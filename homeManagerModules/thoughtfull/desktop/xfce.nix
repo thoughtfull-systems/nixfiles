@@ -211,23 +211,14 @@ in lib.mkIf enable {
         "xfce4-power-manager/show-tray-icon" = false;
         "xfce4-power-manager/sleep-button-action" = uint 1; # suspend
       };
-      xfce4-screensaver = {
-        "lock/embedded-keyboard/enabled" = false;
-        "lock/enabled" = true;
-        "lock/logout/enabled" = false;
-        "lock/saver-activation/enabled" = false;
-        "lock/status-messages/enabled" = true;
-        "lock/user-switching/enabled" = true;
-        "saver/enabled" = false;
-        "saver/idle-activation/delay" = 1440;
-        "saver/idle-activation/enabled" = false;
-      };
       xfce4-session = {
-        # starting emacs after xfsettingsd fixes the `cl-no-applicable-method: No applicable method:
-        # xcb:-+request, nil, #s(xcb:SetInputFocus t 42 1 nil 0)' error on login
+        "general/LockCommand" = "dm-tool lock";
+        "general/SaveOnExit" = false;
         "sessions/Failsafe/Client0_Command" = [ "xfsettingsd" ];
         "sessions/Failsafe/Client0_PerScreen" = false;
         "sessions/Failsafe/Client0_Priority" = 15;
+        # starting emacs after xfsettingsd fixes the `cl-no-applicable-method: No applicable method:
+        # xcb:-+request, nil, #s(xcb:SetInputFocus t 42 1 nil 0)' error on login
         "sessions/Failsafe/Client1_Command" = [ "${pkgs.thoughtfull.exwm-trampoline}/bin/exwm-trampoline" ];
         "sessions/Failsafe/Client1_PerScreen" = false;
         "sessions/Failsafe/Client1_Priority" = 20;
@@ -238,7 +229,6 @@ in lib.mkIf enable {
         "sessions/Failsafe/Client3_PerScreen" = false;
         "sessions/Failsafe/Client3_Priority" = 30;
         "sessions/Failsafe/Count" = 4;
-        "general/SaveOnExit" = false;
       };
       xsettings = {
         "Gdk/WindowScalingFactor" = 1;
