@@ -2,7 +2,7 @@
   options.thoughtfull.clojure.enable = lib.mkEnableOption "clojure";
   config = {
     home.packages = with pkgs; [
-      adoptopenjdk-hotspot-bin-16
+      adoptopenjdk-hotspot-bin-11
       babashka
       clj-kondo
       clojure
