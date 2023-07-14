@@ -223,7 +223,21 @@ in lib.mkIf enable {
         "saver/idle-activation/enabled" = false;
       };
       xfce4-session = {
-        "sessions/Failsafe/Client0_Command" = [ "${pkgs.thoughtfull.exwm-trampoline}/bin/exwm-trampoline" ];
+        # starting emacs after xfsettingsd fixes the `cl-no-applicable-method: No applicable method:
+        # xcb:-+request, nil, #s(xcb:SetInputFocus t 42 1 nil 0)' error on login
+        "sessions/Failsafe/Client0_Command" = [ "xfsettingsd" ];
+        "sessions/Failsafe/Client0_PerScreen" = false;
+        "sessions/Failsafe/Client0_Priority" = 15;
+        "sessions/Failsafe/Client1_Command" = [ "${pkgs.thoughtfull.exwm-trampoline}/bin/exwm-trampoline" ];
+        "sessions/Failsafe/Client1_PerScreen" = false;
+        "sessions/Failsafe/Client1_Priority" = 20;
+        "sessions/Failsafe/Client2_Command" = [ "Thunar" "--daemon" ];
+        "sessions/Failsafe/Client2_PerScreen" = false;
+        "sessions/Failsafe/Client2_Priority" = 25;
+        "sessions/Failsafe/Client3_Command" = [ "xfce4-panel" ];
+        "sessions/Failsafe/Client3_PerScreen" = false;
+        "sessions/Failsafe/Client3_Priority" = 30;
+        "sessions/Failsafe/Count" = 4;
         "general/SaveOnExit" = false;
       };
       xsettings = {
