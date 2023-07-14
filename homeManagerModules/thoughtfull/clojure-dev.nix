@@ -1,11 +1,17 @@
-{ lib, pkgs, ... } : {
-  options.thoughtfull.clojure.enable = lib.mkEnableOption "clojure";
+{ config, lib, pkgs, ... } : {
+  options.thoughtfull.clojure = {
+    enable = lib.mkEnableOption "clojure";
+    jdk-package = lib.mkPackageOption pkgs "jdk" {
+      default = "temurin-bin-17";
+    };
+  };
   config = {
     home.packages = with pkgs; [
-      adoptopenjdk-hotspot-bin-11
       babashka
       clj-kondo
-      clojure
+      (clojure.override {
+        jdk = config.thoughtfull.clojure.jdk-package;
+      })
       joker
     ];
     programs.emacs = {
