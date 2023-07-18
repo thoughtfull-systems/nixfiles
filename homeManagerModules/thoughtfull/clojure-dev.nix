@@ -13,7 +13,7 @@
         jdk = config.thoughtfull.clojure.jdk-package;
       })
       joker
-    ];
+    ] ++ [ config.thoughtfull.clojure.jdk-package ];
     programs.emacs = {
       extraPackages = epkgs: with epkgs; [
         my-clojure-dev
