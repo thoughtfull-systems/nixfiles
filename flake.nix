@@ -24,6 +24,11 @@
         specialArgs.thoughtfull = nixosModules;
         system = "x86_64-linux";
       };
+      raspi3b = nixpkgs.lib.nixosSystem {
+        modules = [ ./nixos/raspi3b ];
+        specialArgs.thoughtfull = nixosModules;
+        system = "aarch64-linux";
+      };
       ziph = nixpkgs.lib.nixosSystem {
         modules = [ ./nixos/ziph ];
         specialArgs.thoughtfull = nixosModules;

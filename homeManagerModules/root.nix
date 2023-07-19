@@ -1,4 +1,4 @@
-{ ... } : {
+{ lib, ... } : {
   home = {
     homeDirectory = "/root";
     # This value determines the Home Manager release that your
@@ -9,7 +9,7 @@
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    stateVersion = "22.11";
+    stateVersion = lib.mkDefault "22.11";
     username = "root";
   };
   thoughtfull.desktop.enable = false;
