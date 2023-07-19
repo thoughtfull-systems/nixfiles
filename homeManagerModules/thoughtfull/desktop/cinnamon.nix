@@ -1,4 +1,4 @@
-{ config, lib, nix-lib, osConfig, pkgs, unstable, ... }: let
+{ config, lib, osConfig, pkgs, unstable, ... }: let
   enable = config.thoughtfull.desktop.enable &&
            osConfig.services.xserver.desktopManager.cinnamon.enable;
 in lib.mkIf enable {
