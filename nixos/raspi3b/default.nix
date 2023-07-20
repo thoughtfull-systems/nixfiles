@@ -1,6 +1,5 @@
 { config, lib, pkgs, thoughtfull, unstable, ... }: {
   boot = {
-    cleanTmpDir = true;
     initrd = {
       availableKernelModules = [ "smsc95xx" "usb_storage" "usbhid" "xhci_pci" "xhci_hcd" ];
       kernelModules = [ "dm-snapshot" ];
@@ -40,6 +39,7 @@
         version = 3;
       };
     };
+    tmp.cleanOnBoot = true;
   };
   console.useXkbConfig = true;
   documentation.nixos.enable = false;
@@ -162,7 +162,7 @@
     };
     openssh = {
       enable = true;
-      passwordAuthentication = false;
+      settings.PasswordAuthentication = false;
     };
     syncthing.guiAddress = "0.0.0.0:8384";
     vaultwarden.enable = true;
