@@ -43,5 +43,6 @@
   services.trezord.enable = true;
   system.stateVersion = "22.05";
   thoughtfull.desktop.enable = true;
+  thoughtfull.vpn.home.enable = true;
   virtualisation.libvirtd.enable = true;
 }

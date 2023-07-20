@@ -17,13 +17,14 @@ inputs: { lib, ... }: {
     ./nix.nix
     ./overlay-thoughtfull.nix
     ./postgresql-backup.nix
-    ./proton-vpn.nix
     ./power-supply.nix
     ./restic.nix
     ./sudo.nix
     ./tlp.nix
     ./tt-rss.nix
     ./vaultwarden.nix
+    ./vpn-home.nix
+    ./vpn-proton.nix
     ./xfce.nix
     ./yubikey.nix
     ./zsh.nix
