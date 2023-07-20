@@ -9,6 +9,7 @@
       userEmail = "paul@stadig.name";
       userName = "Paul Stadig";
     };
+    tmux.enable = true;
   };
   thoughtfull.services.syncthing-init.folders = {
     archive = {
