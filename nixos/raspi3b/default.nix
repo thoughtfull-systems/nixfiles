@@ -39,68 +39,22 @@
     };
     tmp.cleanOnBoot = true;
   };
-  console.useXkbConfig = true;
-  documentation.nixos.enable = false;
   environment.systemPackages = [ pkgs.execline ];
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/d78473e5-e415-40be-a0b7-a59f451b042f";
-      fsType = "ext4";
-      options = [ "noatime" "nodiratime" "discard" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/eaf656ae-fb96-4ebe-95a9-ce7dc991782b";
-      fsType = "ext4";
-      options = [ "noatime" "nodiratime" ];
-    };
-    "/boot/firmware" = {
-      device = "/dev/disk/by-uuid/2178-694E";
-      fsType = "vfat";
-      options = [ "noatime" "nodiratime" ];
-    };
-    "/nix" = {
-      device = "/dev/disk/by-uuid/8bff918b-d86d-4f26-b3ae-85b95e7225bc";
-      fsType = "ext4";
-      options = [ "noatime" "nodiratime" ];
-    };
-  };
-  hardware.enableRedistributableFirmware = true;
-  i18n.defaultLocale = "en_US.UTF-8";
   imports = [
+    ./filesystems.nix
     ./hardware-configuration.nix
     ./paul.nix
     ./root.nix
     thoughtfull.default
   ];
-  thoughtfull.restic = {
-    environmentFile = "/var/lib/restic/.env";
-    passwordFile = "/var/lib/restic/passphrase";
-    s3Bucket = "stadig-restic";
-  };
   networking = {
-    domain = "stadig.name";
     firewall.allowedTCPPorts = [
       80
       443
       8384 # syncthing
     ];
     hostName = "raspi3b";
-    interfaces.eth0 = {
-      useDHCP = true;
-      ipv4.addresses = [
-        # My first-line router is on 192.168.1.x and will only NAT forward to that subnet.
-        {
-          address = "192.168.1.3";
-          prefixLength = 24;
-        }
-      ];
-    };
-    # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-    # Per-interface useDHCP will be mandatory in the future, so this generated config
-    # replicates the default behaviour.
-    useDHCP = false;
   };
-  powerManagement.cpuFreqGovernor = "ondemand";
   security.acme = {
     acceptTerms = true;
     certs."stadig.name".extraDomainNames = [
@@ -169,13 +123,7 @@
       joinNetworks = [ "af415e486f92a166" ];
     };
   };
-  swapDevices = [{
-    device = "/dev/disk/by-uuid/2dff7c80-387a-4e70-9fa3-9f8139c03b6f";
-  }];
   system = {
-    autoUpgrade = {
-      dates = "12:00";
-    };
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -184,6 +132,10 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     stateVersion = "21.11"; # Did you read the comment?
   };
-  users.mutableUsers = false;
+  thoughtfull.restic = {
+    environmentFile = "/var/lib/restic/.env";
+    passwordFile = "/var/lib/restic/passphrase";
+    s3Bucket = "stadig-restic";
+  };
   virtualisation.docker.enable = true;
 }
