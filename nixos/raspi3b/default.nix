@@ -20,7 +20,6 @@
         };
       };
     };
-    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "cma=32M"
       # AFAICT, this is required to get a luks password prompt
@@ -68,9 +67,10 @@
   hardware.enableRedistributableFirmware = true;
   i18n.defaultLocale = "en_US.UTF-8";
   imports = [
-    thoughtfull.default
+    ./hardware-configuration.nix
     ./paul.nix
     ./root.nix
+    thoughtfull.default
   ];
   thoughtfull.restic = {
     environmentFile = "/var/lib/restic/.env";
