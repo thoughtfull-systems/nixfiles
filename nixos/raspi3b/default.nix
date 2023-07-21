@@ -67,22 +67,17 @@
     };
   };
   hardware.enableRedistributableFirmware = true;
-  # home-manager = {
-  #   extraSpecialArgs = { inherit nix-lib unstable; };
-  # };
   i18n.defaultLocale = "en_US.UTF-8";
   imports = [
     thoughtfull.default
     ./paul.nix
     ./root.nix
   ];
-  # my.restic.s3Bucket = "stadig-restic";
   thoughtfull.restic = {
     environmentFile = "/var/lib/restic/.env";
     passwordFile = "/var/lib/restic/passphrase";
     s3Bucket = "stadig-restic";
   };
-  nix.gc.options = lib.mkForce "--delete-older-than 7d";
   networking = {
     domain = "stadig.name";
     firewall.allowedTCPPorts = [
