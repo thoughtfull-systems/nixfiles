@@ -10,13 +10,12 @@
       network = {
         enable = true;
         ssh = {
-          authorizedKeys = config.users.users.paul.openssh.authorizedKeys.keys;
+          authorizedKeys = config.users.users.root.openssh.authorizedKeys.keys;
           enable = true;
           hostKeys = [
             secrets.initrd_ssh_host_ed25519_key
             secrets.initrd_ssh_host_rsa_key
           ];
-          ignoreEmptyHostKeys = true;
           port = 222;
         };
       };
