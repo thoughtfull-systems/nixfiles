@@ -1,4 +1,4 @@
-{ config, lib, pkgs, thoughtfull, unstable, ... }: {
+{ config, lib, pkgs, secrets, thoughtfull, unstable, ... }: {
   boot = {
     initrd = {
       availableKernelModules = [ "smsc95xx" "usb_storage" "usbhid" "xhci_pci" "xhci_hcd" ];
@@ -13,8 +13,8 @@
           authorizedKeys = config.users.users.paul.openssh.authorizedKeys.keys;
           enable = true;
           hostKeys = [
-            /etc/ssh/initrd_ssh_host_ed25519_key
-            /etc/ssh/initrd_ssh_host_rsa_key
+            secrets.initrd_ssh_host_ed25519_key
+            secrets.initrd_ssh_host_rsa_key
           ];
           ignoreEmptyHostKeys = true;
           port = 222;

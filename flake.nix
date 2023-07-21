@@ -8,10 +8,11 @@
       url = "github:thoughtfull-systems/home-manager/release-23.05";
     };
     nixpkgs.url = "github:thoughtfull-systems/nixpkgs/nixos-23.05";
+    secrets.url = "git+ssh://git@github.com/thoughtfull-systems/nixfiles-secrets";
     # for some software I want the most recent version
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
-  outputs = { hardware, nixpkgs, ... }@inputs: rec {
+  outputs = { hardware, nixpkgs, secrets, ... }@inputs: rec {
     emacsPackages = import ./emacsPackages;
     homeManagerModules = import ./homeManagerModules;
     lib = import ./lib inputs;
@@ -21,17 +22,26 @@
           hardware.nixosModules.lenovo-thinkpad-x13
           ./nixos/hemera
         ];
-        specialArgs.thoughtfull = nixosModules;
+        specialArgs = {
+          secrets = secrets.hemera;
+          thoughtfull = nixosModules;
+        };
         system = "x86_64-linux";
       };
       raspi3b = nixpkgs.lib.nixosSystem {
         modules = [ ./nixos/raspi3b ];
-        specialArgs.thoughtfull = nixosModules;
+        specialArgs = {
+          secrets = secrets.raspi3b;
+          thoughtfull = nixosModules;
+        };
         system = "aarch64-linux";
       };
       ziph = nixpkgs.lib.nixosSystem {
         modules = [ ./nixos/ziph ];
-        specialArgs.thoughtfull = nixosModules;
+        specialArgs = {
+          secrets = secrets.ziph;
+          thoughtfull = nixosModules;
+        };
         system = "x86_64-linux";
       };
     };

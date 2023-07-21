@@ -1,7 +1,0 @@
-#       Serial: 22369475, Slot: 1
-#         Name: nixos key
-#      Created: Mon, 20 Mar 2023 16:26:12 +0000
-#   PIN policy: Never  (A PIN is NOT required to decrypt)
-# Touch policy: Never  (A physical touch is NOT required to decrypt)
-#    Recipient: age1yubikey1qdlg5tuvtwc7kl8k75a98wwc09l8ysywr7gsamxk8spgs08s4tjcxd4eytg
-AGE-PLUGIN-YUBIKEY-1CD292QVZZPCVVNCX0892S

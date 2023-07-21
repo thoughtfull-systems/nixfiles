@@ -117,7 +117,23 @@
         "hardware": "hardware",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
+        "secrets": "secrets",
         "unstable": "unstable"
+      }
+    },
+    "secrets": {
+      "locked": {
+        "lastModified": 1689943311,
+        "narHash": "sha256-XC1f7Df6AaH0BY0aq+WPz/z2NnVkTnnkum0scmawXz8=",
+        "ref": "refs/heads/main",
+        "rev": "7546bfd15e5a4d00a2f3e68781da1494e5c433a9",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@github.com/thoughtfull-systems/nixfiles-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/thoughtfull-systems/nixfiles-secrets"
       }
     },
     "unstable": {
