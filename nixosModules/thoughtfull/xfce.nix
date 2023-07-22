@@ -14,7 +14,7 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
             patches = [ ./0001-Hybrid-Sleep-v2.2.patch ];
             # this is a temporary hack to fix #45, but something better should e done
             postPatch = ''
-              substituteInPlace src/org.xfce.power.policy.in2 --replace "@sbindir@/xfpm-power-backlight-helper" "/run/current-system/sw/bin/xfpm-power-backlight-helper"
+              substituteInPlace src/org.xfce.power.policy.in2 --replace "@sbindir@" "/run/current-system/sw/bin"
               substituteInPlace common/xfpm-brightness.c --replace "SBINDIR" "\"/run/current-system/sw/bin\""
             '';
           }));
