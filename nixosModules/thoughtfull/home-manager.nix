@@ -1,9 +1,10 @@
-home-manager: { lib, pkgs, thoughtfull, ... }: {
+home-manager: { lib, pkgs, secrets, thoughtfull, ... }: {
   environment.systemPackages = [
     pkgs.home-manager
   ];
   home-manager = {
     extraSpecialArgs = {
+      inherit secrets;
       thoughtfull = thoughtfull.home;
     };
     sharedModules = [ thoughtfull.home.thoughtfull ];

@@ -123,11 +123,11 @@
     },
     "secrets": {
       "locked": {
-        "lastModified": 1689943311,
-        "narHash": "sha256-XC1f7Df6AaH0BY0aq+WPz/z2NnVkTnnkum0scmawXz8=",
+        "lastModified": 1690020656,
+        "narHash": "sha256-TKb8DJWMRxPwqNGeQPh7uI986In0uuVH1FEoSjp+/no=",
         "ref": "refs/heads/main",
-        "rev": "7546bfd15e5a4d00a2f3e68781da1494e5c433a9",
-        "revCount": 2,
+        "rev": "ba147ce2b5e0447b80b3ac644c6fe2194bc621a9",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://git@github.com/thoughtfull-systems/nixfiles-secrets"
       },

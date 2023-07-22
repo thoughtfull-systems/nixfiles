@@ -112,7 +112,6 @@
       enable = true;
       settings.PasswordAuthentication = false;
     };
-    syncthing.guiAddress = "0.0.0.0:8384";
     vaultwarden.enable = true;
     xserver = {
       layout = "dvorak";

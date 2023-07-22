@@ -11,21 +11,24 @@
     };
     tmux.enable = true;
   };
+  services.syncthing.extraOptions = [
+    "--gui-address=0.0.0.0:8384"
+  ];
   thoughtfull.services.syncthing-init.folders = {
     archive = {
-      devices = [ "carbon" "hemera" ];
+      devices = [ "carbon" "hemera" "ziph" ];
       enable = true;
     };
     obsidian = {
-      devices = [ "carbon" "hemera" "pixel" "pixel5a" ];
+      devices = [ "carbon" "hemera" "pixel" "pixel5a" "ziph" ];
       enable = true;
     };
     org = {
-      devices = [ "carbon" "hemera" "pixel" "pixel5a" ];
+      devices = [ "carbon" "hemera" "pixel" "pixel5a" "ziph" ];
       enable = true;
     };
     sync = {
-      devices = [ "bennu" "carbon" "hemera" "pixel" "pixel5a" ];
+      devices = [ "bennu" "carbon" "hemera" "pixel" "pixel5a" "ziph" ];
       enable = true;
     };
   };
