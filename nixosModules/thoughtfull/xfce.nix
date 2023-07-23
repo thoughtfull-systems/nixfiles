@@ -22,11 +22,16 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
       };
     })
   ];
-  environment.systemPackages = with pkgs; [
-    xfce.xfce4-panel
-    xfce.xfce4-pulseaudio-plugin
-    xfce.xfce4-xkb-plugin
-    xfce.xfce4-weather-plugin
+  environment.systemPackages = with pkgs.xfce; [
+    xfce4-panel
+    xfce4-pulseaudio-plugin
+    xfce4-xkb-plugin
+    xfce4-weather-plugin
+  ];
+  programs.thunar.plugins = with pkgs.xfce; [
+    thunar-archive-plugin
+    thunar-media-tags-plugin
+    thunar-volman
   ];
   services = {
     xserver = {
