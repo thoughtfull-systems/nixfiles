@@ -3,12 +3,6 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
   nixpkgs.overlays = [
     (self: super: {
       xfce = super.xfce // {
-        xfce4-pulseaudio-plugin = super.xfce.xfce4-pulseaudio-plugin.overrideAttrs (
-          (prevAttrs: {
-            buildInputs = prevAttrs.buildInputs ++ [
-              super.libcanberra
-            ];
-          }));
         xfce4-power-manager = super.xfce.xfce4-power-manager.overrideAttrs (
           (prevAttrs: {
             patches = [ ./0001-Hybrid-Sleep-v2.2.patch ];
