@@ -16,6 +16,7 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
             postPatch = ''
               substituteInPlace src/org.xfce.power.policy.in2 --replace "@sbindir@" "/run/current-system/sw/bin"
               substituteInPlace common/xfpm-brightness.c --replace "SBINDIR" "\"/run/current-system/sw/bin\""
+              substituteInPlace common/xfpm-suspend.c --replace "SBINDIR" "\"/run/current-system/sw/bin\""
             '';
           }));
       };
