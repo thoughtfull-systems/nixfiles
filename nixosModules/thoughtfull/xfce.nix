@@ -38,6 +38,7 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
         enableXfwm = lib.mkDefault false;
       };
       displayManager.lightdm.enable = true;
+      libinput.touchpad.tapping = false;
     };
     logind.lidSwitch = "ignore";
   };
