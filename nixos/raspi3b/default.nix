@@ -123,6 +123,9 @@
     };
   };
   system = {
+    autoUpgrade.flags = [
+      "--override-input secrets git+ssh://git@nixfiles-secrets.github.com/thoughtfull-systems/nixfiles-secrets"
+    ];
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -131,10 +134,13 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     stateVersion = "21.11"; # Did you read the comment?
   };
-  thoughtfull.restic = {
-    environmentFile = "/var/lib/restic/.env";
-    passwordFile = "/var/lib/restic/passphrase";
-    s3Bucket = "stadig-restic";
+  thoughtfull = {
+    deploy-keys = [ { name = "nixfiles-secrets"; } ];
+    restic = {
+      environmentFile = "/var/lib/restic/.env";
+      passwordFile = "/var/lib/restic/passphrase";
+      s3Bucket = "stadig-restic";
+    };
   };
   virtualisation.docker.enable = true;
 }
