@@ -107,10 +107,7 @@
         };
       };
     };
-    openssh = {
-      enable = true;
-      settings.PasswordAuthentication = false;
-    };
+    openssh.enable = true;
     vaultwarden.enable = true;
     zerotierone = {
       enable = true;

@@ -15,6 +15,7 @@ inputs: { lib, ... }: {
     ./git.nix
     ./moonlander.nix
     ./nix.nix
+    ./openssh.nix
     ./overlay-thoughtfull.nix
     ./postgresql-backup.nix
     ./power-supply.nix
