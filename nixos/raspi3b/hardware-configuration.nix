@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ ];
+  boot.initrd.availableKernelModules = [ "usb_storage" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
@@ -21,8 +21,7 @@
   # networking.interfaces.br-c84f66b615b5.useDHCP = lib.mkDefault true;
   # networking.interfaces.br-d590fe77da75.useDHCP = lib.mkDefault true;
   # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
-  networking.interfaces.eth0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.vethbe5d66c.useDHCP = lib.mkDefault true;
+  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
   # networking.interfaces.zt44xmz2ij.useDHCP = lib.mkDefault true;
   # networking.interfaces.ztuze32mv7.useDHCP = lib.mkDefault true;
