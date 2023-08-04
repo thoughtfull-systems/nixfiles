@@ -107,7 +107,6 @@
         };
       };
     };
-    openssh.enable = true;
     vaultwarden.enable = true;
     zerotierone = {
       enable = true;
