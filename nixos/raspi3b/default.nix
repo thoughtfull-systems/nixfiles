@@ -1,7 +1,7 @@
 { config, lib, pkgs, secrets, thoughtfull, unstable, ... }: {
   boot = {
     initrd = {
-      availableKernelModules = [ "smsc95xx" "usb_storage" "usbhid" "xhci_pci" "xhci_hcd" ];
+      availableKernelModules = [ "smsc95xx" "usbhid" "xhci_pci" "xhci_hcd" ];
       kernelModules = [ "dm-snapshot" ];
       luks.devices.secure = {
         device = "/dev/sda";
@@ -26,7 +26,6 @@
       "console=tty1"
     ];
     loader = {
-      # generic-extlinux-compatible.enable = true;
       grub.enable = false;
       raspberryPi = {
         enable = true;
@@ -113,10 +112,6 @@
       settings.PasswordAuthentication = false;
     };
     vaultwarden.enable = true;
-    xserver = {
-      layout = "dvorak";
-      xkbOptions = "ctrl:nocaps";
-    };
     zerotierone = {
       enable = true;
       joinNetworks = [ "af415e486f92a166" ];
