@@ -1,12 +1,35 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, utils, ... }:
 lib.mkIf config.services.xserver.desktopManager.xfce.enable {
   nixpkgs.overlays = [
     (self: super: {
       xfce = super.xfce // {
+        libxfce4ui = super.xfce.libxfce4ui.overrideAttrs (
+          prevAttrs: {
+            src = pkgs.fetchFromGitLab {
+              domain = "gitlab.xfce.org";
+              owner = "xfce";
+              repo = "libxfce4ui";
+              rev = "libxfce4ui-4.18.4";
+              sha256 = "sha256-HnLmZftvFvQAvmQ7jZCaYAQ5GB0YMjzhqZkILzvifoE=";
+            };
+            version = "4.18.4";
+          }
+        );
         xfce4-power-manager = super.xfce.xfce4-power-manager.overrideAttrs (
-          (prevAttrs: {
-            patches = [ ./0001-Hybrid-Sleep-v2.2.patch ];
-          }));
+          prevAttrs: {
+            buildInputs = (utils.removePackagesByName
+              prevAttrs.buildInputs
+              [ super.xfce.libxfce4ui ]) ++
+            [ self.xfce.libxfce4ui ];
+            src = pkgs.fetchFromGitLab {
+              domain = "gitlab.xfce.org";
+              owner = "pjstadig";
+              repo = "xfce4-power-manager";
+              rev = "xfce-4.18";
+              sha256 = "sha256-nWvyt9nMYU7erHftmEzIGOiNpELlHyyJvg17pA29Rsc=";
+            };
+            version = "4.18.2";
+          });
       };
     })
   ];
