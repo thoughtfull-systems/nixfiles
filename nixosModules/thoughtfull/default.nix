@@ -14,6 +14,7 @@ inputs: { lib, ... }: {
     ./fonts.nix
     ./git.nix
     ./moonlander.nix
+    ./nginx.nix
     ./nix.nix
     ./openssh.nix
     ./overlay-thoughtfull.nix
