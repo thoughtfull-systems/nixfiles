@@ -1,4 +1,4 @@
-{ config, lib, pkgs, secrets, thoughtfull, unstable, ... }: {
+{ config, pkgs, secrets, thoughtfull, ... }: {
   boot = {
     initrd = {
       availableKernelModules = [ "smsc95xx" "usbhid" "xhci_pci" "xhci_hcd" ];
