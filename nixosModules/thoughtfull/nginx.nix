@@ -1,6 +1,25 @@
 { config, lib, ... }: let
   cfg = config.services.nginx;
+  thoughtfull = config.thoughtfull.nginx;
 in {
+  options.thoughtfull.nginx = {
+    allowedIPs = lib.mkOption {
+      default = [];
+      description = lib.mdDoc ''
+        List of IP addresses that should be allowed a higher request rate. They can also be CIDR
+        notation or special values, see https://nginx.org/en/docs/http/ngx_http_geo_module.html.
+      '';
+      type = lib.types.listOf lib.types.str;
+    };
+    blockedIPs = lib.mkOption {
+      default = [];
+      description = lib.mdDoc ''
+        List of IP addresses that should be blocked from any request. They can also be CIDR notation
+        or special values, see https://nginx.org/en/docs/http/ngx_http_access_module.html.
+      '';
+      type = lib.types.listOf lib.types.str;
+    };
+  };
   config = lib.mkIf cfg.enable {
     networking = {
       firewall.allowedTCPPorts = [
@@ -9,10 +28,13 @@ in {
       ];
     };
     services = {
-      nginx = {
+      nginx = let
+        blockStr = lib.concatMapStringsSep "\n" (ip: "deny ${ip};") thoughtfull.blockedIPs;
+        allowStr = lib.concatMapStringsSep "\n" (ip: "${ip} 0;") thoughtfull.allowedIPs;
+      in {
         appendHttpConfig = ''
           # blocked IPs:
-          # deny 73.177.192.154;
+          ${blockStr}
           allow all;
 
           # rate limiting: https://www.nginx.com/blog/rate-limiting-nginx/
@@ -21,7 +43,7 @@ in {
           geo $limit {
             default 1;
             # allow list IPs:
-            # 73.177.192.154/32 0;
+            ${allowStr}
           }
 
           # $limit_key is "" for allow list IPs, remote address for others
