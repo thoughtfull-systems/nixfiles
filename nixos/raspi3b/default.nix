@@ -52,13 +52,9 @@
     ];
     hostName = "raspi3b";
   };
-  security.acme = {
-    acceptTerms = true;
-    certs."stadig.name".extraDomainNames = [
-      "bw.stadig.name"
-    ];
-    defaults.email = "paul@stadig.name";
-  };
+  security.acme.certs."stadig.name".extraDomainNames = [
+    "bw.stadig.name"
+  ];
   services = {
     nginx = {
       enable = true;

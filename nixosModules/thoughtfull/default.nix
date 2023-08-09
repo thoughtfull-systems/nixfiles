@@ -5,6 +5,7 @@ inputs: { lib, ... }: {
     (import ./agenix.nix inputs.agenix)
     (import ./home-manager.nix inputs.home-manager)
     (import ./overlay-unstable.nix inputs.unstable)
+    ./acme.nix
     ./avahi.nix
     ./bluetooth.nix
     ./brother.nix
