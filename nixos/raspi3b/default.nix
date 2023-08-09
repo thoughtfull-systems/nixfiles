@@ -52,24 +52,8 @@
     ];
     hostName = "raspi3b";
   };
-  security.acme.certs."stadig.name".extraDomainNames = [
-    "bw.stadig.name"
-  ];
   services = {
-    nginx = {
-      enable = true;
-      virtualHosts = {
-        "bw.stadig.name" = {
-          forceSSL = true;
-          locations."/".proxyPass = "http://localhost:8000";
-          useACMEHost = "stadig.name";
-        };
-        "stadig.name" = {
-          enableACME = true;
-          forceSSL = true;
-        };
-      };
-    };
+    nginx.enable = true;
     vaultwarden.enable = true;
     zerotierone = {
       enable = true;
@@ -90,6 +74,7 @@
   };
   thoughtfull = {
     deploy-keys = [ { name = "nixfiles-secrets"; } ];
+    nginx.proxies."bw.stadig.name".backend = "http://localhost:8000";
     restic = {
       environmentFile = "/var/lib/restic/.env";
       passwordFile = "/var/lib/restic/passphrase";

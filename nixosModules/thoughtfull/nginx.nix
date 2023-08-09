@@ -19,14 +19,53 @@ in {
       '';
       type = lib.types.listOf lib.types.str;
     };
+    proxies = lib.mkOption {
+      default = {};
+      description = lib.mdDoc ''
+        Proxies for nginx.
+      '';
+      type = lib.types.attrsOf (lib.types.submodule ({ name, ... } : {
+        options = {
+          backend = lib.mkOption {
+            default = null;
+            description = lib.mdDoc ''
+                URL of the backend service for this proxy.
+              '';
+            type = lib.types.str;
+          };
+          forceSSL = lib.mkOption {
+            default = true;
+            description = lib.mdDoc ''
+                Whether to force SSL connections to this proxy.
+              '';
+            type = lib.types.bool;
+          };
+          name = lib.mkOption {
+            default = name;
+            description = lib.mdDoc ''
+                Name of the virtual host for the proxy.
+              '';
+            type = lib.types.str;
+          };
+        };
+      }));
+    };
   };
-  config = lib.mkIf cfg.enable {
+  config = {
     networking = {
-      firewall.allowedTCPPorts = [
+      firewall.allowedTCPPorts = lib.mkIf cfg.enable [
         80
         443
       ];
     };
+    security = lib.mkMerge (lib.mapAttrsToList
+      (name : {name, backend, forceSSL}:
+        {
+          acme.certs = {
+            ${name} = {};
+          };
+        })
+      thoughtfull.proxies);
     services = {
       nginx = let
         blockStr = lib.concatMapStringsSep "\n" (ip: "deny ${ip};") thoughtfull.blockedIPs;
@@ -63,6 +102,15 @@ in {
           limit_req_status 429;
         '';
         recommendedProxySettings = true;
+        virtualHosts = lib.mkMerge (lib.mapAttrsToList (name : {name, backend, forceSSL}:
+          {
+            ${name} = {
+              enableACME = lib.mkDefault true;
+              forceSSL = lib.mkDefault forceSSL;
+              locations."/".proxyPass = lib.mkDefault backend;
+            };
+          })
+          thoughtfull.proxies);
       };
     };
   };
