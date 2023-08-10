@@ -3,7 +3,7 @@
 in {
   config.services.openssh = lib.mkMerge [
     {
-      enable = lib.mkDefault (!config.thoughtfull.desktop.enable);
+      enable = lib.mkOverride 900 (!config.thoughtfull.desktop.enable);
     }
     (lib.mkIf cfg.enable {
       settings.PasswordAuthentication = lib.mkDefault false;
