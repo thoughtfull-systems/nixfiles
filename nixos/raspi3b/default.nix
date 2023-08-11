@@ -1,4 +1,8 @@
 { config, pkgs, secrets, thoughtfull, ... }: {
+  age.secrets = {
+    restic-env.file = secrets.age.restic-env;
+    restic-passphrase.file = secrets.age.restic-passphrase;
+  };
   boot = {
     initrd = {
       availableKernelModules = [ "smsc95xx" "usbhid" "xhci_pci" "xhci_hcd" ];
@@ -76,8 +80,8 @@
     deploy-keys = [ { name = "nixfiles-secrets"; } ];
     nginx.proxies."bw.stadig.name".backend = "http://localhost:8000";
     restic = {
-      environmentFile = "/var/lib/restic/.env";
-      passwordFile = "/var/lib/restic/passphrase";
+      environmentFile = config.age.secrets.restic-env.path;
+      passwordFile = config.age.secrets.restic-passphrase.path;
       s3Bucket = "stadig-restic";
     };
   };
