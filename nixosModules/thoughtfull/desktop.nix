@@ -2,27 +2,27 @@
   cfg = config.thoughtfull.desktop;
 in {
   options.thoughtfull.desktop.enable = lib.mkEnableOption "desktop";
-  config = {
-    hardware.pulseaudio.enable = lib.mkDefault cfg.enable;
+  config = lib.mkIf cfg.enable {
+    hardware.pulseaudio.enable = lib.mkDefault true;
     home-manager.sharedModules = [({ ... }: {
-      thoughtfull.desktop.enable = lib.mkDefault cfg.enable;
+      thoughtfull.desktop.enable = lib.mkDefault true;
     })];
-    networking.networkmanager.enable = lib.mkDefault cfg.enable;
+    networking.networkmanager.enable = lib.mkDefault true;
     security.rtkit.enable = lib.mkDefault config.hardware.pulseaudio.enable;
     services = {
-      printing.enable = lib.mkDefault cfg.enable;
+      printing.enable = lib.mkDefault true;
       xserver = {
-        desktopManager.xfce.enable = lib.mkDefault cfg.enable;
+        desktopManager.xfce.enable = lib.mkDefault true;
         displayManager = {
           autoLogin = {
-            enable = lib.mkDefault cfg.enable;
-            user = lib.mkIf (cfg.enable && config.users.users ? paul) (lib.mkDefault "paul");
+            enable = lib.mkDefault true;
+            user = lib.mkIf (config.users.users ? paul) (lib.mkDefault "paul");
           };
-          lightdm.enable = lib.mkDefault cfg.enable;
+          lightdm.enable = lib.mkDefault true;
         };
-        enable = lib.mkDefault cfg.enable;
+        enable = lib.mkDefault true;
       };
     };
-    time.timeZone = lib.mkIf (cfg.enable) (lib.mkDefault "America/New_York");
+    time.timeZone = lib.mkDefault "America/New_York";
   };
 }
