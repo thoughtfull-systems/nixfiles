@@ -22,6 +22,7 @@ inputs: { lib, ... }: {
     ./postgresql-backup.nix
     ./power-supply.nix
     ./restic.nix
+    ./ssh.nix
     ./sudo.nix
     ./tlp.nix
     ./tt-rss.nix
