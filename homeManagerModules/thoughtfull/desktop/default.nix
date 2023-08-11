@@ -5,6 +5,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       flameshot
+      libreoffice
       notify-desktop
       tor-browser-bundle-bin
       unstable.obsidian
