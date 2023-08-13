@@ -5,8 +5,12 @@
   };
   boot = {
     initrd = {
-      availableKernelModules = [ "smsc95xx" "usbhid" "xhci_pci" "xhci_hcd" ];
-      kernelModules = [ "dm-snapshot" ];
+      availableKernelModules = [
+        # allows moonlander, but only if pressing a key during detection
+        "usbhid"
+        # nic for initrd openssh
+        "smsc95xx"
+      ];
       luks.devices.secure = {
         device = "/dev/sda";
         preLVM = true;
