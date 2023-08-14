@@ -1,8 +1,7 @@
 { config, lib, osConfig, pkgs, ... }: let
-  cfg = config.xfconf;
-  enable = config.thoughtfull.desktop.enable &&
-           osConfig.services.xserver.desktopManager.xfce.enable;
+  enable = osConfig.services.xserver.desktopManager.xfce.enable;
   uint = value: { type = "uint"; value = value; };
+  xfconf-args = { inherit pkgs uint; };
 in lib.mkIf enable {
   services.picom.enable = true;
   xfconf = {
@@ -181,55 +180,8 @@ in lib.mkIf enable {
         "plugins/plugin-20/update-period" = 250;
         "plugins/plugin-20/use-label" = false;
       };
-      xfce4-power-manager = {
-        "xfce4-power-manager/battery-button-action" = uint 0; # nothing
-        "xfce4-power-manager/blank-on-ac" = 0; # never
-        "xfce4-power-manager/blank-on-battery" = 0; # never
-        "xfce4-power-manager/brightness-level-on-ac" = uint 100;
-        "xfce4-power-manager/brightness-level-on-battery" = uint 100;
-        "xfce4-power-manager/brightness-on-ac" = uint 9; # never
-        "xfce4-power-manager/brightness-on-battery" = uint 9; # never
-        "xfce4-power-manager/critical-power-action" = uint 2; # hybrid-sleep
-        "xfce4-power-manager/critical-power-level" = uint 10;
-        "xfce4-power-manager/dpms-enabled" = true; # sleep display after inactivity?
-        "xfce4-power-manager/dpms-on-ac-off" = uint 0; # never
-        "xfce4-power-manager/dpms-on-ac-sleep" = uint 0; # never
-        "xfce4-power-manager/dpms-on-battery-off" = uint 10;
-        "xfce4-power-manager/dpms-on-battery-sleep" = uint 10;
-        "xfce4-power-manager/general-notification" = false;
-        "xfce4-power-manager/handle-brightness-keys" = true;
-        "xfce4-power-manager/hibernate-button-action" = uint 2; # hybrid-sleep
-        "xfce4-power-manager/inactivity-on-ac" = uint 14; # never
-        "xfce4-power-manager/inactivity-on-battery" = uint 20;
-        "xfce4-power-manager/inactivity-sleep-mode-on-ac" = uint 1; # suspend
-        "xfce4-power-manager/inactivity-sleep-mode-on-battery" = uint 1; # suspend
-        "xfce4-power-manager/lock-screen-suspend-hibernate" = true;
-        "xfce4-power-manager/logind-handle-lid-switch" = false;
-        "xfce4-power-manager/power-button-action" = uint 2; # hybrid-sleep
-        "xfce4-power-manager/show-panel-label" = 1; # percentage
-        "xfce4-power-manager/show-presentation-indicator" = true;
-        "xfce4-power-manager/show-tray-icon" = false;
-        "xfce4-power-manager/sleep-button-action" = uint 1; # suspend
-      };
-      xfce4-session = {
-        "general/LockCommand" = "dm-tool lock";
-        "general/SaveOnExit" = false;
-        "sessions/Failsafe/Client0_Command" = [ "xfsettingsd" ];
-        "sessions/Failsafe/Client0_PerScreen" = false;
-        "sessions/Failsafe/Client0_Priority" = 15;
-        # starting emacs after xfsettingsd fixes the `cl-no-applicable-method: No applicable method:
-        # xcb:-+request, nil, #s(xcb:SetInputFocus t 42 1 nil 0)' error on login
-        "sessions/Failsafe/Client1_Command" = [ "${pkgs.thoughtfull.exwm-trampoline}/bin/exwm-trampoline" ];
-        "sessions/Failsafe/Client1_PerScreen" = false;
-        "sessions/Failsafe/Client1_Priority" = 20;
-        "sessions/Failsafe/Client2_Command" = [ "Thunar" "--daemon" ];
-        "sessions/Failsafe/Client2_PerScreen" = false;
-        "sessions/Failsafe/Client2_Priority" = 25;
-        "sessions/Failsafe/Client3_Command" = [ "xfce4-panel" ];
-        "sessions/Failsafe/Client3_PerScreen" = false;
-        "sessions/Failsafe/Client3_Priority" = 30;
-        "sessions/Failsafe/Count" = 4;
-      };
+      xfce4-power-manager = import ./xfconf/xfce4-power-manager.nix xfconf-args;
+      xfce4-session = import ./xfconf/xfce4-session.nix xfconf-args;
       xsettings = {
         "Gdk/WindowScalingFactor" = 1;
         "Gtk/ButtonImages" = true;
