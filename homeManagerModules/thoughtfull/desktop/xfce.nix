@@ -8,6 +8,7 @@ in lib.mkIf enable {
   services.picom.enable = true;
   xfconf.settings = {
     pointers = import ./xfconf/pointers.nix xfconf-args;
+    thunar = import ./xfconf/thunar.nix xfconf-args;
     xfce4-keyboard-shortcuts = import ./xfconf/xfce4-keyboard-shortcuts.nix xfconf-args;
     xfce4-notifyd = import ./xfconf/xfce4-notifyd.nix xfconf-args;
     xfce4-panel = import ./xfconf/xfce4-panel.nix xfconf-args;
