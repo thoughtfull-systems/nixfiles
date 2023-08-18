@@ -63,10 +63,6 @@
   services = {
     nginx.enable = true;
     vaultwarden.enable = true;
-    zerotierone = {
-      enable = true;
-      joinNetworks = [ "af415e486f92a166" ];
-    };
   };
   system = {
     autoUpgrade.flags = [
