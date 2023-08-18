@@ -7,6 +7,7 @@
 in lib.mkIf enable {
   services.picom.enable = true;
   xfconf.settings = {
+    accessibility = import ./xfconf/accessibility.nix xfconf-args;
     keyboard = import ./xfconf/keyboards.nix xfconf-args;
     pointers = import ./xfconf/pointers.nix xfconf-args;
     thunar = import ./xfconf/thunar.nix xfconf-args;

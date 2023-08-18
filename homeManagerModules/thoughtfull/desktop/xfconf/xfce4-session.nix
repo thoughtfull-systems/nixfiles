@@ -1,6 +1,7 @@
 { pkgs, uint, ... } : {
   "general/LockCommand" = "dm-tool lock";
   "general/SaveOnExit" = false;
+  "general/StartAssistiveTechnologies" = false;
   "sessions/Failsafe/Client0_Command" = [ "xfsettingsd" ];
   "sessions/Failsafe/Client0_PerScreen" = false;
   "sessions/Failsafe/Client0_Priority" = 15;
