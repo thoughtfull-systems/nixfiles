@@ -1,7 +1,13 @@
-{ pkgs, uint, ... } : {
+{ pkgs, ... } : {
+  "chooser/AlwaysDisplay" = false;
+  "compat/LaunchGNOME" = false;
+  "compat/LaunchKDE" = false;
+  "general/AutoSave" = false;
   "general/LockCommand" = "dm-tool lock";
+  "general/PromptOnLogout" = true;
   "general/SaveOnExit" = false;
   "general/StartAssistiveTechnologies" = false;
+  "security/EnableTcp" = false;
   "sessions/Failsafe/Client0_Command" = [ "xfsettingsd" ];
   "sessions/Failsafe/Client0_PerScreen" = false;
   "sessions/Failsafe/Client0_Priority" = 15;
@@ -15,4 +21,5 @@
   "sessions/Failsafe/Client3_PerScreen" = false;
   "sessions/Failsafe/Client3_Priority" = 30;
   "sessions/Failsafe/Count" = 4;
+  "shutdown/LockScreen" = true;
 }
