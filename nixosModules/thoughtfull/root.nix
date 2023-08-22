@@ -13,7 +13,7 @@
       stateVersion = lib.mkDefault "22.11";
       username = "root";
     };
-    thoughtfull.desktop.enable = lib.mkDefault false;
+    thoughtfull.desktop.enable = lib.mkOverride 900 false;
   };
   services.openssh.settings.PermitRootLogin = lib.mkDefault "prohibit-password";
   users.users.root = lib.mkDefault {
