@@ -1,5 +1,4 @@
 inputs: rec {
-  default = thoughtfull;
+  default = import ./thoughtfull inputs;
   home = inputs.self.homeManagerModules;
-  thoughtfull = import ./thoughtfull inputs;
 }
