@@ -1,7 +1,7 @@
 { config, lib, osConfig, pkgs, ... }: let
   enable = osConfig.services.xserver.desktopManager.xfce.enable;
   xfconf-args = {
-    inherit pkgs;
+    inherit config pkgs;
     uint = value: { type = "uint"; value = value; };
   };
 in lib.mkIf enable {

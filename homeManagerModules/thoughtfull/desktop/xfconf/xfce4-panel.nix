@@ -1,4 +1,4 @@
-{ pkgs, uint, ... } : {
+{ config, pkgs, uint, ... } : {
   "configver" = 2;
   "panels" = [ 1 ];
   "panels/dark-mode" = false;
@@ -76,7 +76,7 @@
   "plugins/plugin-15/expand" = false;
   "plugins/plugin-15/style" = uint 1; # separator
   "plugins/plugin-16" = "directorymenu";
-  "plugins/plugin-16/base-directory" = "/home/paul";
+  "plugins/plugin-16/base-directory" = config.home.homeDirectory;
   "plugins/plugin-16/hidden-files" = false;
   "plugins/plugin-16/new-document" = false;
   "plugins/plugin-16/new-folder" = false;
