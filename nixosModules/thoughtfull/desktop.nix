@@ -13,13 +13,7 @@ in {
       printing.enable = lib.mkDefault true;
       xserver = {
         desktopManager.xfce.enable = lib.mkDefault true;
-        displayManager = {
-          autoLogin = {
-            enable = lib.mkDefault true;
-            user = lib.mkIf (config.users.users ? paul) (lib.mkDefault "paul");
-          };
-          lightdm.enable = lib.mkDefault true;
-        };
+        displayManager.lightdm.enable = lib.mkDefault true;
         enable = lib.mkDefault true;
       };
     };
