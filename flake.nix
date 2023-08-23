@@ -16,35 +16,6 @@
     emacsPackages = import ./emacsPackages;
     homeManagerModules = import ./homeManagerModules;
     lib = import ./lib inputs;
-    nixosConfigurations = {
-      hemera = nixpkgs.lib.nixosSystem {
-        modules = [
-          hardware.nixosModules.lenovo-thinkpad-x13
-          ./nixos/hemera
-        ];
-        specialArgs = {
-          secrets = secrets.hemera;
-          thoughtfull = nixosModules;
-        };
-        system = "x86_64-linux";
-      };
-      raspi3b = nixpkgs.lib.nixosSystem {
-        modules = [ ./nixos/raspi3b ];
-        specialArgs = {
-          secrets = secrets.raspi3b;
-          thoughtfull = nixosModules;
-        };
-        system = "aarch64-linux";
-      };
-      ziph = nixpkgs.lib.nixosSystem {
-        modules = [ ./nixos/ziph ];
-        specialArgs = {
-          secrets = secrets.ziph;
-          thoughtfull = nixosModules;
-        };
-        system = "x86_64-linux";
-      };
-    };
     nixosModules = import ./nixosModules inputs;
     packages = lib.forAllSystems (system:
       import ./packages (import nixpkgs {
