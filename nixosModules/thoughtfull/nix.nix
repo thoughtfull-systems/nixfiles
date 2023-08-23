@@ -13,12 +13,10 @@
 in {
   options.thoughtfull.autoUpgrade = {
     flake = lib.mkOption {
-      default = "github:thoughtfull-systems/nixfiles/main";
       description = lib.mdDoc "Flake used for automatic upgrades.";
       type = lib.types.str;
     };
     inputs = lib.mkOption {
-      default = [ "nixpkgs" ];
       description = lib.mdDoc "Flake inputs to update for upgrades.";
       type = lib.types.listOf lib.types.str;
     };
