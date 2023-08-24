@@ -5,9 +5,6 @@ while [ ${v} -eq 82 ]; do
   v=${?}
 done
 case ${XDG_SESSION_DESKTOP} in
-  cinnamon)
-    cinnamon-session-quit --no-prompt
-    ;;
   xfce)
     xfce4-session-logout -fl
     ;;

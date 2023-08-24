@@ -17,7 +17,6 @@ in {
     services.blueman-applet.enable = lib.mkDefault osConfig.hardware.bluetooth.enable;
   };
   imports = [
-    ./cinnamon.nix
     ./firefox.nix
     ./xbanish.nix
     ./xfce.nix
