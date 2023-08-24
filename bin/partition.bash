@@ -35,7 +35,7 @@ hostname="${1}"
 
 
 scriptdir="$(dirname $(realpath ${0}))"
-repo="${3:-github:thoughtfull-systems/nix-config}"
+repo="${3:-github:thoughtfull-systems/nixfiles}"
 
 ### VARIABLES ##################################################################
 # devices

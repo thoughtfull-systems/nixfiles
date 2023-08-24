@@ -172,7 +172,7 @@ log "Setup started"
 [[ -v 1 ]] || die "Expected hostname as first argument"
 hostname="${1}"
 log "Using hostname: ${hostname}"
-repo="${2:-github:thoughtfull-systems/nix-config}"
+repo="${2:-github:thoughtfull-systems/nixfiles}"
 log "Using repo: ${repo}"
 pause_for_input
 
