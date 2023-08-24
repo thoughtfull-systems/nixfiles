@@ -3,7 +3,6 @@
     ./clojure-dev.nix
     ./desktop
     ./emacs
-    ./emoji.nix
     ./exwm.nix
     ./git.nix
     ./gnome-terminal.nix
