@@ -39,6 +39,8 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
       xfce4-pulseaudio-plugin
       xfce4-xkb-plugin
       xfce4-weather-plugin
+    ] ++ [
+      pkgs.gnome.file-roller
     ];
     xfce.excludePackages = [ pkgs.xfce.xfce4-volumed-pulse ];
   };
