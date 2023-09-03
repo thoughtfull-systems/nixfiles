@@ -14,6 +14,7 @@ inputs: { lib, ... }: {
     ./emoji.nix
     ./fonts.nix
     ./git.nix
+    ./greek.nix
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix
@@ -44,8 +45,8 @@ inputs: { lib, ... }: {
   services = {
     openssh.enable = lib.mkDefault true;
     xserver = {
-      layout = lib.mkDefault "dvorak";
-      xkbOptions = lib.mkDefault "ctrl:nocaps";
+      layout = lib.mkDefault "dvorak,us";
+      xkbOptions = lib.mkDefault "grp:shifts_toggle,ctrl:nocaps,compose:rctrl";
     };
   };
   users.mutableUsers = lib.mkDefault false;

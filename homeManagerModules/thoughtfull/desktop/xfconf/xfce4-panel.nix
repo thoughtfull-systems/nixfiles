@@ -82,12 +82,12 @@
   "plugins/plugin-16/new-folder" = false;
   "plugins/plugin-16/open-in-terminal" = false;
   "plugins/plugin-17" = "xkb";
-  "plugins/plugin-17/display-type" = uint 0; # image
   "plugins/plugin-17/display-name" = uint 0; # country
   "plugins/plugin-17/display-scale" = uint 80;
+  "plugins/plugin-17/display-tooltip-icon" = true;
+  "plugins/plugin-17/display-type" = uint 0; # image
+  "plugins/plugin-17/group-policy" = uint 1; # per window
   "plugins/plugin-17/show-notifications" = false;
-  "plugins/plugin-17/display-tooltip-icon" = false;
-  "plugins/plugin-17/group-policy" = uint 0; # configure globally
   "plugins/plugin-18" = "weather";
   "plugins/plugin-18/forecast/days" = 5;
   "plugins/plugin-18/forecast/layout" = 0; # columns
