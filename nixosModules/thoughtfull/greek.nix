@@ -5,8 +5,8 @@
       pkgs.galatia-sil
     ];
     services.xserver = {
-      layout = lib.mkOverride 900 "dvorak,us,gr";
-      xkbVariant = lib.mkOverride 900 ",,polytonic";
+      layout = lib.mkOverride 900 "us,us,gr";
+      xkbVariant = lib.mkOverride 900 "dvorak,,polytonic";
     };
   };
 }

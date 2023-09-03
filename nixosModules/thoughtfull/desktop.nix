@@ -13,7 +13,18 @@ in {
       printing.enable = lib.mkDefault true;
       xserver = {
         desktopManager.xfce.enable = lib.mkDefault true;
-        displayManager.lightdm.enable = lib.mkDefault true;
+        displayManager.lightdm = {
+          enable = lib.mkDefault true;
+          greeters.gtk.indicators = [
+            "~host"
+            "~spacer"
+            "~clock"
+            "~spacer"
+            "~session"
+            "~layout"
+            "~power"
+          ];
+        };
         enable = lib.mkDefault true;
       };
     };
