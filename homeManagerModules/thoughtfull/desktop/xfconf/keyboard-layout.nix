@@ -1,0 +1,3 @@
+{ ... } : {
+  "Default/XkbDisable" = true;
+}
