@@ -45,9 +45,9 @@ inputs: { lib, ... }: {
   services = {
     openssh.enable = lib.mkDefault true;
     xserver = {
-      layout = lib.mkDefault "us,us";
+      layout = lib.mkDefault "us";
       xkbOptions = lib.mkDefault "grp:shifts_toggle,ctrl:nocaps,compose:rctrl";
-      xkbVariant = lib.mkDefault "dvorak,";
+      xkbVariant = lib.mkDefault "dvorak";
     };
   };
   users.mutableUsers = lib.mkDefault false;

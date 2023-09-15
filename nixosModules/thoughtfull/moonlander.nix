@@ -4,6 +4,5 @@ in {
   options.thoughtfull.moonlander.enable = lib.mkEnableOption "moonlander";
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [ pkgs.wally-cli ];
-    services.xserver.layout = lib.mkForce "us,dvorak";
   };
 }
