@@ -22,6 +22,8 @@
   "xfce4-power-manager/inactivity-on-battery" = uint 20;
   "xfce4-power-manager/inactivity-sleep-mode-on-ac" = uint 1; # suspend
   "xfce4-power-manager/inactivity-sleep-mode-on-battery" = uint 1; # suspend
+  "xfce4-power-manager/lid-action-on-battery" = uint 1; # suspend
+  "xfce4-power-manager/lid-action-on-ac" = uint 0; # switch off display
   "xfce4-power-manager/lock-screen-suspend-hibernate" = true;
   "xfce4-power-manager/logind-handle-lid-switch" = false;
   "xfce4-power-manager/power-button-action" = uint 2; # hybrid-sleep
