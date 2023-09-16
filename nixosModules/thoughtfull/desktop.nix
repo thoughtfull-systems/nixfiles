@@ -21,7 +21,6 @@ in {
             "~clock"
             "~spacer"
             "~session"
-            "~layout"
             "~power"
           ];
         };
