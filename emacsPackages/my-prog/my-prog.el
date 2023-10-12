@@ -23,6 +23,11 @@
 (use-package flycheck
   :after (prog-mode)
   :bind (:map prog-mode-map
+              ;; Key binding conventions
+              ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html
+              ;;
+              ;; C-c [letter] is reserved for users
+              ;; <f5> through <f9> are reserved for users
               ("C-c e n" . flycheck-next-error)
               ("C-c e p" . flycheck-previous-error))
   :commands (flycheck-next-error flycheck-previous-error)
@@ -38,6 +43,11 @@
 (use-package flyspell
   :hook (prog-mode . flyspell-prog-mode))
 (use-package imenu
+  ;; Key binding conventions
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html
+  ;;
+  ;; C-c [letter] is reserved for users
+  ;; <f5> through <f9> are reserved for users
   :bind (("C-c i" . imenu)
          ("C-c C-i" . imenu)))
 (use-package magit-extras)
