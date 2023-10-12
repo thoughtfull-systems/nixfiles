@@ -5,11 +5,11 @@
       default = "nodejs_20";
     };
   };
-  config = {
+  config = lib.mkIf config.thoughtfull.javascript.enable {
     home.packages = [ config.thoughtfull.javascript.nodejs-package ];
     programs.emacs = {
       extraPackages = epkgs: with epkgs; [
-        typescript-mode
+        my-javascript-dev
       ];
     };
   };
