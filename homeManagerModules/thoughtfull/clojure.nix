@@ -5,7 +5,7 @@
       default = "temurin-bin-17";
     };
   };
-  config = {
+  config = lib.mkIf config.thoughtfull.clojure.enable {
     home.packages = with pkgs; [
       babashka
       clj-kondo
