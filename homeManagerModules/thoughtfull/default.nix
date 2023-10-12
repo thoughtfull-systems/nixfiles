@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./clojure-dev.nix
+    ./clojure.nix
     ./desktop
     ./emacs
     ./emoji.nix
@@ -8,6 +8,7 @@
     ./git.nix
     ./gnome-terminal.nix
     ./home-manager.nix
+    ./javascript.nix
     ./keychain.nix
     ./notifications.nix
     ./overlay-emacs.nix
