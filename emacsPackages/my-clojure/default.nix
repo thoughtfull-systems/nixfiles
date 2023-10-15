@@ -1,5 +1,5 @@
 epkgs: {
-  my-clojure-dev = epkgs.elpaBuild {
+  my-clojure = epkgs.elpaBuild {
     packageRequires = with epkgs; [
       cider
       clojure-mode
@@ -8,8 +8,8 @@ epkgs: {
       flycheck-clojure
       my-prog
     ];
-    pname = "my-clojure-dev";
-    src = ./my-clojure-dev.el;
+    pname = "my-clojure";
+    src = ./my-clojure.el;
     version = "0.0.0";
   };
 }

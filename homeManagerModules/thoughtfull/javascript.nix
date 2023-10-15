@@ -9,7 +9,7 @@
     home.packages = [ config.thoughtfull.javascript.nodejs-package ];
     programs.emacs = {
       extraPackages = epkgs: with epkgs; [
-        my-javascript-dev
+        my-javascript
       ];
     };
   };

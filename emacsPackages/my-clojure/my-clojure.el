@@ -1,4 +1,4 @@
-;;; my-clojure-dev.el --- Clojure development configuration  -*- lexical-binding: t; -*-
+;;; my-clojure.el --- Clojure development configuration  -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 
@@ -26,13 +26,13 @@
 (use-package flycheck-clojure
   :after (clojure-mode flycheck))
 
-(deftheme my-clojure-dev)
+(deftheme my-clojure)
 (custom-theme-set-variables
- 'my-clojure-dev
+ 'my-clojure
  '(cider-preferred-build-tool 'clojure-cli)
  '(cider-repl-history-file "~/.cider-history")
  '(nrepl-log-messages t))
-(provide-theme 'my-clojure-dev)
-(enable-theme 'my-clojure-dev)
-(provide 'my-clojure-dev)
-;;; my-clojure-dev.el ends here
+(provide-theme 'my-clojure)
+(enable-theme 'my-clojure)
+(provide 'my-clojure)
+;;; my-clojure.el ends here

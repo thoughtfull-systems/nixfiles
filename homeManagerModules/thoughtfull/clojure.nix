@@ -16,7 +16,7 @@
     ] ++ [ config.thoughtfull.clojure.jdk-package ];
     programs.emacs = {
       extraPackages = epkgs: with epkgs; [
-        my-clojure-dev
+        my-clojure
       ];
     };
   };
