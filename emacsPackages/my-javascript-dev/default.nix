@@ -1,6 +1,8 @@
 epkgs: {
   my-javascript-dev = epkgs.elpaBuild {
     packageRequires = with epkgs; [
+      js2-mode
+      json-mode
       my-prog
       typescript-mode
     ];

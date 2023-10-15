@@ -13,6 +13,9 @@
 (require 'use-package)
 
 (use-package my-prog)
+(use-package js2-mode
+  :mode "\\.js\\'")
+(use-package json-mode)
 (use-package typescript-mode)
 
 ;; (deftheme my-javascript-dev)
