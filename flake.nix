@@ -1,7 +1,13 @@
 {
   description = "NixOS configuration";
   inputs = {
-    agenix.url = "github:ryantm/agenix/e64961977f60388dd0b49572bb0fc453b871f896";
+    agenix = {
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+      url = "github:ryantm/agenix/e64961977f60388dd0b49572bb0fc453b871f896";
+    };
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:thoughtfull-systems/home-manager/release-23.05";
