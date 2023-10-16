@@ -2,10 +2,7 @@
   description = "NixOS configuration";
   inputs = {
     agenix = {
-      inputs = {
-        home-manager.follows = "home-manager";
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
       url = "github:ryantm/agenix/e64961977f60388dd0b49572bb0fc453b871f896";
     };
     home-manager = {
