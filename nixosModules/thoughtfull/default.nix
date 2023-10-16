@@ -3,7 +3,7 @@ inputs: { lib, ... }: {
   hardware.enableAllFirmware = lib.mkDefault true;
   imports = [
     (import ./agenix.nix inputs.agenix)
-    (import ./home-manager.nix inputs.home-manager)
+    (import ./home-manager.nix inputs.home-manager inputs.self)
     (import ./overlay-unstable.nix inputs.unstable)
     ./acme.nix
     ./avahi.nix
