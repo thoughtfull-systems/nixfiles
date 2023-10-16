@@ -1,6 +1,16 @@
 { ... } : {
   programs.ssh.knownHosts = {
-    "hemera.lan".publicKey = builtins.readFile ./ssh/hemera.pub;
-    "raspi3b.lan".publicKey = builtins.readFile ./ssh/raspi3b.pub;
+    "github-ecdsa" = {
+      hostNames = [ "github.com" ];
+      publicKey = builtins.readFile ./ssh/github-ecdsa.pub;
+    };
+    "github-ed25519" = {
+      hostNames = [ "github.com" ];
+      publicKey = builtins.readFile ./ssh/github-ed25519.pub;
+    };
+    "github-rsa" = {
+      hostNames = [ "github.com" ];
+      publicKey = builtins.readFile ./ssh/github-rsa.pub;
+    };
   };
 }
