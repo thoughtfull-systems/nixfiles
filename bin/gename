@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bash -euo pipefail
 # https://bible.knowing-jesus.com/names
-cat <<EOF | shuf -n 1
+cat <<EOF | shuf -n 10
 aaron
 abaddon
 abagtha
