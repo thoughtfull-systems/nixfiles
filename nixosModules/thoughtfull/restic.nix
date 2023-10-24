@@ -28,7 +28,11 @@ in {
     };
   };
   config = lib.mkIf enabled {
-    environment.systemPackages = [ pkgs.restic ];
+    environment.systemPackages = [
+      # includes envfile which makes it easier to interact at the command line
+      pkgs.execline
+      pkgs.restic
+    ];
     services.restic.backups.default = (lib.mkMerge [
       {
         environmentFile = cfg.environmentFile;
