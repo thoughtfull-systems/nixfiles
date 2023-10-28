@@ -173,6 +173,7 @@
         ("C-d" . "<delete>")
         ("C-e" . "<end>")
         ("C-f" . "<right>")
+        ("C-g" . "<escape>")
         ("C-k" . "S-<end> <delete>")
         ("C-n" . "<down>")
         ("C-p" . "<up>")
