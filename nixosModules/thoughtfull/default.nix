@@ -15,6 +15,7 @@ inputs: { lib, ... }: {
     ./fonts.nix
     ./git.nix
     ./greek.nix
+    ./initrd-ssh.nix
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix
