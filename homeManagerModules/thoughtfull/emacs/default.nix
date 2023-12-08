@@ -22,5 +22,6 @@
       my-completion
       my-prog
     ];
+    package = pkgs.emacs29;
   };
 }
