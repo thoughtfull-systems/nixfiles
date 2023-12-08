@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... } : {
   options.thoughtfull.greek.enable = lib.mkEnableOption "desktop";
   config = lib.mkIf config.thoughtfull.greek.enable {
-    fonts.fonts = [
+    fonts.packages = [
       pkgs.galatia-sil
     ];
     services.xserver = {
