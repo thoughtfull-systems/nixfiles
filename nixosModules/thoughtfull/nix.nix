@@ -41,7 +41,7 @@ in {
       allowReboot = lib.mkDefault (!desktop);
       dates = lib.mkDefault (if desktop then "12:00" else "03:00");
       enable = lib.mkDefault true;
-      flags = [ "--no-write-lock-file" ] ++
+      flags = [ "--no-write-lock-file" "--refresh" ] ++
               (map (i: "--update-input ${i}") cfg.inputs);
       flake = cfg.flake;
     };
