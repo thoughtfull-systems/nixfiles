@@ -4,8 +4,12 @@
     activation = lib.mkIf config.programs.tmux.enable {
       reloadTmuxConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
         export TMUX_TMPDIR=/run/user/$UID
-        [ -e "$TMUX_TMPDIR/tmux-$UID/default" ] &&
-        $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux source-file $HOME/.config/tmux/tmux.conf
+        if ${pkgs.tmux}/bin/tmux ls &> /dev/null; then
+          echo "Reloading tmux config"
+          $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux source-file $HOME/.config/tmux/tmux.conf
+        else
+          echo "NOT Reloading tmux config (tmux not running)"
+        fi
       '';
     };
   };
