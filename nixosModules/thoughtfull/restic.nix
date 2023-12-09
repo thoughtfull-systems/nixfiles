@@ -29,9 +29,13 @@ in {
   };
   config = lib.mkIf enabled {
     environment.systemPackages = [
-      # includes envfile which makes it easier to interact at the command line
-      pkgs.execline
-      pkgs.restic
+      (pkgs.writeScriptBin "restic" ''
+        #!/usr/bin/env bash
+        ${pkgs.execline}/bin/envfile /var/lib/restic/.env ${pkgs.restic}/bin/restic \
+          -r "s3:s3.amazonaws.com/${cfg.s3Bucket}" \
+          -p /var/lib/restic/passphrase \
+          "''${@}"
+      '')
     ];
     services.restic.backups.default = (lib.mkMerge [
       {
