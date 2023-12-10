@@ -1,5 +1,4 @@
 { config, lib, ... }: let
-  cfg = config.services.nginx;
   thoughtfull = config.thoughtfull.nginx;
 in {
   options.thoughtfull.nginx = {
@@ -53,7 +52,7 @@ in {
   };
   config = {
     networking = {
-      firewall.allowedTCPPorts = lib.mkIf cfg.enable [
+      firewall.allowedTCPPorts = lib.mkIf config.services.nginx.enable [
         80
         443
       ];
@@ -101,6 +100,7 @@ in {
           limit_req zone=limit_relaxed burst=2000 nodelay;
           limit_req_status 429;
         '';
+        enable = lib.mkDefault ((builtins.length (builtins.attrNames thoughtfull.proxies)) > 0);
         recommendedProxySettings = true;
         virtualHosts = lib.mkMerge (lib.mapAttrsToList (name : {name, backend, forceSSL}:
           {
