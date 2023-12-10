@@ -31,9 +31,9 @@ in {
     environment.systemPackages = [
       (pkgs.writeScriptBin "restic" ''
         #!/usr/bin/env bash
-        ${pkgs.execline}/bin/envfile /var/lib/restic/.env ${pkgs.restic}/bin/restic \
+        ${pkgs.execline}/bin/envfile ${cfg.environmentFile} ${pkgs.restic}/bin/restic \
           -r "s3:s3.amazonaws.com/${cfg.s3Bucket}" \
-          -p /var/lib/restic/passphrase \
+          -p ${cfg.passwordFile} \
           "''${@}"
       '')
     ];
