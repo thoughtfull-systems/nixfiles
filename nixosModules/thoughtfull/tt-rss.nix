@@ -7,9 +7,7 @@
       enable = true;
       ensureDatabases = [ "tt_rss" ];
       ensureUsers = [{
-        ensurePermissions = {
-          "DATABASE tt_rss" = "ALL PRIVILEGES";
-        };
+        ensureDBOwnership = true;
         name = "tt_rss";
       }];
     };
