@@ -2,9 +2,14 @@
   programs.ssh = {
     extraConfig = ''
       Host unlock.*
-      RemoteCommand cryptsetup-askpass
-      RequestTTY yes
-      User root
+        RequestTTY yes
+        RemoteCommand cryptsetup-askpass
+      Host *.local
+        User root
+        ForwardAgent yes
+      Host *.lan
+        User root
+        ForwardAgent yes
     '';
     knownHosts = {
       "github-ecdsa" = {
