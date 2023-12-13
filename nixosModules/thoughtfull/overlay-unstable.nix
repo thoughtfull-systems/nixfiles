@@ -2,7 +2,7 @@ unstable: { ... }: {
   nixpkgs.overlays = [
     (final: prev: {
       unstable = import unstable {
-        config.allowUnfree = final.config.allowUnfree;
+        config = final.config;
         system = final.system;
       };
     })
