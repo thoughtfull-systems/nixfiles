@@ -16,6 +16,7 @@
   programs.tmux = {
     baseIndex = lib.mkDefault 1;
     clock24 = lib.mkDefault true;
+    enable = lib.mkDefault config.thoughtfull.desktop.enable;
     extraConfig = ''
       set-option -g alternate-screen on
       set-option -g copy-command "${pkgs.xsel}/bin/xsel -i --clipboard"
