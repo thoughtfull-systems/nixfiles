@@ -1,6 +1,6 @@
 { lib, pkgs, ... } : {
   home-manager.users.root = {
-    programs.tmux.enable = lib.mkDefault true;
+    programs.tmux.enable = lib.mkOverride 900 true;
     thoughtfull.desktop.enable = lib.mkOverride 900 false;
   };
   services.openssh.settings.PermitRootLogin = lib.mkDefault "prohibit-password";
