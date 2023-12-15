@@ -29,6 +29,8 @@
       set-option -g renumber-windows on
       set-option -g repeat-time 2000
       set-option -g status-position top
+      set-option -g window-status-current-style reverse
+      set-option -g window-status-activity-style bg=yellow
 
       bind-key -T copy-mode -N "Copy to clipboard and cancel" C-w send -X copy-pipe-and-cancel
       bind-key -T copy-mode -N "Show copy-mode key bindings in a new pane" ? split-window -dfh "tmux list-keys -NT copy-mode | less"
@@ -151,7 +153,7 @@
         extraConfig = ''
           set-option -g @prefix_highlight_show_copy_mode on
           set-option -g @prefix_highlight_show_sync_mode on
-          set-option -g status-right "#{prefix_highlight}"
+          set-option -g status-right "#{?#{==:#{user},root},#[bg=red]#[fg=white],}#{user}@#h#[default]#{prefix_highlight}"
         '';
       }
     ];
