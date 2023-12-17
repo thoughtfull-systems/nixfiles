@@ -4,6 +4,7 @@ epkgs:
 (import ./my-completion epkgs) //
 (import ./my-exwm epkgs) //
 (import ./my-javascript epkgs) //
+(import ./my-org epkgs) //
 (import ./my-org-bullets epkgs) //
 (import ./my-org-faces epkgs) //
 (import ./my-prog epkgs)
