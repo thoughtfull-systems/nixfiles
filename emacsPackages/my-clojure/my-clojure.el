@@ -20,6 +20,7 @@
   :after clojure-mode)
 (use-package flycheck-clj-kondo
   :after (flycheck-clojure)
+  :commands (flycheck-clojure-setup)
   :init (flycheck-clojure-setup))
 (use-package flycheck-clojure
   :after (clojure-mode flycheck))
