@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+(require 'use-package)
 (use-package org
   :hook ((org-mode . variable-pitch-mode))
   :bind (("C-c o b" . org-switchb)
@@ -26,7 +27,6 @@
   :after (org))
 
 (deftheme my-org)
-
 (custom-theme-set-variables
  'my-org
  '(org-archive-file-header-format "")
@@ -41,7 +41,6 @@
  '(org-id-link-to-org-use-id t)
  '(org-startup-folded 'content)
  '(org-yank-adjusted-subtrees t))
-
 (provide-theme 'my-org)
 (enable-theme 'my-org)
 

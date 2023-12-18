@@ -32,9 +32,11 @@
          (prog-mode . flyspell-prog-mode)))
 
 (defun my-buffer-compare (b1 b2)
+  "Compare buffer names of B1 and B2."
   (string-collate-lessp (buffer-name b1) (buffer-name b2) nil t))
 
 (defun my-switch-buffer (&optional prefix)
+  "Switch buffers using completion or ibuffer when given PREFIX."
   (interactive "p")
   (if (eq prefix 4)
       (ibuffer)

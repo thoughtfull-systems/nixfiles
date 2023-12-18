@@ -11,7 +11,6 @@
 ;;; Code:
 
 (require 'use-package)
-
 (use-package cider
   :after clojure-mode)
 (use-package clojure-mode

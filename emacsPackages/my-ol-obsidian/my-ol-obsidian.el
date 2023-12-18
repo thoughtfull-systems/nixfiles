@@ -10,8 +10,10 @@
 
 ;;; Code:
 
+(require 'use-package)
 (use-package ol
   :after org
+  :commands (org-link-set-parameters)
   :config
   (org-link-set-parameters "obsidian" :follow #'my-open-obsidian-link))
 

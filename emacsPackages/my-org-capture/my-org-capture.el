@@ -10,13 +10,13 @@
 
 ;;; Code:
 
+(require 'use-package)
 (use-package org-capture
   :bind (("C-c o c" . org-capture)))
 (use-package org-protocol
   :after (org))
 
 (deftheme my-org-capture)
-
 (custom-theme-set-variables
  'my-org-capture
  '(org-capture-templates
@@ -38,7 +38,6 @@
 
 From: %a")))
  '(org-default-notes-file "~/org/in.org"))
-
 (provide-theme 'my-org-capture)
 (enable-theme 'my-org-capture)
 

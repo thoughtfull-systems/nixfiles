@@ -11,6 +11,7 @@
 ;;; Code:
 
 (defun my-completion-delete-back-to-slash ()
+  "Delete characters backward until a slash."
   (interactive)
   (let ((end (point-marker)))
     (when (string= (char-to-string (char-before)) "/")

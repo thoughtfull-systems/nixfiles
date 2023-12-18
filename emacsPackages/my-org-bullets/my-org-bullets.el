@@ -57,13 +57,11 @@
     (1 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
 
 (deftheme my-org-bullets)
-
 (custom-theme-set-variables
  'my-org-bullets
  '(org-hide-leading-stars t)
  '(org-list-demote-modify-bullet '(("-" . "+") ("+" . "*") ("*" . "-")))
  '(org-startup-indented t))
-
 (provide-theme 'my-org-bullets)
 (enable-theme 'my-org-bullets)
 

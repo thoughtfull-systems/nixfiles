@@ -10,6 +10,7 @@
 
 ;;; Code:
 
+(require 'desktop)
 (require 'map) ; for map-apply
 (require 'my)
 (require 'exwm)
@@ -46,6 +47,7 @@
                  (concat "nohup " command "</dev/null >&/dev/null &!")))
 
 (defun my-exwm-select-or-run (target-class-name command)
+  "Cycle through instances of TARGET-CLASS-NAME, or execute COMMAND."
   (interactive)
   (when (not (my-exwm-cycle-class target-class-name (current-buffer)))
     (my-exwm-start-disowned-process command)))
@@ -62,13 +64,14 @@
     (exwm-workspace-switch-create n)))
 
 (defun my-exwm-workspace-name (n)
-  "Align workspace name more intuitively with keyboard."
   (number-to-string (mod (1+ n) 10)))
 
 (defun my-exwm-rename-buffer ()
   (exwm-workspace-rename-buffer exwm-class-name))
 
 (defun my-exwm-restart ()
+  "Restart Emacs and EXWM.
+Exiting with 82 ('R') signals the trampoline script to restart Emacs."
   (interactive)
   ;; EXWM is started with a trampoline script that will restart Emacs
   ;; if it returns an exit code of 82 (the ASCII code for 'R'--for
@@ -89,11 +92,13 @@
     "xfce4-terminal"))
 
 (defun my-exwm-run-command-with-shell (command)
+  "Run COMMAND asynchronously with a shell in tmux."
   (interactive (list (read-shell-command "$ ")))
   (my-exwm-select-or-run terminal-class terminal-command)
   (mapcar #'exwm-input--fake-key (concat "$" command "")))
 
 (defun my-exwm-run-command (command)
+  "Run COMMAND asynchronously."
   (interactive (list (read-shell-command "& ")))
   (my-exwm-start-disowned-process command))
 
@@ -116,9 +121,7 @@
   (desktop-release-lock)
   (desktop-remove))
 
-;;; Configuration theme:
 (deftheme my-exwm)
-
 (custom-theme-set-variables
  'my-exwm
  '(exwm-modeline-mode t)
@@ -229,7 +232,6 @@
  '(exwm-workspace-index-map 'my-exwm-workspace-name)
  '(exwm-workspace-number 10)
  '(exwm-workspace-show-all-buffers t))
-
 (provide-theme 'my-exwm)
 
 (provide 'my-exwm)

@@ -136,7 +136,6 @@
     (1 'org-highlight))))
 
 (deftheme my-org-faces)
-
 (custom-theme-set-faces
  'my-org-faces
  '(org-block ((t (:inherit fixed-pitch))))
@@ -154,7 +153,6 @@
  '(org-table ((t (:inherit fixed-pitch :foreground "Blue1"))))
  '(org-tag ((t (:inherit fixed-pitch :weight bold))))
  '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
-
 (provide-theme 'my-org-faces)
 (enable-theme 'my-org-faces)
 
