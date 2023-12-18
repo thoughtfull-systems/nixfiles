@@ -7,6 +7,7 @@ epkgs: {
       all-the-icons-ibuffer
       nix-mode
       use-package
+      wgrep
     ];
     pname = "my";
     src = ./my.el;

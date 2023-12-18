@@ -30,6 +30,7 @@
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
+(use-package wgrep)
 
 (defun my-buffer-compare (b1 b2)
   "Compare buffer names of B1 and B2."
