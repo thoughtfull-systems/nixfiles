@@ -32,26 +32,7 @@
  '(org-archive-file-header-format "")
  '(org-archive-location "archive.org::")
  '(org-attach-id-dir "attachments/")
- '(org-capture-templates
-   '(("t" "Todo" entry
-      (file "in.org")
-      "* TODO %?
-:PROPERTIES:
-:CREATED: %U
-:END:")
-     ("l" "Linked Todo" entry
-      (file "in.org")
-      "* TODO %?
-:PROPERTIES:
-:CREATED: %U
-:END:
-#+BEGIN_QUOTE
-%i
-#+END_QUOTE
-
-From: %a")))
- '(org-default-notes-file "~/org/in.org")
- '(org-directory "~/org/work")
+ '(org-directory "~/org")
  '(org-enforce-todo-checkbox-dependencies t)
  '(org-enforce-todo-dependencies t)
  '(org-habit-following-days 1)
