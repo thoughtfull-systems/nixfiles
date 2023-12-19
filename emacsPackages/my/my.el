@@ -30,6 +30,8 @@
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
 (use-package wgrep)
+(use-package writegood-mode
+  :hook (text-mode . writegood-mode))
 
 (defun my-buffer-compare (b1 b2)
   "Compare buffer names of B1 and B2."
