@@ -6,11 +6,13 @@
 
 ;;; Commentary:
 
-;; Use variable pitch face for org-mode, making prefixes fixed width so things align properly.
-;; Also, define strike through and highlight faces.
+;; Because I like to use variable pitch for org-mode, make the left margins fixed pitch, so things
+;; line up when indented.
 
 ;;; Code:
+(require 'org)
 
+;; Make heading bullets fixed pitch
 (defface org-level-1-bullet '((t :inherit (org-level-1 fixed-pitch)))
   "Face used for level 1 headline bullets."
   :group 'org-faces)
@@ -45,97 +47,40 @@
 
 (font-lock-add-keywords
  'org-mode
- '(("^\\(\\* \\)"
-    (1 'org-level-1-bullet))))
+ '(("^\\(\\* \\)" 1 'org-level-1-bullet)
+   ("^\\*\\{1\\}\\(\\* \\)" 1 'org-level-2-bullet)
+   ("^\\*\\{2\\}\\(\\* \\)" 1 'org-level-3-bullet)
+   ("^\\*\\{3\\}\\(\\* \\)" 1 'org-level-4-bullet)
+   ("^\\*\\{4\\}\\(\\* \\)" 1 'org-level-5-bullet)
+   ("^\\*\\{5\\}\\(\\* \\)" 1 'org-level-6-bullet)
+   ("^\\*\\{6\\}\\(\\* \\)" 1 'org-level-7-bullet)
+   ("^\\*\\{7\\}\\(\\* \\)" 1 'org-level-8-bullet)))
 
+;; Make prefix spaces and plain list markers fixed-pitch so plain lists indent consistently
 (font-lock-add-keywords
  'org-mode
- '(("^\\*\\{1\\}\\(\\* \\)"
-    (1 'org-level-2-bullet))))
+ '(("^ +[*] " 0 'fixed-pitch)
+   ("^ *[-] " 0 'fixed-pitch)
+   ("^ *[+] " 0 'fixed-pitch)
+   ("^ *[0-9]+[.)] " 0 'fixed-pitch)
+   ("^ *[a-zA-Z][.)] " 0 'fixed-pitch)))
 
+;; Fix face for checkboxes on alphabetical lists.
 (font-lock-add-keywords
  'org-mode
- '(("^\\*\\{2\\}\\(\\* \\)"
-    (1 'org-level-3-bullet))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^\\*\\{3\\}\\(\\* \\)"
-    (1 'org-level-4-bullet))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^\\*\\{4\\}\\(\\* \\)"
-    (1 'org-level-5-bullet))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^\\*\\{5\\}\\(\\* \\)"
-    (1 'org-level-6-bullet))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^\\*\\{6\\}\\(\\* \\)"
-    (1 'org-level-7-bullet))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^\\*\\{7\\}\\(\\* \\)"
-    (1 'org-level-8-bullet))))
-
-;;; Plain list bullets
-;; Use a fancy bullet for '*', and make the whole prefix fixed-pitch so plain lists indent
-;; consistently
-(font-lock-add-keywords
- 'org-mode
- '(("^ *- "
-    (0 'fixed-pitch))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^ *+ "
-    (0 'fixed-pitch))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^ *[0-9][.)] "
-    (0 'fixed-pitch))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^ *[a-zA-Z][.)] "
-    (0 'fixed-pitch))))
-
-(font-lock-add-keywords
- 'org-mode
- '(("^ +[*] "
-    (0 'fixed-pitch))))
-
-;;; Checkbox
-;; Make the space after a checkbox fixed-pitch, so plain lists with checkboxes indent
-;; consistently.
-(font-lock-add-keywords
- 'org-mode
- '(("[-+*.)] \\[[ X-]\\]\\( \\)"
-    (1 'fixed-pitch))))
+ '(("^ *[a-zA-z][.)] \\(\\[@[a-zA-Z]\\] \\)?\\(\\[[ X-]\\]\\)" 2 'org-checkbox)))
 
 (defface org-strike-through '((t :foreground "gray" :strike-through t))
   "Face used for strike through text."
   :group 'org-faces)
 
-(defface org-highlight '((t :background "yellow"))
-  "Face used for highlighted text."
-  :group 'org-faces)
-
-;; This is font-lock, because the emphasis parsing in org-mode is more
-;; complicated than just customizing org-emphasis-alist. The parsing is
-;; integrated pretty deeply.
-(font-lock-add-keywords
- 'org-mode
- '(("\\(\\^[^\\^|]+\\^\\)"
-    (1 'org-highlight))))
-
 (deftheme my-org-faces)
+(custom-theme-set-variables
+ 'my-org-faces
+ `(org-emphasis-alist
+   ,(list 'quote
+          (cons (list "+" 'org-strike-through)
+                (assoc-delete-all "+" org-emphasis-alist)))))
 (custom-theme-set-faces
  'my-org-faces
  '(org-block ((t (:inherit fixed-pitch))))
