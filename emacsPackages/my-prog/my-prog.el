@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-(require 'use-package)
 (use-package checkdoc)
 (use-package company
   :hook (prog-mode . company-mode))

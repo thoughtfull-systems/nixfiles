@@ -13,7 +13,6 @@
 
 (load my-custom-file t)
 
-(require 'use-package)
 (use-package all-the-icons
   :if (display-graphic-p))
 (use-package all-the-icons-completion

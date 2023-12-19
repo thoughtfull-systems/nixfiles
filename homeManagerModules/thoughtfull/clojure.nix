@@ -15,10 +15,7 @@
       joker
     ] ++ [ config.thoughtfull.clojure.jdk-package ];
     programs.emacs = {
-      extraConfig = ''
-        (require 'use-package)
-        (use-package my-clojure)
-      '';
+      extraConfig = "(use-package my-clojure)";
       extraPackages = epkgs: with epkgs; [
         my-clojure
       ];

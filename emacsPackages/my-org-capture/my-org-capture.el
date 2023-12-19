@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-(require 'use-package)
 (use-package org-capture
   :bind (("C-c o c" . org-capture)))
 (use-package org-protocol

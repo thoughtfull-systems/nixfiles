@@ -10,8 +10,6 @@
 
 ;;; Code:
 
-(require 'use-package)
-
 (use-package my-prog)
 (use-package js2-mode
   :mode "\\.js\\'")

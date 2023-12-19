@@ -22,7 +22,6 @@
           (delete-region (point-marker) end))
       (goto-char end))))
 
-(require 'use-package)
 (use-package icomplete
   :bind
   (:map icomplete-minibuffer-map

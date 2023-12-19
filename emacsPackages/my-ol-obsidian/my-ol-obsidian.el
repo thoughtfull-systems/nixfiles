@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-(require 'use-package)
 (use-package ol
   :after org
   :commands (org-link-set-parameters)

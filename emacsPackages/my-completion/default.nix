@@ -3,7 +3,6 @@ epkgs: {
     packageRequires = with epkgs; [
       marginalia
       orderless
-      use-package
     ];
     pname = "my-completion";
     src = ./my-completion.el;

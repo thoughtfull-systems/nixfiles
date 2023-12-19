@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-(require 'use-package)
 (use-package org
   :hook ((org-mode . variable-pitch-mode))
   :bind (("C-c o b" . org-switchb)
