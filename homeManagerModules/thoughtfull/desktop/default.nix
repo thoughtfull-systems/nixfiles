@@ -9,9 +9,7 @@ in {
       notify-desktop
       tor-browser-bundle-bin
       unstable.obsidian
-      # current version of zoom fails to download
-      # unstable.zoom-us
-      zoom-us
+      unstable.zoom-us
     ];
     fonts.fontconfig.enable = lib.mkForce true;
     services.blueman-applet.enable = lib.mkDefault osConfig.hardware.bluetooth.enable;
