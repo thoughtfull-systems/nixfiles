@@ -16,6 +16,9 @@
          ("C-c o o" . org-cycle-agenda-files)
          ("C-c o j r". org-refile-goto-last-stored)
          ("C-c o j c". org-capture-goto-last-stored)))
+(use-package org-autolist
+  :after (org)
+  :hook (org-mode . org-autolist-mode))
 (use-package org-capture
   :bind (("C-c o c" . org-capture)))
 (use-package org-habit
@@ -31,6 +34,7 @@
  '(org-archive-file-header-format "")
  '(org-archive-location "archive.org::")
  '(org-attach-id-dir "attachments/")
+ '(org-autolist-enable-delete t)
  '(org-directory "~/org")
  '(org-enforce-todo-checkbox-dependencies t)
  '(org-enforce-todo-dependencies t)
