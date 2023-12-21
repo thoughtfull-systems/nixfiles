@@ -16,7 +16,7 @@
       yubikey-touch-plugin-updater = {
         Install.WantedBy = [ "graphical-session.target" ];
         Service = {
-          Environment = "PATH=${pkgs.coreutils}/bin:${pkgs.netcat}/bin:${pkgs.bash}/bin:${pkgs.imagemagick}/bin:${pkgs.notify-desktop}/bin";
+          Environment = "PATH=${coreutils}/bin:${netcat}/bin:${bash}/bin:${imagemagick}/bin:${notify-desktop}/bin";
           ExecStart = "${thoughtfull.yubikey-touch-plugin}/bin/yubikey-touch-plugin-updater";
         };
       };
