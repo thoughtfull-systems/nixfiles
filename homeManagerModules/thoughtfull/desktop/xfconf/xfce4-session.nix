@@ -17,7 +17,7 @@
   "sessions/Failsafe/Client2_Command" = [ "Thunar" "--daemon" ];
   "sessions/Failsafe/Client2_PerScreen" = false;
   "sessions/Failsafe/Client2_Priority" = 25;
-  "sessions/Failsafe/Client3_Command" = [ "xfce4-panel" ];
+  "sessions/Failsafe/Client3_Command" = [ "xfce4-panel" "--disable-wm-check" ];
   "sessions/Failsafe/Client3_PerScreen" = false;
   "sessions/Failsafe/Client3_Priority" = 30;
   "sessions/Failsafe/Count" = 4;
