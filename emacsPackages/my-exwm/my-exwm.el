@@ -113,8 +113,11 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
 ;;;###autoload
 (defun my-exwm-enable ()
   "Enable my EXWM configuration."
-  (server-start)
-  (enable-theme 'my-exwm)
+  (interactive)
+  (when (not (server-running-p))
+    (server-start))
+  (when (not (custom-theme-enabled-p 'my-exwm))
+    (enable-theme 'my-exwm))
   (exwm-randr-enable)
   (exwm-enable)
   (desktop-read user-emacs-directory)
