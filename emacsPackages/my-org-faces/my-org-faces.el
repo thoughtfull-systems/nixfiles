@@ -63,7 +63,8 @@
    ("^ *[-] " 0 'fixed-pitch)
    ("^ *[+] " 0 'fixed-pitch)
    ("^ *[0-9]+[.)] " 0 'fixed-pitch)
-   ("^ *[a-zA-Z][.)] " 0 'fixed-pitch)))
+   ("^ *[a-zA-Z][.)] " 0 'fixed-pitch)
+   ("^\\( +\\)[^ ]" 1 'fixed-pitch)))
 
 ;; Fix face for checkboxes on alphabetical lists.
 (font-lock-add-keywords
