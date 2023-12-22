@@ -5,7 +5,6 @@ epkgs: {
       clojure-mode
       clojure-mode-extra-font-locking
       flycheck-clj-kondo
-      flycheck-clojure
     ];
     pname = "my-clojure";
     src = ./my-clojure.el;

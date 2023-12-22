@@ -18,10 +18,7 @@
 (use-package clojure-mode-extra-font-locking
   :after clojure-mode)
 (use-package flycheck-clj-kondo
-  :after (flycheck-clojure))
-(use-package flycheck-clojure
-  :after (cider flycheck)
-  :config (flycheck-clojure-setup))
+  :after (clojure-mode flycheck))
 
 (deftheme my-clojure)
 (custom-theme-set-variables
