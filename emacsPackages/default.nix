@@ -3,6 +3,7 @@ epkgs:
 (import ./my-clojure epkgs) //
 (import ./my-completion epkgs) //
 (import ./my-exwm epkgs) //
+(import ./my-gtd epkgs) //
 (import ./my-javascript epkgs) //
 (import ./my-ol-obsidian epkgs) //
 (import ./my-org epkgs) //
