@@ -120,17 +120,24 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
 (defvar org-state)
 (defvar org-last-state)
 
-(defun my-gtd-waiting-hook ()
+(defun my-gtd-add-delegatee-to-waiting ()
   (if (equal org-state "WAIT")
       (let ((delegatee (org-read-property-value "DELEGATEE")))
         (org-set-property "DELEGATEE" delegatee)
         (org-add-log-setup 'state org-state org-last-state nil (concat "Delegated to " delegatee)))
-    (org-delete-property "DELEGATEE")))
+    (when (org-entry-get nil "DELEGATEE")
+      (org-delete-property "DELEGATEE"))))
+
+(defun my-gtd-add-created-to-todo ()
+  (when org-state
+    (when (not (org-entry-get nil "CREATED"))
+      (org-set-property "CREATED"
+                        (format-time-string (org-time-stamp-format t t) (current-time))))))
 
 (deftheme my-gtd)
 (custom-theme-set-variables
  'my-gtd
- '(org-after-todo-state-change-hook '(my-gtd-waiting-hook))
+ '(org-after-todo-state-change-hook '(my-gtd-add-delegatee-to-waiting my-gtd-add-created-to-todo))
  '(org-log-done 'time)
  '(org-log-into-drawer t)
  '(org-log-states-order-reversed nil)
