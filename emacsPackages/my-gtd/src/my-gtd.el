@@ -136,6 +136,8 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
                         (format-time-string (org-time-stamp-format t t) (current-time))))))
 
 (defun my-gtd-capture ()
+  "Quickly capture a TODO item."
+  (interactive)
   (let ((org-capture-templates
          '(("z" "Todo" entry
             (file "")
