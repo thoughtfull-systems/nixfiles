@@ -11,6 +11,7 @@
 ;;; Code:
 
 (require 'org)
+(require 'org-capture)
 
 (defun my-gtd--set-agenda-file (sym val)
   (let ((old-file (ignore-errors (file-truename (concat org-directory "/" (symbol-value sym)))))
@@ -133,6 +134,13 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
     (when (not (org-entry-get nil "CREATED"))
       (org-set-property "CREATED"
                         (format-time-string (org-time-stamp-format t t) (current-time))))))
+
+(defun my-gtd-capture ()
+  (let ((org-capture-templates
+         '(("z" "Todo" entry
+            (file "")
+            "* TODO %?\12:PROPERTIES:\12:CREATED: %U\12:END:"))))
+    (org-capture "z")))
 
 (deftheme my-gtd)
 (custom-theme-set-variables

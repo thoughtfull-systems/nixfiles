@@ -19,8 +19,6 @@
 (use-package org-autolist
   :after (org)
   :hook (org-mode . org-autolist-mode))
-(use-package org-capture
-  :bind (("C-c o c" . org-capture)))
 (use-package org-habit
   :after (org))
 (use-package org-id
