@@ -31,8 +31,7 @@ This is where `org-capture' items should go.  Inbox is processed using
 
 File is relative to `org-directory'.  Added to `org-agenda-files' when set."
   :group 'my-gtd
-  :type 'string
-  :set #'my-gtd--set-agenda-file)
+  :type 'string)
 
 (defcustom my-gtd-todo-file-name "todo.org"
   "File containing projects and tasks.
