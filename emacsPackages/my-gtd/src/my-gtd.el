@@ -14,8 +14,9 @@
 (require 'org-capture)
 
 (defun my-gtd--set-agenda-file (sym val)
-  (let ((old-file (ignore-errors (file-truename (concat org-directory "/" (symbol-value sym)))))
-        (new-file (file-truename (concat org-directory "/" val))))
+  (let* ((new-file (file-truename (concat org-directory "/" val)))
+         (old-file (file-truename (concat org-directory "/" (or (ignore-errors (symbol-value sym))
+                                                                (custom--standard-value sym))))))
     (set-default-toplevel-value sym val)
     (org-store-new-agenda-file-list (cons new-file (remove old-file org-agenda-files)))))
 
