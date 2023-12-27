@@ -73,15 +73,22 @@ If there are no more items, show MSG or a default."
    ("k" "Kill item" mgp-refile-as-killed)])
 
 (defun mgp--validate-estimate ()
-  (if (org-entry-get nil "Effort")
+  (if (or (not (org-get-todo-state)) (org-entry-get nil "Effort"))
       t
     (message (substitute-command-keys "Missing estimate.  Set estimate with \\[org-set-effort]."))
+    nil))
+
+(defun mgp--validate-task ()
+  (if (org-todo-state)
+      t
+    (message "Not a valid task.")
     nil))
 
 (defun mgp-refile-as-task ()
   "Refile current inbox item as a standalone task."
   (interactive)
-  (when (mgp--validate-estimate)
+  (when (and (mgp--validate-estimate)
+             (mgp--validate-task))
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
@@ -97,7 +104,8 @@ If there are no more items, show MSG or a default."
 (defun mgp-add-to-project ()
   "Refile current inbox item as a child of an existing project or task."
   (interactive)
-  (when (mgp--validate-estimate)
+  (when (and (mgp--validate-estimate)
+             (mgp--validate-task))
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
@@ -109,7 +117,9 @@ If there are no more items, show MSG or a default."
   (save-excursion
     (let ((has-estimate t))
       (while (and has-estimate (outline-next-heading))
-        (when (and (not (my-gtd-project-p)) (not (org-entry-get nil "Effort")))
+        (when (and (not (my-gtd-project-p))
+                   (org-get-todo-state)
+                   (not (org-entry-get nil "Effort")))
           (setq has-estimate nil)))
       has-estimate)))
 
