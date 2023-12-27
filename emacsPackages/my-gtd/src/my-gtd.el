@@ -142,7 +142,7 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
          '(("z" "Todo" entry
             (file "")
             "* TODO %?\12:PROPERTIES:\12:CREATED: %U\12:END:"))))
-    (org-capture "z")))
+    (org-capture nil "z")))
 
 (deftheme my-gtd)
 (custom-theme-set-variables
