@@ -10,7 +10,6 @@
 
 ;;; Code:
 
-(use-package my-prog)
 (use-package js2-mode
   :mode "\\.js\\'")
 (use-package json-mode)

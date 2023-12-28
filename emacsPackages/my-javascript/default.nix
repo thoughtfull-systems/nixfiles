@@ -3,7 +3,6 @@ epkgs: {
     packageRequires = with epkgs; [
       js2-mode
       json-mode
-      my-prog
       typescript-mode
     ];
     pname = "my-javascript";

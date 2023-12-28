@@ -8,7 +8,7 @@
 ;;; Commentary:
 ;;
 ;; This library is demand loaded because some of it needs to be evaluated very early in loading
-;; Emacs, but things that can be defered should be.
+;; Emacs, but things that can be deferred should be.
 ;;
 
 ;;; Code:
@@ -31,6 +31,9 @@
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
+(use-package imenu
+  :bind (("C-c i" . imenu)
+         ("C-c C-i" . imenu)))
 (use-package wgrep)
 (use-package writegood-mode
   :hook (text-mode . writegood-mode))
@@ -95,6 +98,7 @@ When given PREFIX, use `ibuffer' instead."
 (enable-theme 'my)
 
 (require 'my-completion)
+(require 'my-prog)
 
 (provide 'my)
 ;;; my.el ends here

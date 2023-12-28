@@ -20,7 +20,6 @@
     extraConfig = lib.mkBefore "(require 'use-package)";
     extraPackages = epkgs: with epkgs; [
       my
-      my-prog
       use-package
     ];
     package = pkgs.emacs29;
