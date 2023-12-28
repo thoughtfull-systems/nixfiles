@@ -1,4 +1,4 @@
-;;; my-completion.el --- Incremental minibuffer completion               -*- lexical-binding: t; -*-
+;;; my-completion.el --- Incremental minibuffer completion                -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2023 Paul Stadig
 ;;
