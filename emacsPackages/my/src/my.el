@@ -52,6 +52,9 @@ When given PREFIX, use `ibuffer' instead."
       (ibuffer)
     (call-interactively 'switch-to-buffer)))
 
+(bind-keys ("C-x b" . my-switch-buffer)
+           ("C-x C-b" . my-switch-buffer))
+
 (defun my-kill-buffer-and-delete-file ()
   "Kill the current buffer and delete the file it is visiting."
   (interactive)
@@ -63,6 +66,8 @@ When given PREFIX, use `ibuffer' instead."
           (delete-file filename)
           (message "Deleted file %s" filename)
           (kill-buffer))))))
+
+(bind-keys ("C-c D" . my-kill-buffer-and-delete-file))
 
 
 ;;; Configuration

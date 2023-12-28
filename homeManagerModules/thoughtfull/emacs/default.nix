@@ -17,7 +17,10 @@
     ]);
   };
   programs.emacs = {
-    extraConfig = lib.mkBefore "(require 'use-package)";
+    extraConfig = lib.mkBefore ''
+      (require 'use-package)
+      (require 'my)
+    '';
     extraPackages = epkgs: with epkgs; [
       my
       use-package
