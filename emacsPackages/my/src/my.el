@@ -31,9 +31,6 @@
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
-(use-package imenu
-  :bind (("C-c i" . imenu)
-         ("C-c C-i" . imenu)))
 (use-package wgrep)
 (use-package writegood-mode
   :hook (text-mode . writegood-mode))
