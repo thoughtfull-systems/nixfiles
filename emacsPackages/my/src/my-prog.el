@@ -17,7 +17,7 @@
 ;;; Dependencies
 (use-package checkdoc
   ;; since global-flycheck-mode is enabled, there's nothing else to do
-  :after emacs-lisp-mode)
+  :after elisp-mode)
 (use-package company
   :hook (prog-mode . company-mode))
 (use-package simple
