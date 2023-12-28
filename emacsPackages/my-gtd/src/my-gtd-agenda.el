@@ -56,19 +56,18 @@
 (defun mga-daily ()
   "Show Agenda with next actions."
   (interactive)
-  (let ((org-agenda-prefix-format
-         '((agenda . " %i %b%?-12t% s")
-           (todo . " %i %b")
-           (tags . " %i %b")
-           (search . " %i %b")))
-        (org-agenda-custom-commands
-         '(("z" "Agenda and all TODOs"
-            ((agenda ""
-                     ((org-agenda-tag-filter-preset
-                       '("-ARCHIVE"))))
-             (alltodo ""
-                      ((org-agenda-skip-function 'mga-only-next-action))))
-            nil))))
+  (let* ((org-agenda-custom-commands
+          '(("z" "Agenda and all TODOs"
+             ((agenda ""
+                      ((org-agenda-tag-filter-preset
+                        '("-ARCHIVE"))))
+              (alltodo ""
+                       ((org-agenda-skip-function 'mga-only-next-action))))
+             ((org-agenda-prefix-format
+               '((agenda . " %i %?-12t% s%b")
+                 (todo . " %i %b")
+                 (tags . " %i %b")
+                 (search . " %i %b"))))))))
     (org-agenda nil "z")))
 
 ;; (deftheme my-gtd-agenda)
