@@ -1,15 +1,35 @@
-;;; my-completion.el --- minibuffer completion  -*- lexical-binding: t; -*-
-
+;;; my-completion.el --- Incremental minibuffer completion               -*- lexical-binding: t; -*-
+;;
 ;; Copyright (c) 2023 Paul Stadig
-
-;; Version: 0.0.0
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
 
 ;;; Commentary:
-
-;; None
+;;
+;; Configure incremental minibuffer completion pretty much everywhere in Emacs.
+;;
 
 ;;; Code:
+
+;;; Dependencies
+(use-package all-the-icons-completion
+  :after (all-the-icons icomplete marginalia)
+  :commands (all-the-icons-completion-mode)
+  :config (all-the-icons-completion-mode)
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+(use-package icomplete
+  :bind
+  (:map icomplete-minibuffer-map
+        ("C-<return>" . icomplete-force-complete)
+        ("M-<return>" . #'exit-minibuffer)
+        ("<return>" . icomplete-force-complete-and-exit)
+        ("C-l" . #'my-completion-delete-back-to-slash)))
+(use-package marginalia
+  :hook (icomplete-mode . marginalia-mode))
 
+
+;;; Functions
 (defun my-completion-delete-back-to-slash ()
   "Delete characters backward until a slash."
   (interactive)
@@ -22,17 +42,8 @@
           (delete-region (point-marker) end))
       (goto-char end))))
 
-(use-package icomplete
-  :bind
-  (:map icomplete-minibuffer-map
-        ("C-<return>" . icomplete-force-complete)
-        ("M-<return>" . exit-minibuffer)
-        ("<return>" . icomplete-force-complete-and-exit)
-        ("C-l" . my-completion-delete-back-to-slash)))
-(use-package marginalia
-  :hook (icomplete-mode . marginalia-mode))
-(use-package orderless)
-
+
+;;; Configuration
 (deftheme my-completion)
 (custom-theme-set-variables
  'my-completion

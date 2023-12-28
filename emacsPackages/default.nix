@@ -1,7 +1,6 @@
 epkgs:
 (import ./my epkgs) //
 (import ./my-clojure epkgs) //
-(import ./my-completion epkgs) //
 (import ./my-exwm epkgs) //
 (import ./my-gtd epkgs) //
 (import ./my-javascript epkgs) //

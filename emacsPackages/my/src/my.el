@@ -1,25 +1,27 @@
-;;; my.el --- General code and configuration  -*- lexical-binding: t; -*-
-
+;;; my.el --- Essentials for a pleasant Emacs experience                  -*- lexical-binding: t -*-
+;;
 ;; Copyright (c) 2023 Paul Stadig
-
-;; Version: 0.0.0
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
 
 ;;; Commentary:
-
-;; None
+;;
+;; This library is demand loaded because some of it needs to be evaluated very early in loading
+;; Emacs, but things that can be defered should be.
+;;
 
 ;;; Code:
-(defvar my-custom-file "~/.config/emacs/custom.el")
 
-(load my-custom-file t)
+;; This needs to be done as early as possible.
+(defvar my--custom-file "~/.config/emacs/custom.el"
+  "Location to use for `custom-file'.  Modification will have no effect.")
+(load my--custom-file t)
 
+
+;;; Dependencies
 (use-package all-the-icons
   :if (display-graphic-p))
-(use-package all-the-icons-completion
-  :after (all-the-icons icomplete marginalia)
-  :commands (all-the-icons-completion-mode)
-  :config (all-the-icons-completion-mode)
-  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
 (use-package all-the-icons-dired
   :after (all-the-icons)
   :hook (dired-mode . all-the-icons-dired-mode))
@@ -33,12 +35,15 @@
 (use-package writegood-mode
   :hook (text-mode . writegood-mode))
 
+
+;;; Functions
 (defun my-buffer-compare (b1 b2)
   "Compare buffer names of B1 and B2."
   (string-collate-lessp (buffer-name b1) (buffer-name b2) nil t))
 
 (defun my-switch-buffer (&optional prefix)
-  "Switch buffers using completion or ibuffer when given PREFIX."
+  "Switch buffers using incremental completion.
+When given PREFIX, use `ibuffer' instead."
   (interactive "p")
   (if (eq prefix 4)
       (ibuffer)
@@ -56,13 +61,15 @@
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
+
+;;; Configuration
 (deftheme my)
 (custom-theme-set-variables
  'my
  '(all-the-icons-dired-monochrome nil)
  '(auto-save-visited-mode t)
  '(backup-directory-alist '(("." . "~/.config/emacs/backups")))
- '(custom-file my-custom-file)
+ '(custom-file my--custom-file)
  '(desktop-restore-frames nil)
  '(fringe-mode 1)
  '(global-whitespace-mode t)
@@ -86,6 +93,8 @@
  '(default ((t (:height 110 :family "Source Code Pro")))))
 (provide-theme 'my)
 (enable-theme 'my)
+
+(require 'my-completion)
 
 (provide 'my)
 ;;; my.el ends here
