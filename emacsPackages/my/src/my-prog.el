@@ -36,7 +36,7 @@
 (use-package magit-extras
   :after magit)
 (use-package paredit
-  :hook (lisp-mode . paredit-mode))
+  :hook (emacs-lisp-mode . paredit-mode))
 
 
 ;;; Configuration
