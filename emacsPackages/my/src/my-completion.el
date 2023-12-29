@@ -13,6 +13,7 @@
 ;;; Code:
 
 ;;; Dependencies
+(require 'my-core)
 (use-package all-the-icons-completion
   :after (all-the-icons icomplete marginalia)
   :commands (all-the-icons-completion-mode)
@@ -44,9 +45,8 @@
 
 
 ;;; Configuration
-(deftheme my-completion)
-(custom-theme-set-variables
- 'my-completion
+(my-custom-theme-set-variables
+ 'my
  '(completion-auto-help nil)
  '(completion-category-overrides '((file (styles basic partial-completion orderless))))
  '(completion-cycle-threshold 3)
@@ -58,12 +58,10 @@
    '(orderless-regexp orderless-literal orderless-initialism orderless-prefixes))
  '(read-buffer-completion-ignore-case t)
  '(read-file-name-completion-ignore-case t))
-(custom-theme-set-faces
- 'my-completion
+(my-custom-theme-set-faces
+ 'my
  '(completions-common-part ((t (:inherit orderless-match-face-0))))
  '(icomplete-selected-match ((t nil))))
-(provide-theme 'my-completion)
-(enable-theme 'my-completion)
 
 (provide 'my-completion)
 ;;; my-completion.el ends here

@@ -15,6 +15,7 @@
 ;;; Code:
 
 ;;; Dependencies
+(require 'my-core)
 (use-package checkdoc
   ;; since global-flycheck-mode is enabled, there's nothing else to do
   :after elisp-mode)
@@ -40,9 +41,8 @@
 
 
 ;;; Configuration
-(deftheme my-prog)
-(custom-theme-set-variables
- 'my-prog
+(my-custom-theme-set-variables
+ 'my
  '(checkdoc-force-docstrings-flag nil)
  '(display-line-numbers-minor-tick 10)
  '(display-line-numbers-width-start t)
@@ -55,8 +55,6 @@
  '(flycheck-emacs-lisp-load-path 'inherit)
  '(global-flycheck-mode t)
  '(sh-basic-offset 2))
-(provide-theme 'my-prog)
-(enable-theme 'my-prog)
 
 (provide 'my-prog)
 ;;; my-prog.el ends here

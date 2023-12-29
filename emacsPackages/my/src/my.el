@@ -20,6 +20,7 @@
 
 
 ;;; Dependencies
+(require 'my-core)
 (use-package all-the-icons
   :if (display-graphic-p))
 (use-package all-the-icons-dired
@@ -68,8 +69,7 @@ When given PREFIX, use `ibuffer' instead."
 
 
 ;;; Configuration
-(deftheme my)
-(custom-theme-set-variables
+(my-custom-theme-set-variables
  'my
  '(all-the-icons-dired-monochrome nil)
  '(auto-save-visited-mode t)
@@ -93,11 +93,9 @@ When given PREFIX, use `ibuffer' instead."
  '(whitespace-line-column nil)
  '(whitespace-style '(face trailing lines-tail missing-newline-at-eof empty indentation
                            space-after-tab space-before-tab)))
-(custom-theme-set-faces
+(my-custom-theme-set-faces
  'my
  '(default ((t (:height 110 :family "Source Code Pro")))))
-(provide-theme 'my)
-(enable-theme 'my)
 
 (require 'my-completion)
 (require 'my-prog)
