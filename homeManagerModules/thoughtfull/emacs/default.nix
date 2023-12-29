@@ -19,10 +19,10 @@
   programs.emacs = {
     extraConfig = lib.mkBefore ''
       (require 'use-package)
-      (require 'my)
+      (require 'pjs)
     '';
     extraPackages = epkgs: with epkgs; [
-      my
+      pjs
       use-package
     ];
     package = pkgs.emacs29;

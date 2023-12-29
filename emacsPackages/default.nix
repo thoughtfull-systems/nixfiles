@@ -1,11 +1,11 @@
 epkgs:
-(import ./my epkgs) //
-(import ./my-clojure epkgs) //
-(import ./my-exwm epkgs) //
-(import ./my-gtd epkgs) //
-(import ./my-javascript epkgs) //
-(import ./my-ol-obsidian epkgs) //
-(import ./my-org epkgs) //
-(import ./my-org-bullets epkgs) //
-(import ./my-org-capture epkgs) //
-(import ./my-org-faces epkgs)
+(import ./pjs epkgs) //
+(import ./pjs-clojure epkgs) //
+(import ./pjs-exwm epkgs) //
+(import ./pjs-gtd epkgs) //
+(import ./pjs-javascript epkgs) //
+(import ./pjs-ol-obsidian epkgs) //
+(import ./pjs-org epkgs) //
+(import ./pjs-org-bullets epkgs) //
+(import ./pjs-org-capture epkgs) //
+(import ./pjs-org-faces epkgs)

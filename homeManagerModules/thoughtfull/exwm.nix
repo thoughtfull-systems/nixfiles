@@ -15,7 +15,7 @@ in {
     };
     programs.emacs = {
       enable = true;
-      extraPackages = epkgs: [ epkgs.my-exwm ];
+      extraPackages = epkgs: [ epkgs.pjs-exwm ];
     };
     xsession = {
       enable = true;
