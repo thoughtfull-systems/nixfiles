@@ -52,6 +52,9 @@
  '(completion-cycle-threshold 3)
  '(completion-styles '(orderless))
  '(completions-detailed t)
+ '(consult-after-jump-hook '(recenter pulse-momentary-highlight-one-line))
+ '(consult-narrow-key "C-,")
+ '(consult-preview-key nil)
  '(icomplete-show-matches-on-no-input t)
  '(icomplete-vertical-mode t)
  '(orderless-matching-styles
