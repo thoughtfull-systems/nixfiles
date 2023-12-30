@@ -19,7 +19,7 @@
 
 (define-minor-mode pgp-mode
   "Minor mode for pjs-gtd-process."
-  :lighter " MGP"
+  :lighter " PGP"
   :keymap pgp-map
   :group 'pjs-gtd-process
   (if pgp-mode
