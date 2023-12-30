@@ -20,6 +20,7 @@
 
 
 ;;; Dependencies
+(require 'use-package)
 (require 'pjs-core)
 (use-package all-the-icons
   :if (display-graphic-p))

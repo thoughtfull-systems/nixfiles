@@ -18,7 +18,6 @@
   };
   programs.emacs = {
     extraConfig = lib.mkBefore ''
-      (require 'use-package)
       (require 'pjs)
     '';
     extraPackages = epkgs: with epkgs; [
