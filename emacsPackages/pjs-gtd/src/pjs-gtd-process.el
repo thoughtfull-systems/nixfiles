@@ -79,7 +79,7 @@ If there are no more items, show MSG or a default."
     nil))
 
 (defun pgp--validate-task ()
-  (if (org-todo-state)
+  (if (org-get-todo-state)
       t
     (message "Not a valid task.")
     nil))
@@ -104,8 +104,7 @@ If there are no more items, show MSG or a default."
 (defun pgp-add-to-project ()
   "Refile current inbox item as a child of an existing project or task."
   (interactive)
-  (when (and (pgp--validate-estimate)
-             (pgp--validate-task))
+  (when (pgp--validate-estimate)
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
