@@ -1,4 +1,4 @@
-;;; pjs.el --- Essentials for a pleasant Emacs experience                  -*- lexical-binding: t -*-
+;;; pjs.el --- Essentials for a pleasant Emacs experience                 -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2023 Paul Stadig
 ;;
