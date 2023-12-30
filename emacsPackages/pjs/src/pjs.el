@@ -30,7 +30,7 @@
   :after (all-the-icons)
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
 (use-package face-remap
-  :delay t
+  :defer t
   :diminish buffer-face-mode)
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
