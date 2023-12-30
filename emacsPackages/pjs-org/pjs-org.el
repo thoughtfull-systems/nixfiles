@@ -34,6 +34,9 @@
  '(org-attach-id-dir "attachments/")
  '(org-autolist-enable-delete t)
  '(org-directory "~/org")
+ ;; 'm' is 'month' by default, which seems crazy to me.  I'm usually estimating fine-grained tasks,
+ ;; so I'm not sure I even need 'w', but leaving it here for now.
+ '(org-duration-units '(("m" . 1) ("h" . 60) ("d" . 480) ("w" . 2400)))
  '(org-enforce-todo-checkbox-dependencies t)
  '(org-enforce-todo-dependencies t)
  '(org-habit-following-days 1)
