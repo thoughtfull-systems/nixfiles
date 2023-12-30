@@ -58,16 +58,16 @@
   (interactive)
   (let* ((org-agenda-custom-commands
           '(("z" "Agenda and all TODOs"
-             ((agenda ""
-                      ((org-agenda-tag-filter-preset
-                        '("-ARCHIVE"))))
+             ((agenda "")
               (alltodo ""
                        ((org-agenda-skip-function 'pga-only-next-action))))
              ((org-agenda-prefix-format
                '((agenda . " %i %?-12t% s%b")
                  (todo . " %i %b")
                  (tags . " %i %b")
-                 (search . " %i %b"))))))))
+                 (search . " %i %b")))
+              (org-agenda-tag-filter-preset
+               '("-ARCHIVE" "-DONE")))))))
     (org-agenda nil "z")))
 
 ;; (deftheme pjs-gtd-agenda)
