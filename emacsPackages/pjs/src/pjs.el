@@ -54,10 +54,7 @@ When given PREFIX, use `ibuffer' instead."
   (interactive "p")
   (if (eq prefix 4)
       (ibuffer)
-    (call-interactively 'switch-to-buffer)))
-
-(bind-keys ("C-x b" . pjs-switch-buffer)
-           ("C-x C-b" . pjs-switch-buffer))
+    (call-interactively #'switch-to-buffer)))
 
 (defun pjs-kill-buffer-and-delete-file ()
   "Kill the current buffer and delete the file it is visiting."
@@ -71,7 +68,13 @@ When given PREFIX, use `ibuffer' instead."
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
+
+;;; Key bindings
 (bind-keys ("C-c D" . pjs-kill-buffer-and-delete-file))
+(bind-keys ("C-h C-c" . finder-commentary))
+(bind-keys ("C-x b" . pjs-switch-buffer)
+           ("C-x C-b" . pjs-switch-buffer))
+(bind-keys ("C-x C-l" . find-library))
 
 
 ;;; Configuration
