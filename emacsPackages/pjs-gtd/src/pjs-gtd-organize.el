@@ -1,4 +1,4 @@
-;;; pjs-gtd-organize.el --- Organize GTD projects  -*- lexical-binding: t; -*-
+;;; pjs-gtd-organize.el --- Organize GTD projects                        -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

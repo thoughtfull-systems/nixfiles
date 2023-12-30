@@ -1,4 +1,4 @@
-;;; pjs-core.el --- Shared definitions                                     -*- lexical-binding: t -*-
+;;; pjs-core.el --- Shared definitions                                    -*- lexical-binding: t -*-
 ;;
 ;; Copyright (c) 2023 Paul Stadig
 ;;

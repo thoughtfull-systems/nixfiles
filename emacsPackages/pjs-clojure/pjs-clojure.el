@@ -1,4 +1,4 @@
-;;; pjs-clojure.el --- Clojure development configuration  -*- lexical-binding: t; -*-
+;;; pjs-clojure.el --- Clojure development configuration                 -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

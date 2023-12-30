@@ -1,4 +1,4 @@
-;;; pjs-gtd.el --- Project and task management using a GTDish process  -*- lexical-binding: t; -*-
+;;; pjs-gtd.el --- Project and task management using a GTDish process    -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

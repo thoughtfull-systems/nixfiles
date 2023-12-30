@@ -1,4 +1,4 @@
-;;; pjs-javascript.el --- JavaScript development configuration  -*- lexical-binding: t; -*-
+;;; pjs-javascript.el --- JavaScript development configuration           -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

@@ -1,4 +1,4 @@
-;;; pjs-org-faces.el --- Faces for org-mode  -*- lexical-binding: t; -*-
+;;; pjs-org-faces.el --- Faces for org-mode                              -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

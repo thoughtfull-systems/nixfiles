@@ -1,4 +1,4 @@
-;;; pjs-org-bullets.el --- Use fancy bullets for headings and lists  -*- lexical-binding: t; -*-
+;;; pjs-org-bullets.el --- Use fancy bullets for headings and lists      -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

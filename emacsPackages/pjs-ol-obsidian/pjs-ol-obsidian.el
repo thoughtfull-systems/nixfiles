@@ -1,4 +1,4 @@
-;;; pjs-ol-obsidian.el --- Org-link configuration for obsidian links  -*- lexical-binding: t; -*-
+;;; pjs-ol-obsidian.el --- Org-link configuration for obsidian links     -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

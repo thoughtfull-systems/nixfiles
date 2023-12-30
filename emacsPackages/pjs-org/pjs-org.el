@@ -1,4 +1,4 @@
-;;; pjs-org.el --- Code and configuration for org-mode  -*- lexical-binding: t; -*-
+;;; pjs-org.el --- Code and configuration for org-mode                   -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 

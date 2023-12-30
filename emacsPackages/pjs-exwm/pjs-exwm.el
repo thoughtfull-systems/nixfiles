@@ -1,4 +1,4 @@
-;;; pjs-exwm.el --- EXWM code and configuration -*- lexical-binding: t; -*-
+;;; pjs-exwm.el --- EXWM code and configuration                          -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2023 Paul Stadig
 
