@@ -95,6 +95,8 @@ When given PREFIX, use `ibuffer' instead."
  '(inhibit-startup-echo-area-message (getenv "USER"))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
+ '(pulse-delay 2)
+ '(pulse-flag nil)
  '(save-interprogram-paste-before-kill t)
  '(save-place-mode t)
  '(savehist-mode t)
@@ -108,7 +110,8 @@ When given PREFIX, use `ibuffer' instead."
                            space-after-tab space-before-tab)))
 (pjs-custom-theme-set-faces
  'pjs
- '(default ((t (:height 110 :family "Source Code Pro")))))
+ '(default ((t (:height 110 :family "Source Code Pro"))))
+ '(pulse-highlight-start-face ((t (:inherit highlight :extend t)))))
 
 (require 'pjs-completion)
 (require 'pjs-prog)
