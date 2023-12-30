@@ -11,22 +11,22 @@
 ;;; Code:
 
 (use-package org
-  :hook ((org-mode . variable-pitch-mode))
   :bind (("C-c o b" . org-switchb)
          ("C-c o o" . org-cycle-agenda-files)
          ("C-c o j r". org-refile-goto-last-stored)
-         ("C-c o j c". org-capture-goto-last-stored)))
+         ("C-c o j c". org-capture-goto-last-stored))
+  :hook ((org-mode . variable-pitch-mode)))
 (use-package org-autolist
-  :diminish
   :after (org)
+  :diminish
   :hook (org-mode . org-autolist-mode))
 (use-package org-habit
   :after (org))
 (use-package org-id
   :after (org))
 (use-package org-indent
-  :diminish
-  :after (org))
+  :after (org)
+  :diminish)
 (use-package org-protocol
   :after (org))
 

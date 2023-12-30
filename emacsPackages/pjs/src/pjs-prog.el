@@ -30,11 +30,11 @@
   :diminish
   :hook (emacs-lisp-mode . eldoc-mode))
 (use-package flycheck
-  :diminish
   ;; global-flycheck-mode enabled below
   :bind (:map prog-mode-map
               ("C-c e n" . flycheck-next-error)
-              ("C-c e p" . flycheck-previous-error)))
+              ("C-c e p" . flycheck-previous-error))
+  :diminish)
 (use-package flyspell
   :diminish
   :hook (prog-mode . flyspell-prog-mode))
