@@ -20,23 +20,28 @@
   ;; since global-flycheck-mode is enabled, there's nothing else to do
   :after elisp-mode)
 (use-package company
+  :diminish
   :hook (prog-mode . company-mode))
 (use-package simple
   :hook (prog-mode . column-number-mode))
 (use-package display-line-numbers
   :hook (prog-mode . display-line-numbers-mode))
 (use-package eldoc
+  :diminish
   :hook (emacs-lisp-mode . eldoc-mode))
 (use-package flycheck
+  :diminish
   ;; global-flycheck-mode enabled below
   :bind (:map prog-mode-map
               ("C-c e n" . flycheck-next-error)
               ("C-c e p" . flycheck-previous-error)))
 (use-package flyspell
+  :diminish
   :hook (prog-mode . flyspell-prog-mode))
 (use-package magit-extras
   :after magit)
 (use-package paredit
+  :diminish
   :hook (emacs-lisp-mode . paredit-mode))
 
 

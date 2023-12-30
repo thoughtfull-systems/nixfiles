@@ -17,11 +17,15 @@
          ("C-c o j r". org-refile-goto-last-stored)
          ("C-c o j c". org-capture-goto-last-stored)))
 (use-package org-autolist
+  :diminish
   :after (org)
   :hook (org-mode . org-autolist-mode))
 (use-package org-habit
   :after (org))
 (use-package org-id
+  :after (org))
+(use-package org-indent
+  :diminish
   :after (org))
 (use-package org-protocol
   :after (org))

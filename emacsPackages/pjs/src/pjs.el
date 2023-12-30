@@ -29,11 +29,16 @@
 (use-package all-the-icons-ibuffer
   :after (all-the-icons)
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+(use-package face-remap
+  :diminish buffer-face-mode)
 (use-package flyspell
   :hook ((text-mode . flyspell-mode)
          (prog-mode . flyspell-prog-mode)))
 (use-package wgrep)
+(use-package whitespace
+  :diminish global-whitespace-mode)
 (use-package writegood-mode
+  :diminish
   :hook (text-mode . writegood-mode))
 
 
