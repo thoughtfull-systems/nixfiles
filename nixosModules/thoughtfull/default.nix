@@ -7,6 +7,7 @@ inputs: { lib, ... }: {
     (import ./overlay-unstable.nix inputs.unstable)
     ./acme.nix
     ./avahi.nix
+    ./backlight.nix
     ./bluetooth.nix
     ./brother.nix
     ./deploy-keys.nix
@@ -23,7 +24,6 @@ inputs: { lib, ... }: {
     ./openssh.nix
     ./overlay-thoughtfull.nix
     ./postgresql-backup.nix
-    ./power-supply.nix
     ./restic.nix
     ./root.nix
     ./ssh.nix
