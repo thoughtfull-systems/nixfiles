@@ -6,6 +6,7 @@ epkgs: {
       all-the-icons-dired
       all-the-icons-ibuffer
       company
+      consult
       diminish
       flycheck
       magit
