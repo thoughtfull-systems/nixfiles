@@ -49,7 +49,7 @@
 (defun pjs-exwm-select-or-run (target-class-name command)
   "Cycle through instances of TARGET-CLASS-NAME, or execute COMMAND."
   (interactive)
-  (when (not (pjs-exwm-cycle-class target-class-name (current-buffer)))
+  (unless (pjs-exwm-cycle-class target-class-name (current-buffer))
     (pjs-exwm-start-disowned-process command)))
 
 (defun pjs-exwm-kbd-key (m)
@@ -114,9 +114,9 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
 (defun pjs-exwm-enable ()
   "Enable my EXWM configuration."
   (interactive)
-  (when (not (server-running-p))
+  (unless (server-running-p)
     (server-start))
-  (when (not (custom-theme-enabled-p 'pjs-exwm))
+  (unless (custom-theme-enabled-p 'pjs-exwm)
     (enable-theme 'pjs-exwm))
   (exwm-randr-enable)
   (exwm-enable)

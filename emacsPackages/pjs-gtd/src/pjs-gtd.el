@@ -131,7 +131,7 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
 
 (defun pjs-gtd-add-created-to-todo ()
   (when org-state
-    (when (not (org-entry-get nil "CREATED"))
+    (unless (org-entry-get nil "CREATED")
       (org-set-property "CREATED"
                         (format-time-string (org-time-stamp-format t t) (current-time))))))
 
