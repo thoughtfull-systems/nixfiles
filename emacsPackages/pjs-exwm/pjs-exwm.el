@@ -52,6 +52,18 @@
   (unless (pjs-exwm-cycle-class target-class-name (current-buffer))
     (pjs-exwm-start-disowned-process command)))
 
+(defun pjs-exwm-select-or-run-in-workspace (workspace-number target-class-name command)
+  "Switch to WORKSPACE-NUMBER, then cycle instances of TARGET-CLASS-NAME, or execute COMMAND."
+  (interactive)
+  (if (eq exwm-workspace-current-index workspace-number)
+      (unless (pjs-exwm-cycle-class target-class-name (current-buffer))
+        (pjs-exwm-start-disowned-process command))
+    (exwm-workspace-switch workspace-number)
+    (unless (pjs-exwm-buffer-class-p (current-buffer) target-class-name)
+      (unless (pjs-exwm-cycle-class target-class-name nil)
+        (pjs-exwm-start-disowned-process command)))
+    (delete-other-windows)))
+
 (defun pjs-exwm-kbd-key (m)
   (map-apply (lambda (k v) (cons (kbd k) v)) m))
 
@@ -134,13 +146,13 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
       ;; it works inconsistently between Emacs buffers and X buffers.
       `(("s-f" . (lambda ()
                    (interactive)
-                   (pjs-exwm-select-or-run "firefox" "firefox")))
+                   (pjs-exwm-select-or-run-in-workspace 7 "firefox" "firefox")))
         ("s-r" . exwm-reset)
         ("C-s-r" . pjs-exwm-restart)
         ("s-s" . exwm-workspace-switch)
         ("s-t" . (lambda ()
                    (interactive)
-                   (pjs-exwm-select-or-run terminal-class terminal-command)))
+                   (pjs-exwm-select-or-run-in-workspace 8 terminal-class terminal-command)))
         ("s-&" . pjs-exwm-run-command)
         ("s-$" . pjs-exwm-run-command-with-shell)
         ;; Align workspaces more intuitively with key bindings
