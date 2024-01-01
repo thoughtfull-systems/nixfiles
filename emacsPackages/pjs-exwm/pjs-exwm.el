@@ -1,23 +1,39 @@
 ;;; pjs-exwm.el --- EXWM code and configuration                          -*- lexical-binding: t; -*-
-
-;; Copyright (C) 2023 Paul Stadig
-
-;; Version: 0.0.0
+;;
+;; Copyright (C) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
 
 ;;; Commentary:
-
-;; None
+;;
+;; EXWM code and configuration
 
 ;;; Code:
 
+
+;;; Dependencies
 (require 'desktop)
-(require 'map) ; for map-apply
-(require 'pjs)
 (require 'exwm)
 (require 'exwm-modeline)
 (require 'exwm-config)
 (require 'exwm-randr)
+(require 'map) ; for map-apply
+(require 'pjs)
 
+
+;;; Variables
+(defvar terminal-class
+  (if (executable-find "gnome-terminal")
+      "Gnome-terminal"
+    "Xfce4-terminal"))
+
+(defvar terminal-command
+  (if (executable-find "gnome-terminal")
+      "gnome-terminal"
+    "xfce4-terminal"))
+
+
+;;; Functions
 (defun pjs-exwm-buffer-class (buffer)
   (with-current-buffer buffer exwm-class-name))
 
@@ -93,16 +109,6 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
   (desktop-save user-emacs-directory t)
   (kill-emacs 82))
 
-(defvar terminal-class
-  (if (executable-find "gnome-terminal")
-      "Gnome-terminal"
-    "Xfce4-terminal"))
-
-(defvar terminal-command
-  (if (executable-find "gnome-terminal")
-      "gnome-terminal"
-    "xfce4-terminal"))
-
 (defun pjs-exwm-run-command-with-shell (command)
   "Run COMMAND asynchronously with a shell in tmux."
   (interactive (list (read-shell-command "$ ")))
@@ -136,8 +142,9 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
   (desktop-release-lock)
   (desktop-remove))
 
-(deftheme pjs-exwm)
-(custom-theme-set-variables
+
+;;; Configuration
+(pjs-custom-theme-set-variables
  'pjs-exwm
  '(exwm-modeline-mode t)
  `(exwm-input-global-keys
@@ -247,7 +254,6 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
  '(exwm-workspace-index-map 'pjs-exwm-workspace-name)
  '(exwm-workspace-number 10)
  '(exwm-workspace-show-all-buffers t))
-(provide-theme 'pjs-exwm)
 
 (provide 'pjs-exwm)
 ;;; pjs-exwm.el ends here
