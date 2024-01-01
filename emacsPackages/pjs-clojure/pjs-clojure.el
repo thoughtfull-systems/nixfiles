@@ -1,15 +1,18 @@
-;;; pjs-clojure.el --- Clojure development configuration                 -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
-;;  Version: 0.0.0
+;;; pjs-clojure.el --- Essentials for Clojure development configuration  -*- lexical-binding: t; -*-
+;;
+;;  Copyright (c) 2024 Paul Stadig
+;;
+;;  Author: Paul Stadig <paul@thoughtfull.systems>
 
 ;;; Commentary:
-
-;; None
+;;
+;; Essentials for Clojure development configuration
 
 ;;; Code:
 
+
+;;; Dependencies
+(require 'pjs)
 (use-package cider
   :after clojure-mode)
 (use-package clojure-mode
@@ -20,13 +23,13 @@
 (use-package flycheck-clj-kondo
   :after (clojure-mode flycheck))
 
-(deftheme pjs-clojure)
-(custom-theme-set-variables
+
+;;; Configuration
+(pjs-custom-theme-set-variables
  'pjs-clojure
  '(cider-preferred-build-tool 'clojure-cli)
  '(cider-repl-history-file "~/.cider-history")
  '(nrepl-log-messages t))
-(provide-theme 'pjs-clojure)
-(enable-theme 'pjs-clojure)
+
 (provide 'pjs-clojure)
 ;;; pjs-clojure.el ends here
