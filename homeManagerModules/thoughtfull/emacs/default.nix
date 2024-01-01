@@ -17,13 +17,8 @@
     ]);
   };
   programs.emacs = {
-    extraConfig = lib.mkBefore ''
-      (require 'pjs)
-    '';
-    extraPackages = epkgs: with epkgs; [
-      pjs
-      use-package
-    ];
+    extraConfig = lib.mkBefore "(require 'pjs)";
+    extraPackages = epkgs: [ epkgs.pjs ];
     package = pkgs.emacs29;
   };
 }

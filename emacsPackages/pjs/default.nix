@@ -14,6 +14,7 @@ epkgs: {
       nix-mode
       orderless
       paredit
+      use-package
       wgrep
       writegood-mode
     ];
