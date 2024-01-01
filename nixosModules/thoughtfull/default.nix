@@ -17,6 +17,7 @@ inputs: { lib, ... }: {
     ./git.nix
     ./greek.nix
     ./initrd-ssh.nix
+    ./lock-screen.nix
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix

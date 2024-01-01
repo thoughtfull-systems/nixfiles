@@ -21,5 +21,5 @@
   "sessions/Failsafe/Client3_PerScreen" = false;
   "sessions/Failsafe/Client3_Priority" = 30;
   "sessions/Failsafe/Count" = 4;
-  "shutdown/LockScreen" = true;
+  "shutdown/LockScreen" = false;
 }

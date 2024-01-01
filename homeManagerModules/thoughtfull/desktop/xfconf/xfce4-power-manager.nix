@@ -10,7 +10,7 @@
   "xfce4-power-manager/brightness-step-count" = uint 10;
   "xfce4-power-manager/critical-power-action" = uint 2; # hybrid-sleep
   "xfce4-power-manager/critical-power-level" = uint 10;
-  "xfce4-power-manager/dpms-enabled" = true; # sleep display after inactivity?
+  "xfce4-power-manager/dpms-enabled" = false; # lock screen when display turns off?
   "xfce4-power-manager/dpms-on-ac-off" = uint 0; # never
   "xfce4-power-manager/dpms-on-ac-sleep" = uint 0; # never
   "xfce4-power-manager/dpms-on-battery-off" = uint 10;
@@ -24,7 +24,7 @@
   "xfce4-power-manager/inactivity-sleep-mode-on-battery" = uint 1; # suspend
   "xfce4-power-manager/lid-action-on-battery" = uint 1; # suspend
   "xfce4-power-manager/lid-action-on-ac" = uint 0; # switch off display
-  "xfce4-power-manager/lock-screen-suspend-hibernate" = true;
+  "xfce4-power-manager/lock-screen-suspend-hibernate" = false;
   "xfce4-power-manager/logind-handle-lid-switch" = false;
   "xfce4-power-manager/power-button-action" = uint 2; # hybrid-sleep
   "xfce4-power-manager/show-panel-label" = 1; # percentage
