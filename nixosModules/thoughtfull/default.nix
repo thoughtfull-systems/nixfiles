@@ -29,6 +29,7 @@ inputs: { lib, ... }: {
     ./root.nix
     ./ssh.nix
     ./sudo.nix
+    ./suspend-when-ac-disconnected.nix
     ./tlp.nix
     ./tt-rss.nix
     ./vaultwarden.nix
