@@ -4,6 +4,7 @@ epkgs: {
       cider
       clojure-mode
       clojure-mode-extra-font-locking
+      flycheck
       flycheck-clj-kondo
       pjs
     ];
