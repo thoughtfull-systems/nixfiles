@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: lib.mkIf config.programs.emacs.enable {
   home = {
+    file.".config/emacs/early-init.el".source = ./early-init.el;
     packages = (lib.mkMerge [
       (with pkgs; [
         aspell

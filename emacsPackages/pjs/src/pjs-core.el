@@ -1,6 +1,6 @@
 ;;; pjs-core.el --- Shared definitions                                    -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2023 Paul Stadig
+;; Copyright (c) 2024 Paul Stadig
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
 ;;
@@ -16,11 +16,11 @@
 BODY is presumed to be `custom-theme-set-variables' and `custom-theme-set-faces'
 forms.
 
-A package can configure variables and faces itself, instead of configuration
-being done in `use-package' when requiring the package.
+Using a theme, a package can configure variables and faces itself, instead of
+configuration being done in `use-package' when requiring the package, but still
+allow the user to override with the standard customization mechanism.
 
-Using a theme allows the user to override by using customization.  After
-creating the theme, remove it from `custom-enabled-themes', so it won't be
+After creating the theme, remove it from `custom-enabled-themes', so it won't be
 disabled when iterating over all themes to disable them.
 
 This technique is borrowed from `use-package'."
@@ -40,11 +40,11 @@ This technique is borrowed from `use-package'."
   "Create THEME with VARIABLES or add VARIABLES to existing THEME.
 VARIABLES are lists of the form (<symbol> <value> [comment]).
 
-A package can configure variables itself, instead of configuration being done in
-`use-package' when requiring the package.
+Using a theme, a package can configure variables and faces itself, instead of
+configuration being done in `use-package' when requiring the package, but still
+allow the user to override with the standard customization mechanism.
 
-Using a theme allows the user to override by using customization.  After
-creating the theme, remove it from `custom-enabled-themes', so it won't be
+After creating the theme, remove it from `custom-enabled-themes', so it won't be
 disabled when iterating over all themes to disable them.
 
 This technique is borrowed from `use-package'."
@@ -55,11 +55,11 @@ This technique is borrowed from `use-package'."
   "Create THEME with FACES or add FACES to existing THEME.
 FACES are lists of the form (<symbol> <face-spec>).
 
-A package can configure faces itself, instead of configuration being done in
-`use-package' when requiring the package.
+Using a theme, a package can configure variables and faces itself, instead of
+configuration being done in `use-package' when requiring the package, but still
+allow the user to override with the standard customization mechanism.
 
-Using a theme allows the user to override by using customization.  After
-creating the theme, remove it from `custom-enabled-themes', so it won't be
+After creating the theme, remove it from `custom-enabled-themes', so it won't be
 disabled when iterating over all themes to disable them.
 
 This technique is borrowed from `use-package'."

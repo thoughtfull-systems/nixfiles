@@ -1,22 +1,17 @@
 ;;; pjs.el --- Essentials for a pleasant Emacs experience                 -*- lexical-binding: t -*-
 ;;
-;; Copyright (c) 2023 Paul Stadig
+;; Copyright (c) 2024 Paul Stadig
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
 ;;
-
 ;;; Commentary:
 ;;
-;; This library is demand loaded because some of it needs to be evaluated very early in loading
-;; Emacs, but things that can be deferred should be.
+;; Configures essential and/or global aspects of the Emacs experience.  Customizations broadly
+;; affecting the Emacs experience should be here.  As well, this is kind of a "miscellaneous"
+;; library for customizations not having a home elsewhere, though the ideally customizations should
+;; move out to other libraries as seams become apparent.
 ;;
-
 ;;; Code:
-
-;; This needs to be done as early as possible.
-(defvar pjs--custom-file "~/.config/emacs/custom.el"
-  "Location to use for `custom-file'.  Modification will have no effect.")
-(load pjs--custom-file t)
 
 
 ;;; Dependencies
@@ -87,7 +82,6 @@ When given PREFIX, use `ibuffer' instead."
  '(all-the-icons-dired-monochrome nil)
  '(auto-save-visited-mode t)
  '(backup-directory-alist '(("." . "~/.config/emacs/backups")))
- '(custom-file pjs--custom-file)
  '(desktop-restore-frames nil)
  '(fringe-mode 1)
  '(global-whitespace-mode t)
