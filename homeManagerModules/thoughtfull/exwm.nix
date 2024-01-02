@@ -15,6 +15,7 @@ in {
     };
     programs.emacs = {
       enable = true;
+      extraConfig = "(require 'pjs-exwm)";
       extraPackages = epkgs: [ epkgs.pjs-exwm ];
     };
     xsession = {
