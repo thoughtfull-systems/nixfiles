@@ -15,8 +15,8 @@
       joker
     ] ++ [ config.thoughtfull.clojure.jdk-package ];
     programs.emacs = {
-      extraConfig = "(use-package pjs-clojure)";
-      extraPackages = epkgs: [ epkgs.pjs-clojure ];
+      extraConfig = "(use-package tfl-clojure)";
+      extraPackages = epkgs: [ epkgs.tfl-clojure ];
     };
   };
 }

@@ -15,8 +15,8 @@ in {
     };
     programs.emacs = {
       enable = true;
-      extraConfig = "(require 'pjs-exwm)";
-      extraPackages = epkgs: [ epkgs.pjs-exwm ];
+      extraConfig = "(require 'tfl-exwm)";
+      extraPackages = epkgs: [ epkgs.tfl-exwm ];
     };
     xsession = {
       enable = true;

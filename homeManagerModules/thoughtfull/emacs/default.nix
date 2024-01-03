@@ -18,8 +18,8 @@
     ]);
   };
   programs.emacs = {
-    extraConfig = lib.mkBefore "(require 'pjs)";
-    extraPackages = epkgs: [ epkgs.pjs ];
+    extraConfig = lib.mkBefore "(require 'tfl)";
+    extraPackages = epkgs: [ epkgs.tfl ];
     package = pkgs.emacs29;
   };
 }

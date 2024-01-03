@@ -12,7 +12,7 @@
     ./keychain.nix
     ./notifications.nix
     ./overlay-emacs.nix
-    ./pjs-autostart.nix
+    ./autostart.nix
     ./starship.nix
     ./syncthing.nix
     ./tmux.nix
