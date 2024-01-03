@@ -33,6 +33,12 @@
 (deftheme pjs-org)
 (custom-theme-set-variables
  'pjs-org
+ '(org-agenda-skip-deadline-if-done t)
+ '(org-agenda-skip-deadline-prewarning-if-scheduled 'pre-scheduled)
+ '(org-agenda-skip-scheduled-if-deadline-is-shown 'repeated-after-deadline)
+ '(org-agenda-skip-scheduled-if-done t)
+ '(org-agenda-skip-timestamp-if-deadline-is-shown t)
+ '(org-agenda-skip-timestamp-if-done t)
  '(org-archive-file-header-format "")
  '(org-archive-location "archive.org::")
  '(org-attach-id-dir "attachments/")
