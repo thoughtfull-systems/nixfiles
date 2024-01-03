@@ -10,6 +10,8 @@
 
 ;;; Code:
 
+(use-package hl-line
+  :hook (org-agenda-mode . hl-line-mode))
 (use-package org
   :bind (("C-c o b" . org-switchb)
          ("C-c o o" . org-cycle-agenda-files)
