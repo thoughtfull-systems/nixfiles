@@ -1,6 +1,5 @@
 epkgs:
 (import ./tfl epkgs) //
-(import ./tfl-clojure epkgs) //
 (import ./tfl-exwm epkgs) //
 (import ./tfl-gtd epkgs) //
 (import ./tfl-javascript epkgs) //

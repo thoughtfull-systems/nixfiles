@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
-    ./clojure.nix
+    ./clojure
     ./desktop
     ./emacs
     ./emoji.nix
