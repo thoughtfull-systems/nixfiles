@@ -1,4 +1,4 @@
-;;; tfl.el --- Essentials for a pleasant Emacs experience                 -*- lexical-binding: t -*-
+;;; tfl.el --- Essentials for a pleasant Emacs experience                -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2024 Paul Stadig
 ;;

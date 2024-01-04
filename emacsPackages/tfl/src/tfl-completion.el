@@ -1,4 +1,4 @@
-;;; tfl-completion.el --- Incremental minibuffer completion               -*- lexical-binding: t -*-
+;;; tfl-completion.el --- Incremental minibuffer completion              -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2023 Paul Stadig
 ;;

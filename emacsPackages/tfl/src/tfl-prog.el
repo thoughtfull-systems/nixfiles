@@ -1,4 +1,4 @@
-;;; tfl-prog.el --- Essentials for a pleasant programming experience      -*- lexical-binding: t -*-
+;;; tfl-prog.el --- Essentials for a pleasant programming experience     -*- lexical-binding: t; -*-
 
 ;;  Copyright (c) 2023 Paul Stadig
 ;;

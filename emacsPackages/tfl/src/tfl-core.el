@@ -1,4 +1,4 @@
-;;; tfl-core.el --- Shared definitions                                    -*- lexical-binding: t -*-
+;;; tfl-core.el --- Shared definitions                                   -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2024 Paul Stadig
 ;;
