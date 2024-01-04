@@ -13,6 +13,9 @@
 
 ;;; Dependencies
 (require 'tfl-core)
+(use-package consult-org
+  :after org
+  :bind ("C-c o j j" . consult-org-agenda))
 (use-package all-the-icons-completion
   :after (all-the-icons icomplete marginalia)
   :commands (all-the-icons-completion-mode)
