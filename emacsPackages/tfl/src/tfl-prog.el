@@ -1,18 +1,16 @@
 ;;; tfl-prog.el --- Essentials for a pleasant programming experience     -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
+;;
+;; Copyright (c) 2024 Paul Stadig
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
 ;;
-
 ;;; Commentary:
 ;;
-;; This is demand loaded because there's a fair amount of config for prog-mode and emacs-lisp which
-;; will just get loaded immediately anyway (because of the scratch buffer), but things that can be
-;; deferred should be.
+;; Configures essentials and/or global aspects of the Emacs programming experience including spell
+;; checking, flycheck, paredit, etc.
 ;;
-
 ;;; Code:
+
 
 ;;; Dependencies
 (require 'tfl-core)

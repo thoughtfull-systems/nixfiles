@@ -88,6 +88,8 @@ When given PREFIX, use `ibuffer' instead."
  '(indent-tabs-mode nil)
  '(inhibit-startup-echo-area-message (getenv "USER"))
  '(inhibit-startup-screen t)
+ '(initial-major-mode 'fundamental-mode)
+ '(initial-scratch-message nil)
  '(menu-bar-mode nil)
  '(pulse-delay 2)
  '(pulse-flag nil)

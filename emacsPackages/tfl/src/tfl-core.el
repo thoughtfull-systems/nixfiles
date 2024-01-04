@@ -4,13 +4,12 @@
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
 ;;
-
 ;;; Commentary:
 ;;
-;; Shared definitions separated to prevent circular dependencies.
+;; Shared definitions separated to prevent circular dependencies and minimize loading.
 ;;
-
 ;;; Code:
+
 (defmacro tfl-with-theme (theme &rest body)
   "Create and enable THEME, if it doesn't exist.
 BODY is presumed to be `custom-theme-set-variables' and `custom-theme-set-faces'

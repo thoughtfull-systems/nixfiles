@@ -1,16 +1,15 @@
-;;; tfl-completion.el --- Incremental minibuffer completion              -*- lexical-binding: t; -*-
+;;; tfl-completion.el --- Incremental completion everywhere              -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2023 Paul Stadig
+;; Copyright (c) 2024 Paul Stadig
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
 ;;
-
 ;;; Commentary:
 ;;
-;; Configure incremental minibuffer completion pretty much everywhere in Emacs.
+;; Incremental completion everywhere using icomplete, marginalia, orderless and consult.
 ;;
-
 ;;; Code:
+
 
 ;;; Dependencies
 (require 'tfl-core)
