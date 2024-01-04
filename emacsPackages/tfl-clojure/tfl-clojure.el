@@ -1,13 +1,13 @@
 ;;; tfl-clojure.el --- Essentials for Clojure development configuration  -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Paul Stadig
+;; Copyright (c) 2024 Paul Stadig
 ;;
-;;  Author: Paul Stadig <paul@thoughtfull.systems>
-
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
 ;;; Commentary:
 ;;
-;; Essentials for Clojure development configuration
-
+;; Essentials for Clojure development including cider, flycheck, paredit, kondo, etc.
+;;
 ;;; Code:
 
 
