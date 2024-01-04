@@ -15,7 +15,7 @@
   :defer
   :diminish buffer-face-mode)
 (use-package faces
-  :custom-face (default ((t (:height 110 :family "Source Code Pro"))))
+  :custom-face (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
   :defer)
 (use-package files
   :custom ((auto-save-visited-mode t)
@@ -39,7 +39,7 @@
 (use-package pulse
   :custom ((pulse-delay 2)
            (pulse-flag nil))
-  :custom-face (pulse-highlight-start-face ((t (:inherit highlight :extend t))))
+  :custom-face (pulse-highlight-start-face ((t (:inherit highlight :extend t))) face-defface-spec)
   :defer)
 (use-package safehist
   :custom (savehist-mode t)
@@ -105,8 +105,7 @@
               ("<return>" . icomplete-force-complete-and-exit)
               ("C-l" . tfl-completion-delete-back-to-slash))
   :custom ((icomplete-show-matches-on-no-input t)
-           (icomplete-vertical-mode t))
-  :custom-face (icomplete-selected-match ((t nil))))
+           (icomplete-vertical-mode t)))
 (use-package marginalia
   :hook (icomplete-mode . marginalia-mode))
 (use-package minibuffer
@@ -117,7 +116,7 @@
            (completions-detailed t)
            (read-buffer-completion-ignore-case t)
            (read-file-name-completion-ignore-case t))
-  :custom-face (completions-common-part ((t (:inherit orderless-match-face-0))))
+  :custom-face (completions-common-part ((t (:inherit orderless-match-face-0))) face-defface-spec)
   :defer)
 (use-package orderless
   :custom (orderless-matching-styles
