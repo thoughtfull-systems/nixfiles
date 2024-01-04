@@ -128,7 +128,6 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
 (defun tfl-exwm-autorandr-change ()
   (tfl-exwm-start-disowned-process "autorandr -c"))
 
-;;;###autoload
 (defun tfl-exwm-enable ()
   "Enable my EXWM configuration."
   (interactive)
