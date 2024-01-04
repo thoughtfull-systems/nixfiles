@@ -10,26 +10,26 @@
 
 ;;; Code:
 ;; Heading bullets
-(defun pob--compose-bullet (bullet)
+(defun tob--compose-bullet (bullet)
   (prog1 () (compose-region (match-beginning 1) (match-end 1) bullet)))
 
 (font-lock-add-keywords
  'org-mode
- '(("^\\(\\*\\) " 1 (pob--compose-bullet "●"))
-   ("^\\*\\{1\\}\\(\\*\\) " 1 (pob--compose-bullet "◉"))
-   ("^\\*\\{2\\}\\(\\*\\) " 1 (pob--compose-bullet "○"))
-   ("^\\*\\{3\\}\\(\\*\\) " 1 (pob--compose-bullet "◆"))
-   ("^\\*\\{4\\}\\(\\*\\) " 1 (pob--compose-bullet "◇"))
-   ("^\\*\\{5\\}\\(\\*\\) " 1 (pob--compose-bullet "►"))
-   ("^\\*\\{6\\}\\(\\*\\) " 1 (pob--compose-bullet "●"))
-   ("^\\*\\{7\\}\\(\\*\\) " 1 (pob--compose-bullet "◉"))))
+ '(("^\\(\\*\\) " 1 (tob--compose-bullet "●"))
+   ("^\\*\\{1\\}\\(\\*\\) " 1 (tob--compose-bullet "◉"))
+   ("^\\*\\{2\\}\\(\\*\\) " 1 (tob--compose-bullet "○"))
+   ("^\\*\\{3\\}\\(\\*\\) " 1 (tob--compose-bullet "◆"))
+   ("^\\*\\{4\\}\\(\\*\\) " 1 (tob--compose-bullet "◇"))
+   ("^\\*\\{5\\}\\(\\*\\) " 1 (tob--compose-bullet "►"))
+   ("^\\*\\{6\\}\\(\\*\\) " 1 (tob--compose-bullet "●"))
+   ("^\\*\\{7\\}\\(\\*\\) " 1 (tob--compose-bullet "◉"))))
 
 ;; Plain list bullets
 (font-lock-add-keywords
  'org-mode
- '(("^ *\\(?1:[-]\\) " 1 (pob--compose-bullet "•"))
-   ("^ *\\(?1:[+]\\) " 1 (pob--compose-bullet "‣"))
-   ("^ +\\(?1:[*]\\) " 1 (pob--compose-bullet "⁃"))))
+ '(("^ *\\(?1:[-]\\) " 1 (tob--compose-bullet "•"))
+   ("^ *\\(?1:[+]\\) " 1 (tob--compose-bullet "‣"))
+   ("^ +\\(?1:[*]\\) " 1 (tob--compose-bullet "⁃"))))
 
 (deftheme tfl-org-bullets)
 (custom-theme-set-variables
@@ -51,5 +51,5 @@
 ;;; tfl-org-bullets.el ends here
 
 ;; Local Variables:
-;; read-symbol-shorthands: (("pob-" . "tfl-org-bullets-"))
+;; read-symbol-shorthands: (("tob-" . "tfl-org-bullets-"))
 ;; End:

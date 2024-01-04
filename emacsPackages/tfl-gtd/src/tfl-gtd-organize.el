@@ -13,38 +13,38 @@
 (require 'org-refile)
 (require 'transient)
 
-(defvar-keymap pgo-map
+(defvar-keymap tgo-map
   :doc "Keymap for command `tfl-gtd-organize-mode', a minor mode."
-  "C-c C-c" #'pgo-next)
+  "C-c C-c" #'tgo-next)
 
-(define-minor-mode pgo-mode
+(define-minor-mode tgo-mode
   "Minor mode for tfl-gtd-organize."
   :lighter " MGP"
-  :keymap pgo-map
+  :keymap tgo-map
   :group 'tfl-gtd-organize
-  (if pgo-mode
+  (if tgo-mode
       (setq-local
        header-line-format
        `("Tasks should be SMART, singular, brief, verb-based!  "
          ,(substitute-command-keys "\\<tfl-gtd-organize-map>Finish `\\[tfl-gtd-organize-next]'.")))
     (setq-local header-line-format nil)))
 
-(defvar pgo-buffer-name "*tfl-gtd-organize*")
+(defvar tgo-buffer-name "*tfl-gtd-organize*")
 
 ;;;###autoload
 (defun tfl-gtd-organize ()
   "Process each entry from inbox in a narrowed buffer for processing."
   (interactive)
-  (if (get-buffer pgo-buffer-name)
-      (pop-to-buffer pgo-buffer-name)
+  (if (get-buffer tgo-buffer-name)
+      (pop-to-buffer tgo-buffer-name)
     (with-current-buffer
-        (make-indirect-buffer (tfl-gtd-org-buffer tfl-gtd-todo-file-name) pgo-buffer-name t)
-      (pgo-mode)
+        (make-indirect-buffer (tfl-gtd-org-buffer tfl-gtd-todo-file-name) tgo-buffer-name t)
+      (tgo-mode)
       (goto-char (point-min))
       (outline-next-heading)
-      (pgo--next "No unorganized projects."))))
+      (tgo--next "No unorganized projects."))))
 
-(defun pgo--next-heading-same-level ()
+(defun tgo--next-heading-same-level ()
   (org-back-to-heading)
   (let ((curr (point)))
     (org-forward-heading-same-level 1)
@@ -62,23 +62,23 @@
               (let ((point (save-excursion (mgp--find-unorganized-project))))
                 (if (not point)
                     ;; organized project, keep looking
-                    (setq continue (pgo--next-heading-same-level))
+                    (setq continue (tgo--next-heading-same-level))
                   ;; unorganized project, exit early
                   (setq unorganized point)
                   (setq continue nil)))
-            (unless (pgo--next-heading-same-level)
+            (unless (tgo--next-heading-same-level)
               (setq unorganized nil)
               (setq continue nil)))
         (if (or (not (org-get-todo-state))
                 (not (tfl-gtd-active-p)))
-            (unless (pgo--next-heading-same-level)
+            (unless (tgo--next-heading-same-level)
               (setq unorganized heading)
               (setq continue nil))
           (setq unorganized nil)
           (setq continue nil))))
     unorganized))
 
-(defun pgo--first-unorganized-project ()
+(defun tgo--first-unorganized-project ()
   (goto-char (point-min))
   (outline-next-heading)
   (let ((organized t)
@@ -91,29 +91,29 @@
         (if (not (or (not (tfl-gtd-project-p))
                      (and (tfl-gtd-project-p)
                           (tfl-gtd-active-p)
-                          (pgo--organized-project-p))))
+                          (tgo--organized-project-p))))
             (setq organized nil)
-          (setq continue (pgo--next-heading-same-level)))))
+          (setq continue (tgo--next-heading-same-level)))))
     organized))
 
-(defun pgo--next (&optional msg)
-  (if (not (pgo--next-unorganized-project))
+(defun tgo--next (&optional msg)
+  (if (not (tgo--next-unorganized-project))
       (progn
         (message (or msg "No more unorganized projects."))
-        (kill-buffer pgo-buffer-name))
+        (kill-buffer tgo-buffer-name))
     (org-fold-heading nil t)
     (org-narrow-to-subtree)
-    (pop-to-buffer pgo-buffer-name)))
+    (pop-to-buffer tgo-buffer-name)))
 
-(defun pgo-next ()
+(defun tgo-next ()
   "Move to next unorganized project for planning.
 If there are no more unorganized projects, show MSG or a default."
   (interactive)
-  (if (not (save-excursion (goto-char (point-min)) (pgo--organized-project-p)))
+  (if (not (save-excursion (goto-char (point-min)) (tgo--organized-project-p)))
       (message "Project is not organized!")
     (widen)
     (goto-char (point-min))
-    (pgo--next)))
+    (tgo--next)))
 
 ;; (deftheme tfl-gtd-organize)
 ;; (custom-theme-set-variables
@@ -126,5 +126,5 @@ If there are no more unorganized projects, show MSG or a default."
 ;;; tfl-gtd-organize.el ends here
 
 ;; Local Variables:
-;; read-symbol-shorthands: (("pgo-" . "tfl-gtd-organize-"))
+;; read-symbol-shorthands: (("tgo-" . "tfl-gtd-organize-"))
 ;; End:

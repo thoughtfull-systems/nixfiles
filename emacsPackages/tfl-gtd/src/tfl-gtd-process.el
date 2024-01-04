@@ -13,36 +13,36 @@
 (require 'org-refile)
 (require 'transient)
 
-(defvar-keymap pgp-map
+(defvar-keymap tgp-map
   :doc "Keymap for command `tfl-gtd-process-mode', a minor mode."
-  "C-c C-c" #'pgp-finalize)
+  "C-c C-c" #'tgp-finalize)
 
-(define-minor-mode pgp-mode
+(define-minor-mode tgp-mode
   "Minor mode for tfl-gtd-process."
   :lighter " PGP"
-  :keymap pgp-map
+  :keymap tgp-map
   :group 'tfl-gtd-process
-  (if pgp-mode
+  (if tgp-mode
       (setq-local
        header-line-format
        `("Tasks should be SMART, singular, brief, verb-based!  "
          ,(substitute-command-keys "\\<tfl-gtd-process-map>Finish `\\[tfl-gtd-process-finalize]'.")))
     (setq-local header-line-format nil)))
 
-(defvar pgp-buffer-name "*tfl-gtd-process*")
+(defvar tgp-buffer-name "*tfl-gtd-process*")
 
 ;;;###autoload
 (defun tfl-gtd-process ()
   "Process each entry from inbox in a narrowed buffer for processing."
   (interactive)
-  (if (get-buffer pgp-buffer-name)
-      (pop-to-buffer pgp-buffer-name)
+  (if (get-buffer tgp-buffer-name)
+      (pop-to-buffer tgp-buffer-name)
     (with-current-buffer
-        (make-indirect-buffer (tfl-gtd-org-buffer tfl-gtd-inbox-file-name) pgp-buffer-name t)
-      (pgp-mode)
-      (pgp--next "No inbox items."))))
+        (make-indirect-buffer (tfl-gtd-org-buffer tfl-gtd-inbox-file-name) tgp-buffer-name t)
+      (tgp-mode)
+      (tgp--next "No inbox items."))))
 
-(defun pgp--next (&optional msg)
+(defun tgp--next (&optional msg)
   "Move to next inbox entry for processing.
 If there are no more items, show MSG or a default."
   (interactive)
@@ -50,69 +50,69 @@ If there are no more items, show MSG or a default."
   (if (not (outline-next-heading))
       (progn
         (message (or msg "No more inbox items."))
-        (kill-buffer pgp-buffer-name))
+        (kill-buffer tgp-buffer-name))
     (org-fold-heading nil t)
     (org-narrow-to-subtree)
-    (pop-to-buffer pgp-buffer-name)))
+    (pop-to-buffer tgp-buffer-name)))
 
-(defun pgp--maybe-cleanup-and-next ()
-  (when (equal (buffer-name) pgp-buffer-name)
+(defun tgp--maybe-cleanup-and-next ()
+  (when (equal (buffer-name) tgp-buffer-name)
     (widen)
     (ignore-errors (kill-line))
-    (pgp--next)))
+    (tgp--next)))
 
-(transient-define-prefix pgp-finalize ()
-  [("t" "Standalone task" pgp-refile-as-task)
-   ("a" "Project task for existing project or task" pgp-add-to-project)
-   ("p" "New project" pgp-refile-as-project)
-   ("s" "`Someday' task to do in the future" pgp-refile-as-someday)
-   ("m" "`Maybe' task to think about doing" pgp-refile-as-maybe)
-   ("d" "Do task now" pgp-refile-as-done)
-   ("r" "Reference item" pgp-refile-as-reference)
-   ("c" "Cancel item" pgp-refile-as-canceled)
-   ("k" "Kill item" pgp-refile-as-killed)])
+(transient-define-prefix tgp-finalize ()
+  [("t" "Standalone task" tgp-refile-as-task)
+   ("a" "Project task for existing project or task" tgp-add-to-project)
+   ("p" "New project" tgp-refile-as-project)
+   ("s" "`Someday' task to do in the future" tgp-refile-as-someday)
+   ("m" "`Maybe' task to think about doing" tgp-refile-as-maybe)
+   ("d" "Do task now" tgp-refile-as-done)
+   ("r" "Reference item" tgp-refile-as-reference)
+   ("c" "Cancel item" tgp-refile-as-canceled)
+   ("k" "Kill item" tgp-refile-as-killed)])
 
-(defun pgp--validate-estimate ()
+(defun tgp--validate-estimate ()
   (if (or (not (org-get-todo-state)) (org-entry-get nil "Effort"))
       t
     (message (substitute-command-keys "Missing estimate.  Set estimate with \\[org-set-effort]."))
     nil))
 
-(defun pgp--validate-task ()
+(defun tgp--validate-task ()
   (if (org-get-todo-state)
       t
     (message "Not a valid task.")
     nil))
 
-(defun pgp-refile-as-task ()
+(defun tgp-refile-as-task ()
   "Refile current inbox item as a standalone task."
   (interactive)
-  (when (and (pgp--validate-estimate)
-             (pgp--validate-task))
+  (when (and (tgp--validate-estimate)
+             (tgp--validate-task))
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
     (org-refile nil nil `("Tasks" ,tfl-gtd-todo-file-name nil nil))
-    (pgp--maybe-cleanup-and-next)))
+    (tgp--maybe-cleanup-and-next)))
 
-(defun pgp--verify-active ()
+(defun tgp--verify-active ()
   (if (tfl-gtd-action-p)
       t
     (org-end-of-subtree)
     nil))
 
-(defun pgp-add-to-project ()
+(defun tgp-add-to-project ()
   "Refile current inbox item as a child of an existing project or task."
   (interactive)
-  (when (pgp--validate-estimate)
+  (when (tgp--validate-estimate)
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
-    (let ((org-refile-target-verify-function #'pgp--verify-active))
+    (let ((org-refile-target-verify-function #'tgp--verify-active))
       (org-refile))
-    (pgp--maybe-cleanup-and-next)))
+    (tgp--maybe-cleanup-and-next)))
 
-(defun pgp--verify-project-estimates ()
+(defun tgp--verify-project-estimates ()
   (save-excursion
     (let ((has-estimate t))
       (while (and has-estimate (outline-next-heading))
@@ -122,49 +122,49 @@ If there are no more items, show MSG or a default."
           (setq has-estimate nil)))
       has-estimate)))
 
-(defun pgp--maybe-beginning-of-item ()
-  (when (equal (buffer-name) pgp-buffer-name)
+(defun tgp--maybe-beginning-of-item ()
+  (when (equal (buffer-name) tgp-buffer-name)
     (goto-char (point-min))))
 
-(defun pgp-refile-as-project ()
+(defun tgp-refile-as-project ()
   "Refile current inbox item as a new project."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
   (org-toggle-tag "MAYBE" 'off)
   (org-toggle-tag "REFERENCE" 'off)
   (if (not (save-excursion
-             (pgp--maybe-beginning-of-item)
+             (tgp--maybe-beginning-of-item)
              (tfl-gtd-project-p)))
       (message "Not a valid project.")
     (if (not (save-excursion
-               (pgp--maybe-beginning-of-item)
-               (pgp--verify-project-estimates)))
+               (tgp--maybe-beginning-of-item)
+               (tgp--verify-project-estimates)))
         (message "Missing estimate(s).  Set estimate with %s."
                  (substitute-command-keys "\\[org-set-effort]"))
-      (let ((org-refile-target-verify-function #'pgp--verify-active))
-        (pgp--maybe-beginning-of-item)
+      (let ((org-refile-target-verify-function #'tgp--verify-active))
+        (tgp--maybe-beginning-of-item)
         (org-refile))
-      (pgp--maybe-cleanup-and-next))))
+      (tgp--maybe-cleanup-and-next))))
 
-(defun pgp-refile-as-someday ()
+(defun tgp-refile-as-someday ()
   "Refile current inbox item as a someday task."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'on)
   (org-toggle-tag "MAYBE" 'off)
   (org-toggle-tag "REFERENCE" 'off)
   (org-refile nil nil `("Someday" ,tfl-gtd-someday-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
-(defun pgp-refile-as-maybe ()
+(defun tgp-refile-as-maybe ()
   "Refile current inbox item as a maybe task."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
   (org-toggle-tag "MAYBE" 'on)
   (org-toggle-tag "REFERENCE" 'off)
   (org-refile nil nil `("Maybe" ,tfl-gtd-maybe-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
-(defun pgp-refile-as-done ()
+(defun tgp-refile-as-done ()
   "Completed the current inbox item and archive it."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
@@ -172,18 +172,18 @@ If there are no more items, show MSG or a default."
   (org-toggle-tag "REFERENCE" 'off)
   (org-todo "DONE")
   (org-refile nil nil `("Tasks" ,tfl-gtd-todo-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
-(defun pgp-refile-as-reference ()
+(defun tgp-refile-as-reference ()
   "Refile current inbox item as a reference item."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
   (org-toggle-tag "MAYBE" 'off)
   (org-toggle-tag "REFERENCE" 'on)
   (org-refile nil nil `("Reference" ,tfl-gtd-reference-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
-(defun pgp-refile-as-canceled ()
+(defun tgp-refile-as-canceled ()
   "Cancel the current inbox item and archive it."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
@@ -191,16 +191,16 @@ If there are no more items, show MSG or a default."
   (org-toggle-tag "REFERENCE" 'off)
   (org-todo "CANC")
   (org-refile nil nil `("Archive" ,tfl-gtd-archive-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
-(defun pgp-refile-as-killed ()
+(defun tgp-refile-as-killed ()
   "Archive the current inbox item."
   (interactive)
   (org-toggle-tag "SOMEDAY" 'off)
   (org-toggle-tag "MAYBE" 'off)
   (org-toggle-tag "REFERENCE" 'off)
   (org-refile nil nil `("Archive" ,tfl-gtd-archive-file-name nil nil))
-  (pgp--maybe-cleanup-and-next))
+  (tgp--maybe-cleanup-and-next))
 
 ;; (deftheme tfl-gtd-process)
 ;; (custom-theme-set-variables
@@ -213,5 +213,5 @@ If there are no more items, show MSG or a default."
 ;;; tfl-gtd-process.el ends here
 
 ;; Local Variables:
-;; read-symbol-shorthands: (("pgp-" . "tfl-gtd-process-"))
+;; read-symbol-shorthands: (("tgp-" . "tfl-gtd-process-"))
 ;; End:
