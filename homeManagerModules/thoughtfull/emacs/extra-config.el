@@ -1,3 +1,4 @@
+;;; General
 (use-package all-the-icons
   :if (display-graphic-p))
 (use-package all-the-icons-dired
@@ -81,6 +82,98 @@
 (use-package writegood-mode
   :diminish
   :hook (text-mode . writegood-mode))
+
+
+;;; Completion
+(use-package all-the-icons-completion
+  :after all-the-icons
+  :commands (all-the-icons-completion-mode)
+  :config (all-the-icons-completion-mode)
+  :hook (marginalia-mode . all-the-icons-completion-marginalia-setup))
+(use-package consult
+  :custom ((consult-after-jump-hook '(recenter pulse-momentary-highlight-one-line))
+           (consult-narrow-key "C-,")
+           (consult-preview-key nil))
+  :defer)
+(use-package consult-org
+  :after (consult org)
+  :bind ("C-c o j j" . consult-org-agenda))
+(use-package icomplete
+  :bind (:map icomplete-minibuffer-map
+              ("C-<return>" . icomplete-force-complete)
+              ("M-<return>" . exit-minibuffer)
+              ("<return>" . icomplete-force-complete-and-exit)
+              ("C-l" . tfl-completion-delete-back-to-slash))
+  :custom ((icomplete-show-matches-on-no-input t)
+           (icomplete-vertical-mode t))
+  :custom-face (icomplete-selected-match ((t nil))))
+(use-package marginalia
+  :hook (icomplete-mode . marginalia-mode))
+(use-package minibuffer
+  :custom ((completion-auto-help nil)
+           (completion-category-overrides '((file (styles basic partial-completion orderless))))
+           (completion-cycle-threshold 3)
+           (completion-styles '(orderless))
+           (completions-detailed t)
+           (read-buffer-completion-ignore-case t)
+           (read-file-name-completion-ignore-case t))
+  :custom-face (completions-common-part ((t (:inherit orderless-match-face-0))))
+  :defer)
+(use-package orderless
+  :custom (orderless-matching-styles
+           '(orderless-regexp orderless-literal orderless-initialism orderless-prefixes))
+  :defer)
+(use-package tfl
+  :autoload tfl-completion-delete-back-to-slash)
+
+
+;; Programming
+(use-package buffer
+  :custom (fill-column 100)
+  :defer)
+(use-package checkdoc
+  ;; since global-flycheck-mode is enabled, there's nothing else to do
+  :after elisp-mode
+  :custom (checkdoc-force-docstrings-flag nil))
+(use-package company
+  :diminish
+  :hook (prog-mode . company-mode))
+(use-package simple
+  :hook (prog-mode . column-number-mode))
+(use-package display-line-numbers
+  :hook (prog-mode . display-line-numbers-mode)
+  :custom ((display-line-numbers-minor-tick 10)
+           (display-line-numbers-width-start t)))
+(use-package eldoc
+  :diminish
+  :hook (emacs-lisp-mode . eldoc-mode))
+(use-package electric
+  ;; electric-indent-mode swaps the default behavior of C-j and RET which is confusing, I prefer the
+  ;; default behavior.
+  :custom (electric-indent-mode nil)
+  :defer)
+(use-package flycheck
+  :bind (:map prog-mode-map
+              ("C-c e n" . flycheck-next-error)
+              ("C-c e p" . flycheck-previous-error))
+  :custom ((flycheck-emacs-lisp-check-declare t)
+           (flycheck-emacs-lisp-load-path 'inherit)
+           (global-flycheck-mode t))
+  :diminish)
+(use-package flyspell
+  :diminish
+  :hook (prog-mode . flyspell-prog-mode))
+(use-package lisp-mode
+  :custom (emacs-lisp-docstring-fill-column 80)
+  :defer)
+(use-package magit-extras
+  :after magit)
+(use-package paredit
+  :diminish
+  :hook (emacs-lisp-mode . paredit-mode))
+(use-package sh-script
+  :custom (sh-basic-offset 2)
+  :defer)
 
 ;; Local Variables:
 ;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)

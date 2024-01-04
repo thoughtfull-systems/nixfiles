@@ -12,7 +12,10 @@
 ;; move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
+(require 'tfl-core)
 
+
+;; General
 (defun tfl-buffer-compare (b1 b2)
   "Compare buffer names of B1 and B2."
   (string-collate-lessp (buffer-name b1) (buffer-name b2) nil t))
@@ -37,8 +40,19 @@ When given PREFIX, use `ibuffer' instead."
           (message "Deleted file %s" filename)
           (kill-buffer))))))
 
-(require 'tfl-completion)
-(require 'tfl-prog)
+
+;; Completion
+(defun tfl-completion-delete-back-to-slash ()
+  "Delete characters backward until a slash."
+  (interactive)
+  (let ((end (point-marker)))
+    (when (string= (char-to-string (char-before)) "/")
+      (backward-char 1))
+    (if (search-backward "/" nil t)
+        (progn
+          (forward-char 1)
+          (delete-region (point-marker) end))
+      (goto-char end))))
 
 (provide 'tfl)
 ;;; tfl.el ends here
