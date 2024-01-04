@@ -1,13 +1,13 @@
-;;; tfl-exwm.el --- EXWM code and configuration                          -*- lexical-binding: t; -*-
+;;; tfl-exwm.el --- Essentials for EXWM                                  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2024 Paul Stadig
 ;;
 ;; Author: Paul Stadig <paul@thoughtfull.systems>
-
+;;
 ;;; Commentary:
 ;;
-;; EXWM code and configuration
-
+;; Essentials for EXWM including workspace and buffer management, key bindings, etc.
+;;
 ;;; Code:
 
 
