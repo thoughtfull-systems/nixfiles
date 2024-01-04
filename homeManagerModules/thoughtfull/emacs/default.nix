@@ -18,7 +18,7 @@
     ]);
   };
   programs.emacs = {
-    extraConfig = lib.mkBefore "(require 'tfl)";
+    extraConfig = lib.mkBefore (builtins.readFile ./extra-config.el);
     extraPackages = epkgs: [ epkgs.tfl ];
     package = pkgs.emacs29;
   };
