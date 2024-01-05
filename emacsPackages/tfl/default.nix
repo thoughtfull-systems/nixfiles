@@ -19,7 +19,7 @@ epkgs: {
       writegood-mode
     ];
     pname = "tfl";
-    src = ./src;
+    src = ./tfl.el;
     version = "0";
   };
 }

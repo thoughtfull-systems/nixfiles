@@ -12,7 +12,6 @@
 ;; move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
-(require 'tfl-core)
 
 
 ;; General
