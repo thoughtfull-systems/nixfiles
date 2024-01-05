@@ -15,7 +15,7 @@ in {
     };
     programs.emacs = {
       enable = true;
-      extraConfig = builtins.readFile ./extra-config.el;
+      extraConfig = "(require 'tfl-exwm)";
       extraPackages = epkgs: [ epkgs.tfl-exwm ];
     };
     xsession = {

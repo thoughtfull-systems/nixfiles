@@ -6,7 +6,7 @@ epkgs: {
       tfl
     ];
     pname = "tfl-exwm";
-    src = ./tfl-exwm.el;
+    src = ./src;
     version = "0";
   };
 }

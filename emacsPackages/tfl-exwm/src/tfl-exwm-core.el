@@ -1,4 +1,4 @@
-;;; tfl-exwm.el --- Essentials for EXWM                                  -*- lexical-binding: t; -*-
+;;; tfl-exwm-core.el --- Functions and such for customizing EXWM         -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2024 Paul Stadig
 ;;
@@ -6,7 +6,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; Essentials for EXWM including workspace and buffer management, key bindings, etc.
+;; Functions for managing workspaces, buffers, and processes with EXWM
 ;;
 ;;; Code:
 
@@ -217,5 +217,5 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
   (desktop-save user-emacs-directory t)
   (kill-emacs 82))
 
-(provide 'tfl-exwm)
-;;; tfl-exwm.el ends here
+(provide 'tfl-exwm-core)
+;;; tfl-exwm-core.el ends here

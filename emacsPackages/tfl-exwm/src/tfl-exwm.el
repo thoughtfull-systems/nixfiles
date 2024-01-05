@@ -1,9 +1,21 @@
+;;; tfl-exwm.el --- Essentials for a pleasant EXWM experience            -*- lexical-binding: t; -*-
+;;
+;; Copyright (c) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
+;;; Commentary:
+;;
+;; Configures essential of the EXWM experience like key bindings and such.
+;;
+;;; Code:
+
 (use-package exwm
   :custom ((exwm-replace t)
            (exwm-update-class-hook '(tfl-exwm-rename-current-buffer)))
   :defer)
 (use-package exwm-input
-  :after tfl-exwm
+  :after tfl-exwm-core
   :custom ((exwm-input-global-keys
             ;; C- and M- seem to be fine as modifiers for s- but not S- since
             ;; it works inconsistently between Emacs buffers and X buffers.
@@ -86,9 +98,8 @@
            (exwm-workspace-number 10)
            (exwm-workspace-show-all-buffers t))
   :defer)
-(use-package tfl-exwm
+(use-package tfl-exwm-core
   :after exwm)
 
-;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
-;; End:
+(provide 'tfl-exwm)
+;;; tfl-exwm.el ends here
