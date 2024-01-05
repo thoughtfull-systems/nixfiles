@@ -14,11 +14,8 @@
 ;;; Dependencies
 (require 'desktop)
 (require 'exwm)
-(require 'exwm-modeline)
-(require 'exwm-config)
 (require 'exwm-randr)
-(require 'map) ; for map-apply
-(require 'tfl-core)
+(require 'tfl)
 
 
 ;;; Variables

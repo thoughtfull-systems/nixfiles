@@ -98,8 +98,8 @@
            (exwm-workspace-number 10)
            (exwm-workspace-show-all-buffers t))
   :defer)
-(use-package tfl-exwm-core
-  :after exwm)
+
+(require 'tfl-exwm-core)
 
 (provide 'tfl-exwm)
 ;;; tfl-exwm.el ends here
