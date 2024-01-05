@@ -1,4 +1,4 @@
-;;; tfl.el --- Essentials for a pleasant Emacs experience                -*- lexical-binding: t; -*-
+;;; tfl.el --- Generally useful functions, etc.                          -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2024 Paul Stadig
 ;;
@@ -6,10 +6,8 @@
 ;;
 ;;; Commentary:
 ;;
-;; Configures essential and/or global aspects of the Emacs experience.  Customizations broadly
-;; affecting the Emacs experience should be here.  As well, this is kind of a "miscellaneous"
-;; library for customizations not having a home elsewhere, though the ideally customizations should
-;; move out to other libraries as seams become apparent.
+;; A kind of a "miscellaneous" library for customizations not having a home elsewhere, though the
+;; ideally things should move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
 
