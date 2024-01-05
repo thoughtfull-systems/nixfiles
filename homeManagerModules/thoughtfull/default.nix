@@ -2,7 +2,8 @@
   imports = [
     ./clojure.nix
     ./desktop
-    ./emacs
+    ./emacs.nix
+    ./emacs/gtd.nix
     ./emoji.nix
     ./exwm.nix
     ./git.nix

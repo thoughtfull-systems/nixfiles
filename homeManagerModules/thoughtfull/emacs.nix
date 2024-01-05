@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }: lib.mkIf config.programs.emacs.enable {
   home = {
-    file.".config/emacs/early-init.el".source = ./early-init.el;
+    file.".config/emacs/early-init.el".source = ./emacs/early-init.el;
     packages = (lib.mkMerge [
       (with pkgs; [
         aspell
@@ -18,7 +18,10 @@
     ]);
   };
   programs.emacs = {
-    extraConfig = lib.mkBefore "(require 'tfl)";
+    extraConfig = lib.mkBefore ''
+      (require 'use-package)
+      (require 'tfl)
+    '';
     extraPackages = epkgs: [ epkgs.tfl ];
     package = pkgs.emacs29;
   };

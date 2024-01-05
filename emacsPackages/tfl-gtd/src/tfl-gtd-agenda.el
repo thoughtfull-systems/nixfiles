@@ -56,6 +56,8 @@
 (defun tga-daily ()
   "Show Agenda with next actions."
   (interactive)
+  (when (fboundp 'exwm-workspace-switch)
+    (exwm-workspace-switch 6))
   (let* ((org-agenda-custom-commands
           '(("z" "Agenda and all TODOs"
              ((agenda "")
@@ -68,7 +70,8 @@
                  (search . " %i %b")))
               (org-agenda-tag-filter-preset
                '("-ARCHIVE" "-DONE")))))))
-    (org-agenda nil "z")))
+    (org-agenda nil "z"))
+  (delete-other-windows))
 
 ;; (deftheme tfl-gtd-agenda)
 ;; (custom-theme-set-variables
