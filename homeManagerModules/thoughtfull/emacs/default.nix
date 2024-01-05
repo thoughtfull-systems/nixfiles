@@ -19,7 +19,25 @@
   };
   programs.emacs = {
     extraConfig = lib.mkBefore (builtins.readFile ./extra-config.el);
-    extraPackages = epkgs: [ epkgs.tfl ];
+    extraPackages = epkgs: with epkgs; [
+      all-the-icons
+      all-the-icons-completion
+      all-the-icons-dired
+      all-the-icons-ibuffer
+      company
+      consult
+      diminish
+      flycheck
+      magit
+      marginalia
+      nix-mode
+      orderless
+      paredit
+      tfl
+      use-package
+      wgrep
+      writegood-mode
+    ];
     package = pkgs.emacs29;
   };
 }
