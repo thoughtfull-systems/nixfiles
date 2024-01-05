@@ -16,7 +16,7 @@
 
 
 ;; General
-(defun tfl-buffer-compare (b1 b2)
+(defun tfl-buffer-compare-name (b1 b2)
   "Compare buffer names of B1 and B2."
   (string-collate-lessp (buffer-name b1) (buffer-name b2) nil t))
 

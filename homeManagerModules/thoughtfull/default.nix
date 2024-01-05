@@ -4,7 +4,7 @@
     ./desktop
     ./emacs
     ./emoji.nix
-    ./exwm.nix
+    ./exwm
     ./git.nix
     ./gnome-terminal.nix
     ./home-manager.nix

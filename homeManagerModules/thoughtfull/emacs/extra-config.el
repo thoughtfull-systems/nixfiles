@@ -61,7 +61,7 @@
            (initial-scratch-message nil))
   :defer)
 (use-package tfl
-  :autoload tfl-buffer-compare
+  :autoload tfl-buffer-compare-name
   :bind (("C-c D" . tfl-kill-buffer-and-delete-file)
          ("C-x b" . tfl-switch-buffer)
          ("C-x C-b" . tfl-switch-buffer)))
