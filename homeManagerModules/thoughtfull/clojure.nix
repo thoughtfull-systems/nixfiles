@@ -15,14 +15,8 @@
       joker
     ] ++ [ config.thoughtfull.clojure.jdk-package ];
     programs.emacs = {
-      extraConfig = builtins.readFile ./extra-config.el;
-      extraPackages = epkgs: with epkgs; [
-        cider
-        clojure-mode
-        clojure-mode-extra-font-locking
-        flycheck
-        flycheck-clj-kondo
-      ];
+      extraConfig = "(require 'tfl-clojure)";
+      extraPackages = epkgs: [ epkgs.tfl-clojure ];
     };
   };
 }

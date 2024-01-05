@@ -1,3 +1,15 @@
+;;; tfl-clojure.el --- Essentials for pleasant Clojure development       -*- lexical-binding: t; -*-
+;;
+;; Copyright (c) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
+;;; Commentary:
+;;
+;; Configures essential of the Clojure development experience like cider, kondo, etc.
+;;
+;;; Code:
+
 (use-package cider
   :after clojure-mode
   :custom ((cider-preferred-build-tool 'clojure-cli)
@@ -12,6 +24,5 @@
 (use-package paredit
   :hook (clojure-mode . paredit-mode))
 
-;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
-;; End:
+(provide 'tfl-clojure)
+;;; tfl-clojure.el ends here
