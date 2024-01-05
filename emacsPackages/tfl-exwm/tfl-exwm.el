@@ -18,7 +18,7 @@
 (require 'exwm-config)
 (require 'exwm-randr)
 (require 'map) ; for map-apply
-(require 'tfl)
+(require 'tfl-core)
 
 
 ;;; Variables

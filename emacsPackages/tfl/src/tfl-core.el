@@ -1,4 +1,4 @@
-;;; tfl.el --- Generally useful functions, etc.                          -*- lexical-binding: t; -*-
+;;; tfl-core.el --- Generally useful functions and such                  -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (c) 2024 Paul Stadig
 ;;
@@ -6,8 +6,8 @@
 ;;
 ;;; Commentary:
 ;;
-;; A kind of a "miscellaneous" library for customizations not having a home elsewhere, though the
-;; ideally things should move out to other libraries as seams become apparent.
+;; A kind of a "miscellaneous" library for functions an such not having a home elsewhere, though the
+;; ideally things functions and such move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
 
@@ -51,5 +51,5 @@ When given PREFIX, use `ibuffer' instead."
           (delete-region (point-marker) end))
       (goto-char end))))
 
-(provide 'tfl)
-;;; tfl.el ends here
+(provide 'tfl-core)
+;;; tfl-core.el ends here

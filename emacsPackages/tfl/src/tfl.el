@@ -1,3 +1,19 @@
+;;; tfl.el --- Essentials for a pleasant Emacs experience                -*- lexical-binding: t; -*-
+;;
+;; Copyright (c) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
+;;; Commentary:
+;;
+;; Configures essential and/or global aspects of the Emacs experience.  Customizations broadly
+;; affecting the Emacs experience should be here.  As well, this is kind of a "miscellaneous"
+;; library for customizations not having a home elsewhere, though the ideally customizations should
+;; move out to other libraries as seams become apparent.
+;;
+;;; Code:
+
+
 ;;; General
 (use-package all-the-icons
   :if (display-graphic-p))
@@ -60,7 +76,7 @@
            (initial-major-mode 'fundamental-mode)
            (initial-scratch-message nil))
   :defer)
-(use-package tfl
+(use-package tfl-core
   :autoload tfl-buffer-compare-name
   :bind (("C-c D" . tfl-kill-buffer-and-delete-file)
          ("C-x b" . tfl-switch-buffer)
@@ -174,6 +190,5 @@
   :custom (sh-basic-offset 2)
   :defer)
 
-;; Local Variables:
-;; flycheck-disabled-checkers: (emacs-lisp-checkdoc)
-;; End:
+(provide 'tfl)
+;;; tfl.el ends here
