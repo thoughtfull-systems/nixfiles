@@ -1,13 +1,13 @@
 ;;; tfl-javascript.el --- JavaScript development configuration           -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
-;;  Version: 0.0.0
-
+;;
+;; Copyright (c) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
 ;;; Commentary:
-
-;; None
-
+;;
+;; Configure js2, json, and typescript modes.
+;;
 ;;; Code:
 
 (use-package js2-mode
@@ -15,11 +15,5 @@
 (use-package json-mode)
 (use-package typescript-mode)
 
-;; (deftheme tfl-javascript)
-;; (custom-theme-set-variables
-;;  'tfl-javascript
-;;  )
-;; (provide-theme 'tfl-javascript)
-;; (enable-theme 'tfl-javascript)
 (provide 'tfl-javascript)
 ;;; tfl-javascript.el ends here

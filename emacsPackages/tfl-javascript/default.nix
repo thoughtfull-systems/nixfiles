@@ -1,5 +1,5 @@
 epkgs: {
-  tfl-javascript = epkgs.elpaBuild {
+  tfl-javascript = epkgs.trivialBuild {
     packageRequires = with epkgs; [
       js2-mode
       json-mode
@@ -7,6 +7,6 @@ epkgs: {
     ];
     pname = "tfl-javascript";
     src = ./tfl-javascript.el;
-    version = "0.0.0";
+    version = "0";
   };
 }
