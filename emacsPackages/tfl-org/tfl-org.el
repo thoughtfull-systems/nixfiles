@@ -56,6 +56,7 @@
  '(org-habit-preceding-days 14)
  '(org-id-link-to-org-use-id t)
  '(org-startup-folded 'content)
+ '(org-treat-insert-todo-heading-as-state-change t)
  '(org-yank-adjusted-subtrees t))
 (provide-theme 'tfl-org)
 (enable-theme 'tfl-org)
