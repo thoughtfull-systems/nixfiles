@@ -1,7 +1,7 @@
 epkgs: {
-  tfl-ol-obsidian = epkgs.elpaBuild {
+  tfl-ol-obsidian = epkgs.trivialBuild {
     pname = "tfl-ol-obsidian";
     src = ./tfl-ol-obsidian.el;
-    version = "0.0.0";
+    version = "0";
   };
 }

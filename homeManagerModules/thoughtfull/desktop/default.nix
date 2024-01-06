@@ -8,7 +8,6 @@ in {
       libreoffice
       notify-desktop
       tor-browser-bundle-bin
-      unstable.obsidian
       unstable.zoom-us
     ];
     fonts.fontconfig.enable = lib.mkForce true;
@@ -16,6 +15,7 @@ in {
   };
   imports = [
     ./firefox.nix
+    ./obsidian.nix
     ./xbanish.nix
     ./xfce.nix
   ];

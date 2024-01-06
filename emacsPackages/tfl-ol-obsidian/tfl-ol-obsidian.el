@@ -1,13 +1,13 @@
 ;;; tfl-ol-obsidian.el --- Org-link configuration for obsidian links     -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
-;;  Version: 0.0.0
-
+;;
+;; Copyright (c) 2024 Paul Stadig
+;;
+;; Author: Paul Stadig <paul@thoughtfull.systems>
+;;
 ;;; Commentary:
-
+;;
 ;; Org-link configuration for obsidian links.
-
+;;
 ;;; Code:
 
 (use-package ol
@@ -20,7 +20,7 @@
 (defun tfl-open-obsidian-link (url _)
   "Open an \"obsidian\" type link.
 URL is the obsidian url to open."
-  (shell-command (concat "obsidian \"obsidian:" url "\"") nil nil))
+  (start-process "obsidian" nil "obsidian" (concat "obsidian:" url)))
 
 (provide 'tfl-ol-obsidian)
 ;;; tfl-ol-obsidian.el ends here
