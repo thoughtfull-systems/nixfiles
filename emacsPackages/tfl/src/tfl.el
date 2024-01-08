@@ -69,6 +69,7 @@
 (use-package simple
   :custom ((indent-tabs-mode nil)
            (save-interprogram-paste-before-kill t))
+  :hook (visual-fill-column-mode . visual-line-mode)
   :defer)
 (use-package startup
   :custom ((inhibit-startup-echo-area-message (getenv "USER"))
@@ -83,6 +84,14 @@
          ("C-x C-b" . tfl-switch-buffer)))
 (use-package tool-bar
   :custom (tool-bar-mode nil)
+  :defer)
+(use-package visual-fill-column
+  :ensure t
+  :hook ((markdown-mode org-mode) . visual-fill-column-mode)
+  :config
+  (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust))
+(use-package window
+  :custom (split-window-preferred-function 'visual-fill-column-split-window-sensibly)
   :defer)
 (use-package wgrep
   :defer)
