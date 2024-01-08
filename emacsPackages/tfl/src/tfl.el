@@ -28,6 +28,7 @@
   :custom (desktop-restore-frames nil)
   :defer)
 (use-package face-remap
+  :custom (buffer-face-mode-face 'variable-pitch-text)
   :defer
   :diminish buffer-face-mode)
 (use-package faces
