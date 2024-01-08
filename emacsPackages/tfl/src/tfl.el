@@ -191,7 +191,11 @@
   :custom (emacs-lisp-docstring-fill-column 80)
   :defer)
 (use-package magit-extras
-  :after magit)
+  :after magit
+  ;; add project-switch-command without demand loading magit
+  :preface (advice-add #'project-switch-project :before
+                       (lambda (&rest _args)
+                         (require 'magit-extras))))
 (use-package paredit
   :diminish
   :hook (emacs-lisp-mode . paredit-mode))
