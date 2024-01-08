@@ -119,8 +119,7 @@
 (use-package consult
   :custom ((consult-after-jump-hook '(recenter pulse-momentary-highlight-one-line))
            (consult-narrow-key "C-,")
-           (consult-preview-key nil))
-  :defer)
+           (consult-preview-key nil)))
 (use-package consult-org
   :after (consult org)
   :bind ("C-c o j j" . consult-org-agenda))
