@@ -87,7 +87,6 @@
   :custom (tool-bar-mode nil)
   :defer)
 (use-package visual-fill-column
-  :ensure t
   :hook ((markdown-mode org-mode) . visual-fill-column-mode)
   :config
   (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust))

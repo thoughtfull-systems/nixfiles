@@ -15,6 +15,7 @@ epkgs: {
       orderless
       paredit
       use-package
+      visual-fill-column
       wgrep
       writegood-mode
     ];
