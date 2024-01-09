@@ -17,7 +17,7 @@
          ("C-c o o" . org-cycle-agenda-files)
          ("C-c o j r". org-refile-goto-last-stored)
          ("C-c o j c". org-capture-goto-last-stored))
-  :hook ((org-mode . variable-pitch-mode)))
+  :hook ((org-mode . (lambda () (setq-local buffer-face-mode-face 'variable-pitch-text)))))
 (use-package org-autolist
   :after (org)
   :diminish
