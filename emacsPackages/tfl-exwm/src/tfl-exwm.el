@@ -19,10 +19,11 @@
   :custom ((exwm-input-global-keys
             ;; C- and M- seem to be fine as modifiers for s- but not S- since
             ;; it works inconsistently between Emacs buffers and X buffers.
-            `(([?\s-f] . tfl-exwm-switch-and-cycle-or-run-browser)
+            `(([?\s-b ?\s-b] . tfl-switch-to-most-recent-buffer)
+              ([?\s-b ?\s-f] . tfl-exwm-switch-and-cycle-or-run-browser)
+              ([?\s-b ?\s-s] . tfl-exwm-switch-and-cycle-or-run-slack)
+              ([?\s-b ?\s-t] . tfl-exwm-switch-and-cycle-or-run-terminal)
               ([?\C-\s-r] . tfl-exwm-restart)
-              ([?\s-s] . tfl-exwm-switch-and-cycle-or-run-slack)
-              ([?\s-t] . tfl-exwm-switch-and-cycle-or-run-terminal)
               ([?\s-&] . tfl-exwm-run-command)
               ;; Align workspaces more intuitively with key bindings
               ([?\s-1] . tfl-exwm-switch-to-workspace-1)

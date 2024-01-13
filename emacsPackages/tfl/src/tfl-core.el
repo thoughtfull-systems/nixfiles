@@ -17,6 +17,11 @@
   "Compare buffer names of B1 and B2."
   (string-collate-lessp (buffer-name b1) (buffer-name b2) nil t))
 
+(defun tfl-switch-to-most-recent-buffer ()
+  "Switch to most recently used buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) t)))
+
 (defun tfl-switch-buffer (&optional prefix)
   "Switch buffers using incremental completion.
 When given PREFIX, use `ibuffer' instead."
