@@ -95,6 +95,9 @@
   :defer)
 (use-package wgrep
   :defer)
+(use-package which-key
+  :custom ((which-key-idle-delay 1.5)
+           (which-key-mode t)))
 (use-package whitespace
   :custom ((global-whitespace-mode t)
            (whitespace-action '(auto-cleanup))

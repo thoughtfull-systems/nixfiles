@@ -17,6 +17,7 @@ epkgs: {
       use-package
       visual-fill-column
       wgrep
+      which-key
       writegood-mode
     ];
     pname = "tfl";
