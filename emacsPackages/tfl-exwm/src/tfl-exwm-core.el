@@ -19,11 +19,23 @@
 
 
 ;;; Variables
-(defvar tfl-exwm-browser-workspace-number 7)
-(defvar tfl-exwm-browser-class "firefox")
-(defvar tfl-exwm-browser-command "firefox")
+(defvar tfl-exwm-firefox-workspace-number 10)
+(defvar tfl-exwm-firefox-class "firefox")
+(defvar tfl-exwm-firefox-command "firefox")
 
-(defvar tfl-exwm-terminal-workspace-number 8)
+(defvar tfl-exwm-discord-workspace-number 11)
+(defvar tfl-exwm-discord-class "discord")
+(defvar tfl-exwm-discord-command "discord")
+
+(defvar tfl-exwm-obsidian-workspace-number 12)
+(defvar tfl-exwm-obsidian-class "obsidian")
+(defvar tfl-exwm-obsidian-command "obsidian")
+
+(defvar tfl-exwm-slack-workspace-number 13)
+(defvar tfl-exwm-slack-class "Slack")
+(defvar tfl-exwm-slack-command "slack")
+
+(defvar tfl-exwm-terminal-workspace-number 14)
 (defvar tfl-exwm-terminal-class
   (if (executable-find "gnome-terminal")
       "Gnome-terminal"
@@ -32,10 +44,6 @@
   (if (executable-find "gnome-terminal")
       "gnome-terminal"
     "xfce4-terminal"))
-
-(defvar tfl-exwm-slack-workspace-number 9)
-(defvar tfl-exwm-slack-class "Slack")
-(defvar tfl-exwm-slack-command "slack")
 
 
 ;;; Functions
@@ -151,7 +159,7 @@ If no buffers of TARGET-CLASS-NAME exist, then start COMMAND."
       ;; cycle target-class-name or run command
       (tfl-exwm-cycle-class-or-run-command target-class-name command)
     ;; otherwise switch to workspace-number
-    (exwm-workspace-switch workspace-number)
+    (exwm-workspace-switch-create workspace-number)
     ;; if current-buffer is not target-class-name
     (unless (tfl-exwm-buffer-class-p (current-buffer) target-class-name)
       ;; cycle target-class-name or run command
@@ -159,21 +167,29 @@ If no buffers of TARGET-CLASS-NAME exist, then start COMMAND."
   ;; focus on target-class-name
   (delete-other-windows))
 
-(defun tfl-exwm-switch-and-cycle-or-run-browser ()
-  "Switch to browser workspace and cycle browser windows.
-If browser is not running, the run the browser command."
+(defun tfl-exwm-switch-and-cycle-or-run-discord ()
+  "Switch to discord workspace and cycle discord windows.
+If discord is not running, the run the discord command."
   (interactive)
-  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-browser-workspace-number
-                                    tfl-exwm-browser-class
-                                    tfl-exwm-browser-command))
+  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-discord-workspace-number
+                                    tfl-exwm-discord-class
+                                    tfl-exwm-discord-command))
 
-(defun tfl-exwm-switch-and-cycle-or-run-terminal ()
-  "Switch to terminal workspace and cycle terminal windows.
-If terminal is not running, the run the terminal command."
+(defun tfl-exwm-switch-and-cycle-or-run-firefox ()
+  "Switch to firefox workspace and cycle firefox windows.
+If firefox is not running, the run the firefox command."
   (interactive)
-  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-terminal-workspace-number
-                                    tfl-exwm-terminal-class
-                                    tfl-exwm-terminal-command))
+  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-firefox-workspace-number
+                                    tfl-exwm-firefox-class
+                                    tfl-exwm-firefox-command))
+
+(defun tfl-exwm-switch-and-cycle-or-run-obsidian ()
+  "Switch to obsidian workspace and cycle obsidian windows.
+If obsidian is not running, the run the obsidian command."
+  (interactive)
+  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-obsidian-workspace-number
+                                    tfl-exwm-obsidian-class
+                                    tfl-exwm-obsidian-command))
 
 (defun tfl-exwm-switch-and-cycle-or-run-slack ()
   "Switch to slack workspace and cycle slack windows.
@@ -182,6 +198,14 @@ If slack is not running, the run the slack command."
   (tfl-exwm-switch-and-cycle-or-run tfl-exwm-slack-workspace-number
                                     tfl-exwm-slack-class
                                     tfl-exwm-slack-command))
+
+(defun tfl-exwm-switch-and-cycle-or-run-terminal ()
+  "Switch to terminal workspace and cycle terminal windows.
+If terminal is not running, the run the terminal command."
+  (interactive)
+  (tfl-exwm-switch-and-cycle-or-run tfl-exwm-terminal-workspace-number
+                                    tfl-exwm-terminal-class
+                                    tfl-exwm-terminal-command))
 
 (defun tfl-exwm-enable ()
   "Enable my EXWM configuration."

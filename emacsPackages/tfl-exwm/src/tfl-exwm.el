@@ -20,7 +20,9 @@
             ;; C- and M- seem to be fine as modifiers for s- but not S- since
             ;; it works inconsistently between Emacs buffers and X buffers.
             `(([?\s-b] . tfl-switch-to-most-recent-buffer)
-              ([?\s-f] . tfl-exwm-switch-and-cycle-or-run-browser)
+              ([?\s-d] . tfl-exwm-switch-and-cycle-or-run-discord)
+              ([?\s-f] . tfl-exwm-switch-and-cycle-or-run-firefox)
+              ([?\s-o] . tfl-exwm-switch-and-cycle-or-run-obsidian)
               ([?\s-s] . tfl-exwm-switch-and-cycle-or-run-slack)
               ([?\s-t] . tfl-exwm-switch-and-cycle-or-run-terminal)
               ([?\C-\s-r] . tfl-exwm-restart)
