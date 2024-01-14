@@ -4,6 +4,7 @@ epkgs: {
       exwm
       exwm-modeline
       tfl
+      tfl-gtd
     ];
     pname = "tfl-exwm";
     src = ./src;

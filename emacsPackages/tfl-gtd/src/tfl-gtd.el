@@ -10,6 +10,7 @@
 ;;
 ;;; Code:
 
+(require 'use-package)
 (use-package org
   :custom ((org-after-todo-state-change-hook '(tfl-gtd-add-delegatee-to-waiting
                                                tfl-gtd-add-created-to-todo))

@@ -16,26 +16,29 @@
 (require 'exwm)
 (require 'exwm-randr)
 (require 'tfl)
+(require 'tfl-gtd-agenda)
 
 
 ;;; Variables
-(defvar tfl-exwm-firefox-workspace-number 10)
-(defvar tfl-exwm-firefox-class "firefox")
-(defvar tfl-exwm-firefox-command "firefox")
+(defvar tfl-exmw-agenda-workspace-number 10)
 
 (defvar tfl-exwm-discord-workspace-number 11)
 (defvar tfl-exwm-discord-class "discord")
 (defvar tfl-exwm-discord-command "discord")
 
-(defvar tfl-exwm-obsidian-workspace-number 12)
+(defvar tfl-exwm-firefox-workspace-number 12)
+(defvar tfl-exwm-firefox-class "firefox")
+(defvar tfl-exwm-firefox-command "firefox")
+
+(defvar tfl-exwm-obsidian-workspace-number 13)
 (defvar tfl-exwm-obsidian-class "obsidian")
 (defvar tfl-exwm-obsidian-command "obsidian")
 
-(defvar tfl-exwm-slack-workspace-number 13)
+(defvar tfl-exwm-slack-workspace-number 14)
 (defvar tfl-exwm-slack-class "Slack")
 (defvar tfl-exwm-slack-command "slack")
 
-(defvar tfl-exwm-terminal-workspace-number 14)
+(defvar tfl-exwm-terminal-workspace-number 15)
 (defvar tfl-exwm-terminal-class
   (if (executable-find "gnome-terminal")
       "Gnome-terminal"
@@ -167,6 +170,14 @@ If no buffers of TARGET-CLASS-NAME exist, then start COMMAND."
   ;; focus on target-class-name
   (delete-other-windows))
 
+(defun tfl-exwm-switch-to-agenda ()
+  "Switch to agenda workspace and open agenda window.
+If agenda is not available, then run it."
+  (interactive)
+  (exwm-workspace-switch-create tfl-exmw-agenda-workspace-number)
+  (delete-other-windows)
+  (tfl-gtd-agenda-daily))
+
 (defun tfl-exwm-switch-and-cycle-or-run-discord ()
   "Switch to discord workspace and cycle discord windows.
 If discord is not running, the run the discord command."
@@ -220,7 +231,7 @@ If terminal is not running, the run the terminal command."
 
 (defun tfl-exwm-workspace-name (n)
   "Rename workspace N to align more intuitively with key bindings."
-  (number-to-string (mod (1+ n) 10)))
+  (number-to-string (1+ n)))
 
 (defun tfl-exwm-rename-current-buffer ()
   "Rename `current-buffer' with its `exwm-class-name'."

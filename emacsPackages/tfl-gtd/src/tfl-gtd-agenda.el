@@ -12,6 +12,9 @@
 (require 'tfl-gtd)
 (require 'org-agenda)
 
+(defvar tga--buffer-name "*GTD Daily Agenda*")
+(defvar tga--buffer nil)
+
 (defun tga--previous-heading-same-level ()
   (org-back-to-heading)
   (let ((curr (point)))
@@ -56,22 +59,25 @@
 (defun tga-daily ()
   "Show Agenda with next actions."
   (interactive)
-  (when (fboundp 'exwm-workspace-switch)
-    (exwm-workspace-switch 6))
-  (let* ((org-agenda-custom-commands
-          '(("z" "Agenda and all TODOs"
-             ((agenda "")
-              (alltodo ""
-                       ((org-agenda-skip-function 'tga-only-next-action))))
-             ((org-agenda-prefix-format
-               '((agenda . " %i %?-12t% s%b")
-                 (todo . " %i %b")
-                 (tags . " %i %b")
-                 (search . " %i %b")))
-              (org-agenda-tag-filter-preset
-               '("-ARCHIVE" "-DONE")))))))
-    (org-agenda nil "z"))
-  (delete-other-windows))
+  (if (buffer-live-p tga--buffer)
+      (switch-to-buffer tga--buffer)
+    (let* ((org-agenda-custom-commands
+            `(("z" "Agenda and all TODOs"
+               ((agenda "")
+                (alltodo ""
+                         ((org-agenda-skip-function 'tga-only-next-action))))
+               ((org-agenda-buffer-name
+                 ,tga--buffer-name)
+                (org-agenda-prefix-format
+                 '((agenda . " %i %?-12t% s%b")
+                   (todo . " %i %b")
+                   (tags . " %i %b")
+                   (search . " %i %b")))
+                (org-agenda-tag-filter-preset
+                 '("-ARCHIVE" "-DONE"))
+                (org-agenda-window-setup 'current-window))))))
+      (org-agenda nil "z")
+      (setq tga--buffer (current-buffer)))))
 
 ;; (deftheme tfl-gtd-agenda)
 ;; (custom-theme-set-variables
