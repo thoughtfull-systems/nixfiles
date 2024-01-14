@@ -32,7 +32,9 @@
   :defer
   :diminish buffer-face-mode)
 (use-package faces
-  :custom-face (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
+  :custom-face
+  (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
+  (fixed-pitch ((t (:height 110))) face-defface-spec)
   :defer)
 (use-package files
   :custom ((auto-save-visited-mode t)
