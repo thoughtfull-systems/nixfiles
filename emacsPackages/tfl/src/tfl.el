@@ -77,7 +77,7 @@
 (use-package startup
   :custom ((inhibit-startup-echo-area-message (getenv "USER"))
            (inhibit-startup-screen t)
-           (initial-major-mode 'fundamental-mode)
+           (initial-major-mode 'text-mode)
            (initial-scratch-message nil))
   :defer)
 (use-package tfl-core
