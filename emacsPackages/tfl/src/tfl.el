@@ -34,7 +34,7 @@
 (use-package faces
   :custom-face
   (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
-  (fixed-pitch ((t (:height 110))) face-defface-spec)
+  (fixed-pitch ((t (:height 110))))
   :defer)
 (use-package files
   :custom ((auto-save-visited-mode t)
