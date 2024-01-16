@@ -92,7 +92,8 @@ File is relative to `org-directory'.  Added to `org-agenda-files' when set."
   '("WAIT" "CANC" "DONE"))
 
 (defvar tfl-gtd--inactive-tags
-  '("WAIT" "HABIT" "SOMEDAY" "MAYBE" "CANC" "DONE" "ARCHIVE" "REFERENCE"))
+  '("WAIT" "HABIT" "SOMEDAY" "TOLISTEN" "TOREAD" "TOWATCH" "MAYBE" "CANC" "DONE" "ARCHIVE"
+    "REFERENCE"))
 
 (defun tfl-gtd-active-p ()
   (and (not (seq-intersection tfl-gtd--inactive-todo-states (list (org-get-todo-state))))
