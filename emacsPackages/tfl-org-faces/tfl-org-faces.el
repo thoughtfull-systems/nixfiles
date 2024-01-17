@@ -90,7 +90,7 @@
  '(org-date ((t (:inherit fixed-pitch :foreground "Purple" :underline t))))
  '(org-document-info-keyword ((t (:inherit (shadow fixed-pitch)))))
  '(org-done ((t (:inherit fixed-pitch :foreground "ForestGreen" :weight bold))))
- '(org-drawer ((t (:inherit fixed-pitch :foreground "Blue1"))))
+ '(org-drawer ((t (:inherit fixed-pitch :foreground "gray"))))
  '(org-hide ((t (:inherit fixed-pitch :foreground "white"))))
  '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
  '(org-link ((t (:inherit link :underline t))))
