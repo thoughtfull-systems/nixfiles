@@ -35,6 +35,7 @@
   :custom-face
   (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
   (fixed-pitch ((t (:height 110))))
+  (mode-line-inactive ((t (:foreground "gray60"))))
   :defer)
 (use-package files
   :custom ((auto-save-visited-mode t)
