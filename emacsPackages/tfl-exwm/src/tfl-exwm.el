@@ -90,6 +90,8 @@
   :defer)
 (use-package exwm-modeline
   :custom (exwm-modeline-mode t)
+  :custom-face
+  (exwm-modeline-empty-workspace ((t)) face-defface-spec)
   :defer)
 (use-package exwm-layout
   :custom ((exwm-layout-show-all-buffers t))
