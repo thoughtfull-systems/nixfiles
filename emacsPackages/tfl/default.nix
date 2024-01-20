@@ -15,6 +15,7 @@ epkgs: {
       orderless
       paredit
       use-package
+      vertico
       visual-fill-column
       wgrep
       which-key

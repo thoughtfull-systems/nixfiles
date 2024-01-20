@@ -129,17 +129,8 @@
 (use-package consult-org
   :after (consult org)
   :bind ("C-c o j j" . consult-org-agenda))
-(use-package icomplete
-  :bind (:map icomplete-minibuffer-map
-              ("C-<return>" . icomplete-force-complete)
-              ("M-<return>" . exit-minibuffer)
-              ("<return>" . icomplete-force-complete-and-exit)
-              ("C-l" . tfl-completion-delete-back-to-slash))
-  :custom ((icomplete-show-matches-on-no-input t)
-           (icomplete-vertical-mode t))
-  :preface (autoload #'tfl-completion-delete-back-to-slash "tfl-core"))
 (use-package marginalia
-  :hook (icomplete-mode . marginalia-mode))
+  :custom ((marginalia-mode t)))
 (use-package minibuffer
   :custom ((completion-auto-help nil)
            (completion-category-overrides '((file (styles basic partial-completion orderless))))
@@ -154,6 +145,8 @@
   :custom (orderless-matching-styles
            '(orderless-regexp orderless-literal orderless-initialism orderless-prefixes))
   :defer)
+(use-package vertico
+  :custom ((vertico-mode t)))
 
 
 ;; Programming
