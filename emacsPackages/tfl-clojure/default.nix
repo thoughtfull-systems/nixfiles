@@ -6,6 +6,7 @@ epkgs: {
       clojure-mode-extra-font-locking
       flycheck
       flycheck-clj-kondo
+      tfl
     ];
     pname = "tfl-clojure";
     src = ./tfl-clojure.el;
