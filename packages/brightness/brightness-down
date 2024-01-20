@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-@xbacklight@ -dec 10
-@notify@

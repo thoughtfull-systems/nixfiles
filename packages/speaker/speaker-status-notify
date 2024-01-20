@@ -1,2 +1,0 @@
-#!/usr/bin/env sh
-@notify@ -t 1000 -r 8322483232 "$(@status@)"

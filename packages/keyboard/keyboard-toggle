@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-if @setxkbmap@ -query | grep variant > /dev/null; then
-  @setxkbmap@ -layout us
-else
-  @setxkbmap@ -layout us -variant dvorak
-fi
