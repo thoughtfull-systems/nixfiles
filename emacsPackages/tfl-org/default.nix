@@ -1,6 +1,7 @@
 epkgs: {
   tfl-org = epkgs.elpaBuild {
     packageRequires = with epkgs; [
+      org
       org-autolist
     ];
     pname = "tfl-org";
