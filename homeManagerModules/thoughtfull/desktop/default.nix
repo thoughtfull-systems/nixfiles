@@ -8,7 +8,13 @@ in {
       libreoffice
       notify-desktop
       tor-browser-bundle-bin
-      zoom-us
+      (zoom-us.overrideAttrs (_: {
+        version = "5.16.10.668";
+        src = fetchurl {
+          url = "https://zoom.us/client/5.16.10.668/zoom_x86_64.pkg.tar.xz";
+          hash = "sha256-dZQHbpvU8uNafmHtGoPhj6WsDhO20Dma/XwY6oa3Xes=";
+        };
+      }))
     ];
     fonts.fontconfig.enable = lib.mkForce true;
     services.blueman-applet.enable = lib.mkDefault osConfig.hardware.bluetooth.enable;
