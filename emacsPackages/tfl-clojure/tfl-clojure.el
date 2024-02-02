@@ -20,7 +20,8 @@
 (use-package clojure-mode
   ;; clojure-mode fills to fill-column plus 2.  I think it is because it narrows the buffer to the
   ;; docstring, which removes the first two spaces on the line, so I'm adjusting for that here.
-  :custom ((clojure-docstring-fill-column (- fill-column 2)))
+  :custom ((clojure-docstring-fill-column (- fill-column 2))
+           (clojure-indent-style 'always-indent))
   :defer)
 (use-package clojure-mode-extra-font-locking
   :after clojure-mode)
