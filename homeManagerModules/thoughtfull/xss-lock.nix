@@ -1,11 +1,11 @@
 { lib, pkgs, ... } : {
   systemd.user.services.xss-lock = {
     Install = {
-      WantedBy = [ "tfl-autostart.target" ];
+      WantedBy = [ "thoughtfull-autostart.target" ];
     };
     Unit = {
       Description = "XSS Lock Daemon";
-      PartOf = [ "tfl-autostart.target" ];
+      PartOf = [ "thoughtfull-autostart.target" ];
     };
     Service = {
       ExecStart = with lib;
