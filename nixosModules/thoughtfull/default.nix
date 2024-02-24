@@ -21,7 +21,6 @@ inputs: { lib, ... }: {
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix
-    ./obsidian-electron-eol.nix
     ./openssh.nix
     ./overlay-thoughtfull.nix
     ./postgresql-backup.nix
