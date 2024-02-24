@@ -11,7 +11,7 @@
     };
     nixpkgs.url = "github:thoughtfull-systems/nixpkgs/nixos-23.11";
     # for some software I want the most recent version
-    unstable.url = "github:thoughtfull-systems/nixpkgs/nixos-unstable";
+    unstable.url = "github:thoughtfull-systems/nixpkgs/nixpkgs-unstable";
   };
   outputs = { nixpkgs, self, ... }@inputs: {
     emacsPackages = import ./emacsPackages;
