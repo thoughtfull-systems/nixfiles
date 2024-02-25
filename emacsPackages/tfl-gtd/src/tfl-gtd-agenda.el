@@ -74,7 +74,7 @@
                    (tags . " %i %b")
                    (search . " %i %b")))
                 (org-agenda-tag-filter-preset
-                 '("-ARCHIVE" "-DONE"))
+                 '("-ARCHIVE" "-DONE" "-CANC"))
                 (org-agenda-window-setup 'current-window))))))
       (org-agenda nil "z")
       (setq tga--buffer (current-buffer)))))
