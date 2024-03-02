@@ -1,7 +1,7 @@
 epkgs: {
-  tfl-org-bullets = epkgs.elpaBuild {
+  tfl-org-bullets = epkgs.trivialBuild {
     pname = "tfl-org-bullets";
     src = ./tfl-org-bullets.el;
-    version = "0.0.0";
+    version = "0";
   };
 }
