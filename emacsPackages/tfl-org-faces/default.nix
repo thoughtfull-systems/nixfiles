@@ -1,7 +1,7 @@
 epkgs: {
-  tfl-org-faces = epkgs.elpaBuild {
+  tfl-org-faces = epkgs.trivialBuild {
     pname = "tfl-org-faces";
     src = ./tfl-org-faces.el;
-    version = "0.0.0";
+    version = "0";
   };
 }

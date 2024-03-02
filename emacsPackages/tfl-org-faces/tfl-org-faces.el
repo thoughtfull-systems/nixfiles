@@ -1,14 +1,14 @@
 ;;; tfl-org-faces.el --- Faces for org-mode                              -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
+;;
+;;  Copyright (c) 2024 Paul Stadig
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
+;;
 ;; Because I like to use variable pitch for org-mode, make the left margins fixed pitch, so things
 ;; line up when indented.
-
+;;
 ;;; Code:
 (require 'org)
 

@@ -1,7 +1,7 @@
 epkgs: {
-  tfl-org-capture = epkgs.elpaBuild {
+  tfl-org-capture = epkgs.trivialBuild {
     pname = "tfl-org-capture";
     src = ./tfl-org-capture.el;
-    version = "0.0.0";
+    version = "0";
   };
 }

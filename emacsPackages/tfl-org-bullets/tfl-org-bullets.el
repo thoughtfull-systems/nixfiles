@@ -1,6 +1,6 @@
 ;;; tfl-org-bullets.el --- Use fancy bullets for headings and lists      -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2023 Paul Stadig
+;;  Copyright (c) 2024 Paul Stadig
 ;;
 ;;; Commentary:
 ;;

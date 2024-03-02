@@ -1,13 +1,13 @@
-;;; tfl-org-capture.el --- Code and configuration for org-mode           -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
+;;; tfl-org-capture.el --- Code and configuration for org-capture        -*- lexical-binding: t; -*-
+;;
+;;  Copyright (c) 2024 Paul Stadig
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
-;; Code and configuration for org-mode.
-
+;;
+;; Code and configuration for org-capture.
+;;
 ;;; Code:
 
 (use-package org-capture
