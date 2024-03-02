@@ -1,13 +1,11 @@
 ;;; tfl-org.el --- Code and configuration for org-mode                   -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Paul Stadig
-
-;;  Version: 0.0.0
-
+;;
+;;  Copyright (c) 2024 Paul Stadig
+;;
 ;;; Commentary:
-
+;;
 ;; Code and configuration for org-mode.
-
+;;
 ;;; Code:
 
 (use-package hl-line
