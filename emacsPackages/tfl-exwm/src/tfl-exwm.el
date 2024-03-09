@@ -97,7 +97,8 @@
   :custom ((exwm-layout-show-all-buffers t))
   :defer)
 (use-package exwm-randr
-  :custom (exwm-randr-screen-change-hook 'tfl-exwm-autorandr-change)
+  :custom ((exwm-randr-screen-change-hook 'tfl-exwm-autorandr-change)
+           (exwm-randr-workspace-monitor-plist '(9 "eDP-1")))
   :defer)
 (use-package exwm-workspace
   :custom ((exwm-workspace-index-map 'tfl-exwm-workspace-name)
