@@ -52,11 +52,13 @@
   "plugins/plugin-10" = "notification-plugin";
   "plugins/plugin-12" = "clock";
   "plugins/plugin-12/command" = "";
-  "plugins/plugin-12/digital-layout" = uint 3; # full date
-  "plugins/plugin-12/digital-time-font" = "B612 11";
+  "plugins/plugin-12/digital-date-font" = "B612 8";
+  "plugins/plugin-12/digital-layout" = uint 1; # time then date
+  "plugins/plugin-12/digital-time-font" = "B612 Bold 10";
   "plugins/plugin-12/digital-time-format" = "%R"; # hh:mm
   "plugins/plugin-12/mode" = uint 2; # digital
   "plugins/plugin-12/timezone" = "";
+  "plugins/plugin-12/tooltip-format" = "Week %V";
   "plugins/plugin-14" = "actions";
   "plugins/plugin-14/appearance" = uint 0; # action buttons
   "plugins/plugin-14/ask-confirmation" = false;
