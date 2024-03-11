@@ -52,9 +52,9 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
   services = {
     xserver = {
       desktopManager.xfce = {
-        noDesktop = lib.mkDefault true;
         enableScreensaver = lib.mkDefault false;
-        enableXfwm = lib.mkDefault false;
+        enableXfwm = lib.mkDefault true;
+        noDesktop = lib.mkDefault true;
       };
       displayManager.lightdm.enable = true;
       libinput.touchpad.tapping = false;
