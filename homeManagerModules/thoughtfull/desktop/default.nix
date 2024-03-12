@@ -8,9 +8,7 @@ in {
       libreoffice
       notify-desktop
       tor-browser-bundle-bin
-      # requires opengl be disabled; maybe related to https://github.com/NixOS/nixpkgs/issues/82959
-      # though I don't get a core dump
-      unstable.zoom-us
+      zoom-us
     ];
     fonts.fontconfig.enable = lib.mkForce true;
     services.blueman-applet.enable = lib.mkDefault osConfig.hardware.bluetooth.enable;
