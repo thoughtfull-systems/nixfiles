@@ -128,7 +128,9 @@
            (consult-preview-key nil)))
 (use-package consult-org
   :after (consult org)
-  :bind ("C-c o j j" . consult-org-agenda))
+  :bind (("C-c o j j" . consult-org-agenda)
+         :map org-mode-map
+         ("C-c C-j" . consult-org-heading)))
 (use-package marginalia
   :custom ((marginalia-mode t)))
 (use-package minibuffer
