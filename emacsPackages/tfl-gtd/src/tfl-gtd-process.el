@@ -10,6 +10,7 @@
 
 ;;; Code:
 (require 'tfl-gtd)
+(require 'tfl-gtd-core)
 (require 'org-refile)
 (require 'transient)
 
@@ -19,7 +20,7 @@
 
 (define-minor-mode tgp-mode
   "Minor mode for tfl-gtd-process."
-  :lighter " PGP"
+  :lighter " tgp"
   :keymap tgp-map
   :group 'tfl-gtd-process
   (if tgp-mode

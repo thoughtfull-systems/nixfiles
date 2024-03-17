@@ -39,6 +39,8 @@
   :bind ("C-c g d" . tfl-gtd-agenda-daily))
 (use-package tfl-gtd-process
   :bind ("C-c g p" . tfl-gtd-process))
+(use-package tfl-gtd-review
+  :bind ("C-c g r" . tfl-gtd-review))
 
 (provide 'tfl-gtd)
 ;;; tfl-gtd.el ends here
