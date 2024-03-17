@@ -10,6 +10,7 @@
 
 ;;; Code:
 (require 'tfl-gtd)
+(require 'tfl-gtd-core)
 (require 'org-agenda)
 
 (defvar tga--buffer-name "*GTD Daily Agenda*")
