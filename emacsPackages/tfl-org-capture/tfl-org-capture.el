@@ -12,8 +12,6 @@
 
 (use-package org-capture
   :bind (("C-c o c" . org-capture)))
-(use-package org-protocol
-  :after (org))
 
 (deftheme tfl-org-capture)
 (custom-theme-set-variables

@@ -30,12 +30,9 @@
   :custom ((org-todo-keyword-faces '(("WAIT" . "blue") ("CANC" . "orange"))))
   :defer)
 (use-package tfl-gtd-core
-  :after tfl-org
   :bind ("C-c g c" . tfl-gtd-capture)
-  :demand t
   :hook (org-mode . tfl-gtd-set-regexp))
 (use-package tfl-gtd-agenda
-  :after tfl-gtd
   :bind ("C-c g d" . tfl-gtd-agenda-daily))
 (use-package tfl-gtd-process
   :bind ("C-c g p" . tfl-gtd-process))

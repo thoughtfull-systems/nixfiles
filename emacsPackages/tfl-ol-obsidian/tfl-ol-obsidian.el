@@ -11,10 +11,12 @@
 ;;; Code:
 
 (use-package ol
-  :after org
+  :after (org org-protocol)
   :commands (org-link-set-parameters)
   :config
   (org-link-set-parameters "obsidian" :follow #'tfl-open-obsidian-link))
+(use-package org-protocol
+  :after (org))
 
 ;;;###autoload
 (defun tfl-open-obsidian-link (url _)

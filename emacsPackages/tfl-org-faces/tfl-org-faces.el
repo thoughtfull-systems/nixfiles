@@ -10,8 +10,6 @@
 ;; line up when indented.
 ;;
 ;;; Code:
-(require 'org)
-
 ;; Make heading bullets fixed pitch
 (defface org-level-1-bullet '((t :inherit (org-level-1 fixed-pitch)))
   "Face used for level 1 headline bullets."
