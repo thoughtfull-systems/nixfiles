@@ -19,7 +19,7 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
   services = {
     xserver = {
       desktopManager.xfce = {
-        enableScreensaver = lib.mkDefault false;
+        enableScreensaver = lib.mkDefault true;
         enableXfwm = lib.mkDefault true;
         noDesktop = lib.mkDefault true;
       };

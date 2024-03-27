@@ -17,7 +17,6 @@
     ./starship.nix
     ./syncthing.nix
     ./tmux.nix
-    ./xss-lock.nix
     ./yubikey.nix
     ./zsh.nix
   ];

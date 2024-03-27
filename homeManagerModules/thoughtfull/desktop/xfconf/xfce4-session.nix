@@ -3,7 +3,7 @@
   "compat/LaunchGNOME" = false;
   "compat/LaunchKDE" = false;
   "general/AutoSave" = false;
-  "general/LockCommand" = "dm-tool lock";
+  "general/LockCommand" = "${pkgs.xfce.xfce4-screensaver}/bin/xfce4-screensaver-command -l";
   "general/PromptOnLogout" = true;
   "general/SaveOnExit" = false;
   "general/StartAssistiveTechnologies" = false;
