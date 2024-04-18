@@ -1,0 +1,34 @@
+{ uint, ... } : {
+  "xfce4-power-manager/battery-button-action" = uint 0; # nothing
+  "xfce4-power-manager/blank-on-ac" = 0; # never
+  "xfce4-power-manager/blank-on-battery" = 0; # never
+  "xfce4-power-manager/brightness-exponential" = false;
+  "xfce4-power-manager/brightness-level-on-ac" = uint 100;
+  "xfce4-power-manager/brightness-level-on-battery" = uint 100;
+  "xfce4-power-manager/brightness-on-ac" = uint 9; # never
+  "xfce4-power-manager/brightness-on-battery" = uint 9; # never
+  "xfce4-power-manager/brightness-step-count" = uint 10;
+  "xfce4-power-manager/critical-power-action" = uint 2; # hybrid-sleep
+  "xfce4-power-manager/critical-power-level" = uint 10;
+  "xfce4-power-manager/dpms-enabled" = false; # lock screen when display turns off?
+  "xfce4-power-manager/dpms-on-ac-off" = uint 0; # never
+  "xfce4-power-manager/dpms-on-ac-sleep" = uint 0; # never
+  "xfce4-power-manager/dpms-on-battery-off" = uint 10;
+  "xfce4-power-manager/dpms-on-battery-sleep" = uint 10;
+  "xfce4-power-manager/general-notification" = false;
+  "xfce4-power-manager/handle-brightness-keys" = true;
+  "xfce4-power-manager/hibernate-button-action" = uint 2; # hybrid-sleep
+  "xfce4-power-manager/inactivity-on-ac" = uint 14; # never
+  "xfce4-power-manager/inactivity-on-battery" = uint 20;
+  "xfce4-power-manager/inactivity-sleep-mode-on-ac" = uint 1; # suspend
+  "xfce4-power-manager/inactivity-sleep-mode-on-battery" = uint 1; # suspend
+  "xfce4-power-manager/lid-action-on-battery" = uint 1; # suspend
+  "xfce4-power-manager/lid-action-on-ac" = uint 0; # switch off display
+  "xfce4-power-manager/lock-screen-suspend-hibernate" = false;
+  "xfce4-power-manager/logind-handle-lid-switch" = false;
+  "xfce4-power-manager/power-button-action" = uint 2; # hybrid-sleep
+  "xfce4-power-manager/show-panel-label" = 1; # percentage
+  "xfce4-power-manager/show-presentation-indicator" = true;
+  "xfce4-power-manager/show-tray-icon" = false;
+  "xfce4-power-manager/sleep-button-action" = uint 1; # suspend
+}

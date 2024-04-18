@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+@notify@ -t 1000 -r 5693524464 "$(@status@)"

@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+if [ -f ~/.noexwm ]; then
+  xfwm4 &
+else
+  v=82
+  while [ ${v} -eq 82 ]; do
+    emacs -l tfl-exwm -f tfl-exwm-enable
+    v=${?}
+  done
+  case ${XDG_SESSION_DESKTOP} in
+    xfce)
+      xfce4-session-logout -fl
+      ;;
+  esac
+  exit ${v}
+fi

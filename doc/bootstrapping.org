@@ -1,0 +1,64 @@
+* Bootstrapping (2023-05-20)
+Currently, run ~/bin/boostrap-minimal.bash~ and it does several things, some on the source and some
+on the target.
+
+The part done on the source is mostly about re-encrypting secrets with a bootstrap key (i.e. the
+installation ssh host key).  The public key must be scp'ed to the source, the secrets must be
+re-encrypted, the new secrets must be committed and pushed, the new secrets must be pulled on the
+target, and the private key must be copied to ~/mnt/tmp/~ so it is accessible to ~nixos-install~.
+This is all pretty involved and complicated.
+
+After the installation, it is also complicated to remove the bootstrap key and setup the new
+installed host key (I get the order wrong every time and end up bricking my install except that I
+can ssh in as root and fix it).
+
+Other options:
+
+- use an encrypted bootstrap key.  It would have to be scp'ed from the source (since it cannot be
+  decrypted at the target), but it would mitigate the need to commit and push from the source.  The
+  downside is there's a private key in the public repo that could decrypt all the secrets, but it
+  would also be encrypted.  It would also be (publicly?) accessible on every installed machine, and
+  calls into question the need for any other key.  For some reason I think it's better to depend on
+  each host's ssh host key, but why?  There's also a bootstapping issue in that the bootstrap key
+  has to be decrypted, so I'd always have to install from a source machine that has access to either
+  the bootstap key or some other key (probably my ssh key or yubikey).
+- generate a bootstrap key.  Instead of using the install host key, generate a bootstrap key.  I'd
+  then have to scp it to the target, and I'd have the same complications removing it after
+  installation, so I'm not sure what advantage this would have.
+- use my yubikey.  This would be the ideal.  If I could just plug in my yubikey during the bootstrap
+  process that would be ideal, but I couldn't figure it out.  +It might be worth revisiting.  I
+  think the issue was needing some nixos configuration that isn't available on the install ISO and
+  isn't easily reconfigured before install.  A workaround would be to build my own installation iso
+  with the necessary configuration, but that seems like a big lift that could be complicated,
+  fragile, and is a rabbit hole+.  I did revisit this.  There are, I think, two issue.  One, I need
+  to get age-plugin-yubikey on the path, and the best way I could manage that is to fork agenix.  I
+  just couldn't figure out how to get something on the PATH during activation (especially during
+  boot), otherwise.  Two, even having age-plugin-yubikey on the path, it still needs to access the
+  yubikey through ncscd, and that also is not available during boot activation (it's a systemd
+  unit).  I tried also hacking that into the activation, but couldn't get it figured out.
+- Another option would be a staged bootstrapping where I use the ISO to install the system, and from
+  there install the final system.  The intermediate system could have support for yubikey.  I'm
+  leaning more towards this.  I could bootstrap by partitioning, formatting, and downloading and
+  installing a configuration.nix.  Then I could use nixos-rebuild with the ~--target-host~ and
+  ~--build-host~ options (which I just learned about!).  This would remove some of the awkwardness
+  of the bootstrap script.  I might even be able to run the partition and bootstrap scripts from the
+  target machine, then finish up with a nixos-rebuild from my machine using the target argument.
+
+There are some other issues with the bootstrap script.  I thought it was pretty robust, but it is
+still kind of fragile.  The process of unmounting existing partitions uses a path and a ~realpath~
+because some partitions are links that end up getting mounted as their targets.  I think this could
+be fixed by just unmounting the mounted path, instead of the device.
+
+** New approach
+My new approach would be something like:
+1. Boot with install ISO.
+2. Set password for ~nixos~ user.
+3. SSH into machine.
+4. Run bootstrap script through curl.  Script should:
+   - Partition
+   - Download a configuration.nix and install (or install a 'bootstrap' host from the flake?).
+     Bootstrap install should:
+     - Enable SSH
+     - Configure root SSH authorized_keys
+5. Manually (I guess) add new host key to agenix, rekey, commit, push.
+6. Configure host from my machine with ~--target-host~ and ~--build-host~ arguments.

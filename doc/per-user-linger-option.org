@@ -1,0 +1,8 @@
+* Per-user linger option (2023-03-11)
+- Issue with a long discussion: https://github.com/NixOS/nixpkgs/issues/3702
+- Currently (22.11) no per-user option.
+  - Custom NixOS module to add per-user ~linger~ option: https://github.com/michalrus/dotfiles/commit/ebd5fa9583f82589f23531647aa677feb3f8d344#diff-4d353005ef5b3e37f33c07332b8523edR1
+- Systemd option ~KillUserProcesses~ controls killing user processes on logout.
+  - Changed default to false (2016): https://github.com/NixOS/nixpkgs/commit/93c160fabc0e3b5fb3d997c840ef86a68f4bce00
+  - Added as a NixOS option (still defaulting to false) (2018): https://github.com/NixOS/nixpkgs/pull/51426/files
+  - ~linger~ also starts processes on boot; ~KillUserProcesses~ does not.

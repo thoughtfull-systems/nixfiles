@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+CACHE_DIR="${HOME}/.cache/yubikey-touch-plugin"
+mkdir -p "${CACHE_DIR}"
+
+STATUS_FILE="${CACHE_DIR}/status"
+SIZE="${1:-16}"
+NOT_WAITING_IMG="${CACHE_DIR}/not-waiting${SIZE}.png"
+
+if [ -f "${STATUS_FILE}" ]; then
+  cat "${STATUS_FILE}"
+else
+  echo "<img>${NOT_WAITING_IMG}</img><tool>Yubikey is not waiting for touch</tool>"
+fi
+
+# Local Variables:
+# mode: sh
+# End:

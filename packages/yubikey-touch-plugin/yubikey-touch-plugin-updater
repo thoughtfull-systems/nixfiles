@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/$UID}"
+SOCKET="${RUNTIME_DIR}/yubikey-touch-detector.socket"
+
+CACHE_DIR="${HOME}/.cache/yubikey-touch-plugin"
+mkdir -p "${CACHE_DIR}"
+
+STATUS_FILE="${CACHE_DIR}/status"
+SIZE="${1:-16}"
+NOT_WAITING_IMG="${CACHE_DIR}/not-waiting${SIZE}.png"
+WAITING_IMG="${CACHE_DIR}/waiting${SIZE}.png"
+
+echo "Using socket: ${SOCKET}"
+echo "Using status file: ${STATUS_FILE}"
+echo "Using not waiting image: ${NOT_WAITING_IMG}"
+echo "Using waiting image: ${WAITING_IMG}"
+
+[ -f "${NOT_WAITING_IMG}" ] ||
+  convert -resize ${SIZE}x${SIZE} @not_waiting@ "${NOT_WAITING_IMG}"
+echo "<img>${NOT_WAITING_IMG}</img><tool>Yubikey is not waiting for touch</tool>" > "${STATUS_FILE}"
+
+if [ -S "${SOCKET}" ]; then
+  count=0
+  nc -U "${SOCKET}" | while read -N 5 cmd; do
+    echo "cmd: ${cmd}"
+    if [ "${cmd}" = "U2F_1" ]; then
+      count=$((count+1))
+      echo "${count}"
+      [ -f "${WAITING_IMG}" ] ||
+        convert -resize ${SIZE}x${SIZE} @waiting@ "${WAITING_IMG}"
+      echo "<img>${WAITING_IMG}</img><tool>Yubikey is waiting for touch...</tool>" >"${STATUS_FILE}"
+      if [ ! -v NID ]; then
+        NID=$(notify-desktop -i @waiting@ -t0 "Yubikey" "Yubikey is waiting for touch...")
+      fi
+    elif [ "${cmd}" = "U2F_0" ]; then
+      count=$((count-1))
+      echo "${count}"
+      if [ ${count} -eq 0 ]; then
+        [ -f "${NOT_WAITING_IMG}" ] ||
+          convert -resize ${SIZE}x${SIZE} @not_waiting@ "${NOT_WAITING_IMG}"
+        echo "<img>${NOT_WAITING_IMG}</img><tool>Yubikey is not waiting for touch</tool>" >"${STATUS_FILE}"
+        if [ -v NID ]; then
+          notify-desktop -r ${NID} -i @waiting@ -t2 "Yubikey" "Yubikey is no longer waiting for touch"
+          unset NID
+        fi
+      fi
+    fi
+  done
+else
+  echo "yubikey-touch-detector socket not found: ${SOCKET}" >&2
+  exit 1
+fi
+
+# Local Variables:
+# mode: sh
+# End:

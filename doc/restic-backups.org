@@ -1,0 +1,81 @@
+* Restic backups (2023-12-09)
+Restic is a backup utility with support for different storage types.  It does chunked, incremental
+backups and uses encryption.  I have it configured to back up to S3.
+
+Any services that manage critical data should use restic for backup.  I have both PostgreSQL and
+vaultwarden configured to use restic.
+
+The restic keys and passphrase are deployed using agenix, and an envfile is written that can be used
+with the restic CLI.
+
+I've written a wrapper for restic that uses the envfile, the passphrase file, and the configured
+repository, so instead of having to do:
+
+: envfile /var/lib/restic/.env restic -r s3:s3.amazonaws.com/S3-BUCKET -p /var/lib/restic/passphrase snapshots
+
+You can list backups with:
+
+: restic snapshots
+
+** Dangling locks
+
+One issue with restic that I've encountered somewhat frequently, is dangling locks.  When a backup
+occurs, a lock is acquired and for some reason I've run into situations where the lock is not
+released.  I think maybe my machine is either dying or restarting suddenly which just kills the
+restic process and leaves the lock.
+
+I have sometimes checked in on the backups to find it hasn't been making backups for months because
+there's a dangling lock.
+
+I'd like to find a way to prevent this, but also to detect it.  I'm working on getting services to
+notify by email when they fail, and this would be a good one for that.
+
+To remove the lock:
+
+: restic unlock
+
+** Schedule
+
+The restic backup happens every hour on the hour.  If it is backing up files this is usually fine.
+However, if it is backing up a database that needs to be dumped, then that database process must run
+before restic.  In the case of PostgreSQL, its backup process runs every hour at minute 55.  This
+synchronizes the database backup as closely as possible with restic.  If the PostgreSQL backup ever
+takes more than 5 minutes (it currently takes ~2 seconds), then I'd need to adjust this time.
+
+Because there is a delay between the PostgreSQL backup and the restic backup—no matter how
+small—there's a chance that the database and files that are backed up may skew.  This is true for,
+say, vaultwarden which uses a database and also stores file uploads on disk.  In the event I need to
+restore from backup, I'll just have to sort it out since I don't have any simple ideas to fix that.
+
+** Migrations
+
+Restic does occasionally have migrations that might need to be applied to the repository.  They can
+be listed with:
+
+: restic migrate
+
+and applied with:
+
+: restic migrate MIGRATION_NAME
+
+** Restore
+
+Restic can mount the repository with:
+
+: restic mount DIR
+
+This creates a directory tree to browse the backups by host, id, tags, etc., and is a pretty easy
+way to access files (especially an individual file).
+
+Files can also be restored using:
+
+: restic restore -t TARGET_DIR SNAPSHOT_ID
+
+SNAPSHOT_ID can be "latest" and the command takes various options to specify which host and which
+files to restore.  It also has a ~--verify~ option, which seems like a good idea!
+
+** Automatic restore
+
+I've had the idea that it would be good to create a systemd service for, like vaultwarden, that
+would automatically restore from backup if vaultwarden's data is missing.  I haven't thought through
+whether that would be a good idea or not and what the complications and consequences may be.

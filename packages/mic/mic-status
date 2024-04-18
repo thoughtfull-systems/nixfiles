@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+vol=$(@pactl@ get-source-volume @DEFAULT_SOURCE@ |\
+        head -n1 |\
+        cut -d'/' -f2 |\
+        sed 's/ *//g')
+if [ "$(@pactl@ get-source-mute @DEFAULT_SOURCE@)" = "Mute: yes" ]; then
+  echo " ${vol}"
+else
+  echo " ${vol}"
+fi

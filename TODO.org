@@ -1,0 +1,7 @@
+* TODO The home-manager modules in [[file:home/ziph/][file:home/ziph/]] should be refactored and relocated to file:homeManagerModules
+s
+* TODO Reconfigure key bindings for minibuffer
+I think I'd like to use TAB (or C-TAB) instead of C-Return to complete and maybe I could use different not select the current completion with Return, but require filling in everything?
+* TODO Cosmetics for org-mode
+* TODO Migrate in more nixos and home-manager modules
+* TODO Move emacsPackages into packages?

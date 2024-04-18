@@ -1,0 +1,13 @@
+* Vaultwarden restore
+: systemctl stop vaultwarden
+: mkdir -p /mnt/restic
+: restic mount /mnt/restic
+: cd /mnt/restic/hosts/HOST/latest/var/
+: cp var/backup/postgresql/* /var/backup/postgresql/
+: cp var/lib/bitwarden_rs/config.json var/lib/bitwarden_rs/rsa_key.p* /var/lib/bitwarden_rs/
+: cp -r var/lib/bitwarden_rs/attachments/* /var/lib/bitwarden_rs/attachments/
+: sudo -u postgres dropdb vaultwarden
+: sudo -u postgres createdb vaultwarden -O vaultwarden
+: zcat /var/backup/postgresql/vaultwarden.sql.gz | sudo -u postgres psql
+: chown -R vaultwarden:vaultwarden /var/lib/bitwarden_rs/
+: systemctl start vaultwarden

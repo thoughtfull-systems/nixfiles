@@ -1,0 +1,928 @@
+From e7752dff4ccc8990b1195f0b3459bab158fd0d0d Mon Sep 17 00:00:00 2001
+From: oyvinds <oyvinds@everdot.org>
+Date: Sat, 18 Apr 2020 11:35:58 +0200
+Subject: [PATCH] Hybrid Sleep v2.2.
+
+---
+ common/xfpm-enum-glib.h                 |   2 +
+ common/xfpm-power-common.h              |   3 +
+ settings/xfpm-settings-app.c            |  11 ++-
+ settings/xfpm-settings.c                | 110 +++++++++++++++++++++---
+ settings/xfpm-settings.h                |   2 +
+ src/org.freedesktop.PowerManagement.xml |   7 ++
+ src/xfpm-console-kit.c                  |  12 +++
+ src/xfpm-main.c                         |   8 ++
+ src/xfpm-manager.c                      |   9 ++
+ src/xfpm-pm-helper.c                    |  21 ++++-
+ src/xfpm-power.c                        |  52 ++++++++++-
+ src/xfpm-power.h                        |   2 +
+ src/xfpm-suspend.c                      |  20 +++++
+ src/xfpm-suspend.h                      |   2 +
+ src/xfpm-systemd.c                      |  21 +++++
+ 15 files changed, 263 insertions(+), 19 deletions(-)
+
+diff --git a/common/xfpm-enum-glib.h b/common/xfpm-enum-glib.h
+index d9c83835..1eb90ea2 100644
+--- a/common/xfpm-enum-glib.h
++++ b/common/xfpm-enum-glib.h
+@@ -42,6 +42,7 @@ typedef enum
+ {
+   XFPM_DO_NOTHING,
+   XFPM_DO_SUSPEND,
++  XFPM_DO_HYBRID_SLEEP,
+   XFPM_DO_HIBERNATE,
+   XFPM_ASK,
+   XFPM_DO_SHUTDOWN
+@@ -51,6 +52,7 @@ typedef enum
+ {
+   LID_TRIGGER_NOTHING,
+   LID_TRIGGER_SUSPEND,
++  LID_TRIGGER_HYBRID_SLEEP,
+   LID_TRIGGER_HIBERNATE,
+   LID_TRIGGER_LOCK_SCREEN,
+ } XfpmLidTriggerAction;
+diff --git a/common/xfpm-power-common.h b/common/xfpm-power-common.h
+index 484fe68a..37631868 100644
+--- a/common/xfpm-power-common.h
++++ b/common/xfpm-power-common.h
+@@ -35,12 +35,15 @@
+ #define POLKIT_AUTH_HIBERNATE_UPOWER	"org.freedesktop.upower.hibernate"
+ 
+ #define POLKIT_AUTH_SUSPEND_LOGIND	"org.freedesktop.login1.suspend"
++#define POLKIT_AUTH_HYBRIDSLEEP_LOGIND  "org.freedesktop.login1.hibernate"
+ #define POLKIT_AUTH_HIBERNATE_LOGIND	"org.freedesktop.login1.hibernate"
+ 
+ #define POLKIT_AUTH_SUSPEND_XFPM	"org.xfce.power.xfce4-pm-helper"
++#define POLKIT_AUTH_HYBRIDSLEEP_XFPM    "org.xfce.power.xfce4-pm-helper"
+ #define POLKIT_AUTH_HIBERNATE_XFPM	"org.xfce.power.xfce4-pm-helper"
+ 
+ #define POLKIT_AUTH_SUSPEND_CONSOLEKIT2   "org.freedesktop.consolekit.system.suspend"
++#define POLKIT_AUTH_HYBRIDSLEEP_CONSOLEKIT2 "org.freedesktop.consolekit.system.hybridsleep"
+ #define POLKIT_AUTH_HIBERNATE_CONSOLEKIT2 "org.freedesktop.consolekit.system.hibernate"
+ 
+ const gchar *xfpm_power_translate_device_type (guint     type);
+diff --git a/settings/xfpm-settings-app.c b/settings/xfpm-settings-app.c
+index 872b6c38..17c55860 100644
+--- a/settings/xfpm-settings-app.c
++++ b/settings/xfpm-settings-app.c
+@@ -131,7 +131,9 @@ xfpm_settings_app_launch (GApplication *app)
+   gboolean has_battery;
+   gboolean auth_suspend;
+   gboolean auth_hibernate;
++  gboolean auth_hybrid_sleep;
+   gboolean can_suspend;
++  gboolean can_hybrid_sleep;
+   gboolean can_hibernate;
+   gboolean can_shutdown;
+   gboolean has_lcd_brightness;
+@@ -242,9 +244,11 @@ xfpm_settings_app_launch (GApplication *app)
+   has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
+   has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
+   can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
++  can_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hybrid-sleep"));
+   can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+   auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
+   auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
++  auth_hybrid_sleep  = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hybrid-sleep"));
+   has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
+   has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
+   has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
+@@ -255,9 +259,10 @@ xfpm_settings_app_launch (GApplication *app)
+   DBG("socket_id %i", (int)priv->socket_id);
+   DBG("device id %s", priv->device_id);
+ 
+-  dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
+-                                     can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
+-                                     has_lid, has_sleep_button, has_hibernate_button, has_power_button, has_battery_button,
++  dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hybrid_sleep, auth_hibernate,
++                                     can_suspend, can_hybrid_sleep, can_hibernate, can_shutdown,
++                                     has_battery, has_lcd_brightness,has_lid, has_sleep_button,
++                                     has_hibernate_button, has_power_button, has_battery_button,
+                                      priv->socket_id, priv->device_id, GTK_APPLICATION (app));
+ 
+   g_hash_table_destroy (hash);
+diff --git a/settings/xfpm-settings.c b/settings/xfpm-settings.c
+index f56ecf95..ec783a32 100644
+--- a/settings/xfpm-settings.c
++++ b/settings/xfpm-settings.c
+@@ -875,7 +875,8 @@ xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
+ 
+ static void
+ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+-                          gboolean auth_hibernate, gboolean can_suspend,
++                          gboolean auth_hybrid_sleep, gboolean auth_hibernate,
++                          gboolean can_suspend, gboolean can_hybrid_sleep,
+                           gboolean can_hibernate, gboolean can_shutdown,
+                           gboolean has_lcd_brightness, gboolean has_lid)
+ {
+@@ -911,6 +912,20 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+     gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
+   }
+ 
++  if ( can_hybrid_sleep )
++  {
++    gtk_list_store_append (list_store, &iter);
++    gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++  }
++  else if ( !auth_hybrid_sleep )
++  {
++    gtk_widget_set_tooltip_text (inact_action, _("Hybrid Sleep not permitted"));
++  }
++  else
++  {
++    gtk_widget_set_tooltip_text (inact_action, _("Hybrid Sleep not supported"));
++  }
++
+   if ( can_hibernate )
+   {
+     gtk_list_store_append (list_store, &iter);
+@@ -982,6 +997,12 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+     gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+   }
+ 
++  if ( can_hybrid_sleep && auth_hybrid_sleep )
++  {
++    gtk_list_store_append(list_store, &iter);
++    gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++  }
++
+   if ( can_hibernate && auth_hibernate )
+   {
+     gtk_list_store_append(list_store, &iter);
+@@ -1044,6 +1065,12 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, LID_TRIGGER_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append(list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, LID_TRIGGER_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate)
+     {
+       gtk_list_store_append(list_store, &iter);
+@@ -1113,7 +1140,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+ 
+ static void
+ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
+-                     gboolean auth_hibernate, gboolean can_suspend,
++                     gboolean auth_hybrid_sleep, gboolean auth_hibernate,
++                     gboolean can_suspend, gboolean can_hybrid_sleep,
+                      gboolean can_hibernate, gboolean has_lcd_brightness,
+                      gboolean has_lid)
+ {
+@@ -1148,6 +1176,20 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
+     gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
+   }
+ 
++  if ( can_hybrid_sleep )
++  {
++    gtk_list_store_append (list_store, &iter);
++    gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++  }
++  else if ( !auth_hybrid_sleep )
++  {
++    gtk_widget_set_tooltip_text (inact_action, _("Hybrid Sleep not permitted"));
++  }
++  else
++  {
++    gtk_widget_set_tooltip_text (inact_action, _("Hybrid Sleep not supported"));
++  }
++
+   if ( can_hibernate )
+   {
+     gtk_list_store_append (list_store, &iter);
+@@ -1232,6 +1274,12 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, LID_TRIGGER_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append(list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, LID_TRIGGER_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate )
+     {
+       gtk_list_store_append(list_store, &iter);
+@@ -1300,7 +1348,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
+ 
+ static void
+ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+-                       gboolean auth_hibernate, gboolean can_suspend,
++                       gboolean auth_hibernate, gboolean auth_hybrid_sleep,
++                       gboolean can_suspend, gboolean can_hybrid_sleep,
+                        gboolean can_hibernate, gboolean can_shutdown,
+                        gboolean has_sleep_button, gboolean has_hibernate_button,
+                        gboolean has_power_button, gboolean has_battery_button)
+@@ -1351,6 +1400,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append(list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate )
+     {
+       gtk_list_store_append (list_store, &iter);
+@@ -1409,6 +1464,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append(list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate )
+     {
+       gtk_list_store_append (list_store, &iter);
+@@ -1461,6 +1522,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append (list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate)
+     {
+       gtk_list_store_append (list_store, &iter);
+@@ -1512,6 +1579,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+       gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+     }
+ 
++    if ( can_hybrid_sleep && auth_hybrid_sleep )
++    {
++      gtk_list_store_append (list_store, &iter);
++      gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
++    }
++
+     if ( can_hibernate && auth_hibernate)
+     {
+       gtk_list_store_append (list_store, &iter);
+@@ -1573,8 +1646,9 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+ 
+ static void
+ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
+-                        gboolean auth_hibernate, gboolean can_suspend,
+-                        gboolean can_hibernate, gboolean has_battery)
++                        gboolean auth_hibernate, gboolean auth_hybrid_sleep,
++                        gboolean can_suspend, gboolean can_hibernate,
++                        gboolean can_hybrid_sleep, gboolean has_battery)
+ {
+   guint val;
+   GtkWidget *critical_level;
+@@ -1723,8 +1797,10 @@ light_locker_automatic_locking_changed_cb (GtkWidget *widget, XfconfChannel *cha
+ }
+ 
+ static void xfpm_settings_light_locker (XfconfChannel *channel,
+-                                        gboolean auth_suspend, gboolean auth_hibernate,
+-                                        gboolean can_suspend, gboolean can_hibernate)
++                                        gboolean auth_suspend, gboolean auth_hybrid_sleep,
++                                        gboolean auth_hibernate,
++                                        gboolean can_suspend, gboolean can_hybrid_sleep,
++                                        gboolean can_hibernate)
+ {
+   GSettingsSchemaSource *schema_source;
+   GSettingsSchema       *schema;
+@@ -2358,7 +2434,8 @@ delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
+ 
+ GtkWidget *
+ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+-                          gboolean auth_hibernate, gboolean can_suspend,
++                          gboolean auth_hybrid_sleep, gboolean auth_hibernate,
++                          gboolean can_suspend, gboolean can_hybrid_sleep,
+                           gboolean can_hibernate, gboolean can_shutdown,
+                           gboolean has_battery, gboolean has_lcd_brightness,
+                           gboolean has_lid, gboolean has_sleep_button,
+@@ -2387,8 +2464,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+               "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
+               "has_hibernate_button=%s has_power_button=%s has_battery_button=%s",
+               xfpm_bool_to_string (has_battery), xfpm_bool_to_string (auth_hibernate),
++              xfpm_bool_to_string (auth_hybrid_sleep),
+               xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
+-              xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
++              xfpm_bool_to_string (can_suspend),
++              xfpm_bool_to_string (can_hybrid_sleep), xfpm_bool_to_string (can_hibernate),
+               xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
+               xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
+               xfpm_bool_to_string (has_power_button), xfpm_bool_to_string (has_battery_button));
+@@ -2501,8 +2580,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+ 
+   xfpm_settings_on_ac (channel,
+                        auth_suspend,
++                       auth_hybrid_sleep,
+                        auth_hibernate,
+                        can_suspend,
++                       can_hybrid_sleep,
+                        can_hibernate,
+                        has_lcd_brightness,
+                        has_lid);
+@@ -2510,9 +2591,11 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+   if ( has_battery )
+   xfpm_settings_on_battery (channel,
+                             auth_suspend,
++                            auth_hybrid_sleep,
+                             auth_hibernate,
+                             can_suspend,
+                             can_hibernate,
++                            can_hybrid_sleep,
+                             can_shutdown,
+                             has_lcd_brightness,
+                             has_lid);
+@@ -2527,13 +2610,16 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-stack-switcher")));
+   }
+ 
+-  xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
++  xfpm_settings_general (channel, auth_suspend, auth_hybrid_sleep, auth_hibernate, can_suspend,
++                         can_hybrid_sleep, can_hibernate, can_shutdown,
+                          has_sleep_button, has_hibernate_button, has_power_button, has_battery_button);
+ 
+-  xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, has_battery);
++  xfpm_settings_advanced (channel, auth_suspend, auth_hybrid_sleep, auth_hibernate,
++                         can_suspend, can_hybrid_sleep, can_hibernate, has_battery);
+ 
+   /* Light Locker Integration */
+-  xfpm_settings_light_locker (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate);
++  xfpm_settings_light_locker (channel, auth_suspend, auth_hybrid_sleep, auth_hibernate,
++                         can_suspend, can_hybrid_sleep, can_hibernate);
+   /* END Light Locker Integration */
+ 
+   if ( !has_lcd_brightness )
+diff --git a/settings/xfpm-settings.h b/settings/xfpm-settings.h
+index 426b2085..055012e0 100644
+--- a/settings/xfpm-settings.h
++++ b/settings/xfpm-settings.h
+@@ -26,8 +26,10 @@
+ 
+ GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,
+                                        gboolean auth_suspend,
++                                       gboolean auth_hybrid_sleep,
+                                        gboolean auth_hibernate,
+                                        gboolean can_suspend,
++                                       gboolean can_hybrid_sleep,
+                                        gboolean can_hibernate,
+                                        gboolean can_shutdown,
+                                        gboolean has_battery,
+diff --git a/src/org.freedesktop.PowerManagement.xml b/src/org.freedesktop.PowerManagement.xml
+index 76140f24..78ff51f2 100644
+--- a/src/org.freedesktop.PowerManagement.xml
++++ b/src/org.freedesktop.PowerManagement.xml
+@@ -9,6 +9,9 @@
+     <method name="Reboot">
+     </method>
+     
++    <method name="HybridSleep">
++    </method>
++
+     <method name="Hibernate">
+     </method>
+     
+@@ -27,6 +30,10 @@
+       <arg type="b" name="can_suspend" direction="out"/>
+     </method>
+     
++    <method name="CanHybridSleep">
++      <arg type="b" name="can_hybrid_sleep" direction="out"/>
++    </method>
++
+     <method name="CanHibernate">
+       <arg type="b" name="can_hibernate" direction="out"/>
+     </method>
+diff --git a/src/xfpm-console-kit.c b/src/xfpm-console-kit.c
+index ed9b157c..3cc56581 100644
+--- a/src/xfpm-console-kit.c
++++ b/src/xfpm-console-kit.c
+@@ -51,6 +51,7 @@ struct XfpmConsoleKitPrivate
+   gboolean       can_shutdown;
+   gboolean       can_restart;
+   gboolean         can_suspend;
++  gboolean         can_hybrid_sleep;
+   gboolean         can_hibernate;
+ };
+ 
+@@ -60,6 +61,7 @@ enum
+   PROP_CAN_RESTART,
+   PROP_CAN_SHUTDOWN,
+   PROP_CAN_SUSPEND,
++  PROP_CAN_HYBRID_SLEEP,
+   PROP_CAN_HIBERNATE
+ };
+ 
+@@ -195,6 +197,13 @@ xfpm_console_kit_class_init (XfpmConsoleKitClass *klass)
+                                                          FALSE,
+                                                          G_PARAM_READABLE));
+ 
++  g_object_class_install_property (object_class,
++                                   PROP_CAN_HYBRID_SLEEP,
++                                   g_param_spec_boolean ("can-hybrid-sleep",
++                                                         NULL, NULL,
++                                                         FALSE,
++                                                         G_PARAM_READABLE));
++
+   g_object_class_install_property (object_class,
+                                    PROP_CAN_HIBERNATE,
+                                    g_param_spec_boolean ("can-hibernate",
+@@ -262,6 +271,9 @@ static void xfpm_console_kit_get_property (GObject *object,
+     case PROP_CAN_SUSPEND:
+       g_value_set_boolean (value, console->priv->can_suspend);
+       break;
++    case PROP_CAN_HYBRID_SLEEP:
++      g_value_set_boolean (value, console->priv->can_hybrid_sleep);
++      break;
+     case PROP_CAN_HIBERNATE:
+       g_value_set_boolean (value, console->priv->can_hibernate);
+       break;
+diff --git a/src/xfpm-main.c b/src/xfpm-main.c
+index 7c7aa60d..daf28551 100644
+--- a/src/xfpm-main.c
++++ b/src/xfpm-main.c
+@@ -82,8 +82,10 @@ xfpm_dump (GHashTable *hash)
+ {
+   gboolean has_battery;
+   gboolean auth_suspend;
++  gboolean auth_hybrid_sleep;
+   gboolean auth_hibernate;
+   gboolean can_suspend;
++  gboolean can_hybrid_sleep;
+   gboolean can_hibernate;
+   gboolean can_shutdown;
+   gboolean has_lcd_brightness;
+@@ -96,8 +98,10 @@ xfpm_dump (GHashTable *hash)
+   has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
+   has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
+   can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
++  can_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hybrid-sleep"));
+   can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+   auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
++  auth_hybrid_sleep  = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hybrid-sleep"));
+   auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
+   has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
+   has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
+@@ -133,12 +137,16 @@ xfpm_dump (GHashTable *hash)
+             "%s: %s\n",
+            _("Can suspend"),
+            xfpm_bool_to_local_string (can_suspend),
++           _("Can hybrid sleep"),
++           xfpm_bool_to_local_string (can_hybrid_sleep),
+            _("Can hibernate"),
+            xfpm_bool_to_local_string (can_hibernate),
+            _("Authorized to suspend"),
+            xfpm_bool_to_local_string (auth_suspend),
+            _("Authorized to hibernate"),
+            xfpm_bool_to_local_string (auth_hibernate),
++           _("Authorized to hybrid sleep"),
++           xfpm_bool_to_local_string (auth_hybrid_sleep),
+            _("Authorized to shutdown"),
+            xfpm_bool_to_local_string (can_shutdown),
+            _("Has battery"),
+diff --git a/src/xfpm-manager.c b/src/xfpm-manager.c
+index 01537005..fb3d824f 100644
+--- a/src/xfpm-manager.c
++++ b/src/xfpm-manager.c
+@@ -336,6 +336,9 @@ xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gbool
+     case XFPM_DO_SUSPEND:
+       xfpm_power_suspend (manager->priv->power, force);
+       break;
++    case XFPM_DO_HYBRID_SLEEP:
++      xfpm_power_hybrid_sleep (manager->priv->power, force);
++      break;
+     case XFPM_DO_HIBERNATE:
+       xfpm_power_hibernate (manager->priv->power, force);
+       break;
+@@ -941,8 +944,10 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
+ 
+   guint16 mapped_buttons;
+   gboolean auth_hibernate = FALSE;
++  gboolean auth_hybrid_sleep = FALSE;
+   gboolean auth_suspend = FALSE;
+   gboolean can_suspend = FALSE;
++  gboolean can_hybrid_sleep = FALSE;
+   gboolean can_hibernate = FALSE;
+   gboolean has_sleep_button = FALSE;
+   gboolean has_hibernate_button = FALSE;
+@@ -970,8 +975,10 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
+ 
+   g_object_get (G_OBJECT (manager->priv->power),
+                 "auth-suspend", &auth_suspend,
++                "auth-hybrid-sleep", &auth_hybrid_sleep,
+                 "auth-hibernate", &auth_hibernate,
+                 "can-suspend", &can_suspend,
++                "can-hybrid-sleep", &can_hybrid_sleep,
+                 "can-hibernate", &can_hibernate,
+                 "has-lid", &has_lid,
+                 NULL);
+@@ -995,8 +1002,10 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
+   g_hash_table_insert (hash, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
+   g_hash_table_insert (hash, g_strdup ("battery-button"), g_strdup (xfpm_bool_to_string (has_battery_button)));
+   g_hash_table_insert (hash, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
++  g_hash_table_insert (hash, g_strdup ("auth-hybrid-sleep"), g_strdup (xfpm_bool_to_string (auth_hybrid_sleep)));
+   g_hash_table_insert (hash, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
+   g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
++  g_hash_table_insert (hash, g_strdup ("can-hybrid-sleep"), g_strdup (xfpm_bool_to_string (can_hybrid_sleep)));
+   g_hash_table_insert (hash, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+   g_hash_table_insert (hash, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown)));
+ 
+diff --git a/src/xfpm-pm-helper.c b/src/xfpm-pm-helper.c
+index 93d22849..2f1c310d 100644
+--- a/src/xfpm-pm-helper.c
++++ b/src/xfpm-pm-helper.c
+@@ -60,6 +60,9 @@
+ #ifdef UP_BACKEND_SUSPEND_COMMAND
+ #undef UP_BACKEND_SUSPEND_COMMAND
+ #endif
++#ifdef UP_BACKEND_HYBRID_SLEEP_COMMAND
++#undef UP_BACKEND_HYBRID_SLEEP_COMMAND
++#endif
+ #ifdef UP_BACKEND_HIBERNATE_COMMAND
+ #undef UP_BACKEND_HIBERNATE_COMMAND
+ #endif
+@@ -67,14 +70,17 @@
+ 
+ #ifdef BACKEND_TYPE_FREEBSD
+ #define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/acpiconf -s 3"
++#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/sbin/acpiconf -s 4"
+ #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/acpiconf -s 4"
+ #endif
+ #ifdef BACKEND_TYPE_LINUX
+ #define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/pm-suspend"
++#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/sbin/pm-suspend-hybrid"
+ #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/pm-hibernate"
+ #endif
+ #ifdef BACKEND_TYPE_OPENBSD
+ #define UP_BACKEND_SUSPEND_COMMAND  "/usr/sbin/zzz"
++#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/sbin/ZZZ"
+ #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
+ #endif
+ 
+@@ -136,10 +142,12 @@ main (int argc, char **argv)
+   gint euid;
+   const gchar *pkexec_uid_str;
+   gboolean suspend = FALSE;
++  gboolean hybridsleep = FALSE;
+   gboolean hibernate = FALSE;
+ 
+   const GOptionEntry options[] = {
+     { "suspend",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
++    { "hybridsleep", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hybridsleep, "Hybrid Suspend/sleep the system", NULL },
+     { "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
+     { NULL }
+   };
+@@ -151,7 +159,7 @@ main (int argc, char **argv)
+   g_option_context_free (context);
+ 
+   /* no input */
+-  if (!suspend && !hibernate)
++  if (!suspend && !hybridsleep && !hibernate)
+   {
+     puts ("No valid option was specified");
+     return EXIT_CODE_ARGUMENTS_INVALID;
+@@ -186,6 +194,17 @@ main (int argc, char **argv)
+       return EXIT_CODE_FAILED;
+     }
+   }
++  else if (hybridsleep)
++  {
++    if(run (UP_BACKEND_HYBRID_SLEEP_COMMAND))
++    {
++      return EXIT_CODE_SUCCESS;
++    }
++    else
++    {
++      return EXIT_CODE_FAILED;
++    }
++  }
+   else if (hibernate)
+   {
+     if(run (UP_BACKEND_HIBERNATE_COMMAND))
+diff --git a/src/xfpm-power.c b/src/xfpm-power.c
+index f6087ad8..b7e439d1 100644
+--- a/src/xfpm-power.c
++++ b/src/xfpm-power.c
+@@ -115,6 +115,7 @@ struct XfpmPowerPrivate
+   XfpmPolkit       *polkit;
+ #endif
+   gboolean          auth_suspend;
++  gboolean          auth_hybrid_sleep;
+   gboolean          auth_hibernate;
+ 
+   /* Properties */
+@@ -124,6 +125,7 @@ struct XfpmPowerPrivate
+   gboolean          on_battery;
+   gchar            *daemon_version;
+   gboolean          can_suspend;
++  gboolean          can_hybrid_sleep;
+   gboolean          can_hibernate;
+ 
+   /**
+@@ -139,8 +141,10 @@ enum
+   PROP_ON_LOW_BATTERY,
+   PROP_ON_BATTERY,
+   PROP_AUTH_SUSPEND,
++  PROP_AUTH_HYBRID_SLEEP,
+   PROP_AUTH_HIBERNATE,
+   PROP_CAN_SUSPEND,
++  PROP_CAN_HYBRID_SLEEP,
+   PROP_CAN_HIBERNATE,
+   PROP_HAS_LID,
+   PROP_PRESENTATION_MODE,
+@@ -175,7 +179,7 @@ static gboolean
+ check_for_consolekit2 (XfpmPower *power)
+ {
+   XfpmConsoleKit *console;
+-  gboolean can_suspend, can_hibernate;
++  gboolean can_suspend; gboolean can_hybrid_sleep; gboolean can_hibernate;
+ 
+   g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
+ 
+@@ -187,12 +191,15 @@ check_for_consolekit2 (XfpmPower *power)
+   g_object_get (G_OBJECT (console),
+                 "can-suspend", &can_suspend,
+                 NULL);
++  g_object_get (G_OBJECT (console),
++                "can-hybrid-sleep", &can_hybrid_sleep,
++                NULL);
+   g_object_get (G_OBJECT (console),
+                 "can-hibernate", &can_hibernate,
+                 NULL);
+ 
+     /* ConsoleKit2 supports suspend and hibernate */
+-  if (can_suspend || can_hibernate)
++  if (can_suspend || can_hybrid_sleep || can_hibernate)
+   {
+     return TRUE;
+   }
+@@ -204,11 +211,12 @@ check_for_consolekit2 (XfpmPower *power)
+ static void
+ xfpm_power_check_polkit_auth (XfpmPower *power)
+ {
+-  const char *suspend = NULL, *hibernate = NULL;
++  const char *suspend = NULL, *hybrid_sleep = NULL, *hibernate = NULL;
+   if (LOGIND_RUNNING())
+   {
+     XFPM_DEBUG ("using logind suspend backend");
+     suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
++    hybrid_sleep = POLKIT_AUTH_HYBRIDSLEEP_LOGIND;
+     hibernate = POLKIT_AUTH_HIBERNATE_LOGIND;
+   }
+   else
+@@ -220,12 +228,14 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
+       {
+         XFPM_DEBUG ("using consolekit2 suspend backend");
+         suspend   = POLKIT_AUTH_SUSPEND_CONSOLEKIT2;
++        hybrid_sleep = POLKIT_AUTH_HYBRIDSLEEP_CONSOLEKIT2;
+         hibernate = POLKIT_AUTH_HIBERNATE_CONSOLEKIT2;
+       }
+       else
+       {
+         XFPM_DEBUG ("using xfpm internal suspend backend");
+         suspend   = POLKIT_AUTH_SUSPEND_XFPM;
++        hybrid_sleep = POLKIT_AUTH_HYBRIDSLEEP_XFPM;
+         hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
+       }
+     }
+@@ -233,6 +243,9 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
+   power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
+                                                       suspend);
+ 
++  power->priv->auth_hybrid_sleep = xfpm_polkit_check_auth (power->priv->polkit,
++                                                        hibernate);
++
+   power->priv->auth_hibernate = xfpm_polkit_check_auth (power->priv->polkit,
+                                                         hibernate);
+ }
+@@ -285,6 +298,7 @@ xfpm_power_check_lid (XfpmPower *power, gboolean present, gboolean closed)
+  *
+  * DaemonVersion      's'
+  * CanSuspend'        'b'
++ * CanHybridSleep'    'b'
+  * CanHibernate'      'b'
+  * OnBattery'         'b'
+  * OnLowBattery'      'b'
+@@ -303,6 +317,9 @@ xfpm_power_get_properties (XfpmPower *power)
+     g_object_get (G_OBJECT (power->priv->systemd),
+                   "can-suspend", &power->priv->can_suspend,
+                   NULL);
++    g_object_get (G_OBJECT (power->priv->systemd),
++                  "can-hybrid-sleep", &power->priv->can_hybrid_sleep,
++                  NULL);
+     g_object_get (G_OBJECT (power->priv->systemd),
+                   "can-hibernate", &power->priv->can_hibernate,
+                   NULL);
+@@ -314,6 +331,9 @@ xfpm_power_get_properties (XfpmPower *power)
+       g_object_get (G_OBJECT (power->priv->console),
+         "can-suspend", &power->priv->can_suspend,
+         NULL);
++      g_object_get (G_OBJECT (power->priv->console),
++        "can-hybrid-sleep", &power->priv->can_hybrid_sleep,
++        NULL);
+       g_object_get (G_OBJECT (power->priv->console),
+         "can-hibernate", &power->priv->can_hibernate,
+         NULL);
+@@ -321,6 +341,7 @@ xfpm_power_get_properties (XfpmPower *power)
+     else
+     {
+       power->priv->can_suspend   = xfpm_suspend_can_suspend ();
++      power->priv->can_hybrid_sleep = xfpm_suspend_can_hybrid_sleep ();
+       power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
+     }
+   }
+@@ -1132,6 +1153,20 @@ xfpm_power_class_init (XfpmPowerClass *klass)
+                                                          FALSE,
+                                                          G_PARAM_READABLE));
+ 
++  g_object_class_install_property (object_class,
++                                   PROP_CAN_HYBRID_SLEEP,
++                                   g_param_spec_boolean ("can-hybrid-sleep",
++                                                         NULL, NULL,
++                                                         FALSE,
++                                                         G_PARAM_READABLE));
++
++  g_object_class_install_property (object_class,
++                                   PROP_AUTH_HYBRID_SLEEP,
++                                   g_param_spec_boolean ("auth-hybrid-sleep",
++                                                         NULL, NULL,
++                                                         FALSE,
++                                                         G_PARAM_READABLE));
++
+   g_object_class_install_property (object_class,
+                                    PROP_HAS_LID,
+                                    g_param_spec_boolean ("has-lid",
+@@ -1262,12 +1297,18 @@ xfpm_power_get_property (GObject *object,
+     case PROP_AUTH_HIBERNATE:
+       g_value_set_boolean (value, power->priv->auth_hibernate);
+       break;
++    case PROP_AUTH_HYBRID_SLEEP:
++      g_value_set_boolean (value, power->priv->auth_hybrid_sleep);
++      break;
+     case PROP_AUTH_SUSPEND:
+       g_value_set_boolean (value, power->priv->auth_suspend);
+       break;
+     case PROP_CAN_SUSPEND:
+       g_value_set_boolean (value, power->priv->can_suspend);
+       break;
++    case PROP_CAN_HYBRID_SLEEP:
++      g_value_set_boolean (value, power->priv->can_hybrid_sleep);
++      break;
+     case PROP_CAN_HIBERNATE:
+       g_value_set_boolean (value, power->priv->can_hibernate);
+       break;
+@@ -1393,6 +1434,11 @@ void xfpm_power_suspend (XfpmPower *power, gboolean force)
+   xfpm_power_sleep (power, "Suspend", force);
+ }
+ 
++void xfpm_power_hybrid_sleep (XfpmPower *power, gboolean force)
++{
++  xfpm_power_sleep (power, "HybridSleep", force);
++}
++
+ void xfpm_power_hibernate (XfpmPower *power, gboolean force)
+ {
+   xfpm_power_sleep (power, "Hibernate", force);
+diff --git a/src/xfpm-power.h b/src/xfpm-power.h
+index f95c4e37..e8c38590 100644
+--- a/src/xfpm-power.h
++++ b/src/xfpm-power.h
+@@ -58,6 +58,8 @@ GType       xfpm_power_get_type                 (void) G_GNUC_CONST;
+ XfpmPower  *xfpm_power_get                      (void);
+ void        xfpm_power_suspend                  (XfpmPower *power,
+                                                  gboolean force);
++void        xfpm_power_hybrid_sleep             (XfpmPower *power,
++                                                 gboolean force);
+ void        xfpm_power_hibernate                (XfpmPower *power,
+                                                  gboolean force);
+ gboolean    xfpm_power_has_battery              (XfpmPower *power);
+diff --git a/src/xfpm-suspend.c b/src/xfpm-suspend.c
+index aec24961..576b4a28 100644
+--- a/src/xfpm-suspend.c
++++ b/src/xfpm-suspend.c
+@@ -153,6 +153,24 @@ xfpm_suspend_can_suspend (void)
+   return FALSE;
+ }
+ 
++gboolean
++xfpm_suspend_can_hybrid_sleep (void)
++{
++  XFPM_DEBUG("entering");
++#ifdef BACKEND_TYPE_FREEBSD
++  return FALSE;
++#endif
++/* pm-utils pm-is-supported uses suspend-hybrid not hybridsleep */
++#ifdef BACKEND_TYPE_LINUX
++  return linux_supports_sleep_state ("suspend-hybrid");
++#endif
++#ifdef BACKEND_TYPE_OPENBSD
++  return FALSE;
++#endif
++
++  return FALSE;
++}
++
+ gboolean
+ xfpm_suspend_can_hibernate (void)
+ {
+@@ -183,6 +201,8 @@ xfpm_suspend_try_action (XfpmActionType type)
+ 
+   if (type == XFPM_SUSPEND)
+     action = "suspend";
++  else if (type == XFPM_HYBRID_SLEEP)
++    action = "hybridsleep";
+   else if (type == XFPM_HIBERNATE)
+     action = "hibernate";
+   else
+diff --git a/src/xfpm-suspend.h b/src/xfpm-suspend.h
+index 8d16df07..65fcadb7 100644
+--- a/src/xfpm-suspend.h
++++ b/src/xfpm-suspend.h
+@@ -26,10 +26,12 @@ typedef enum
+ {
+   XFPM_ASK_0 = 0,
+   XFPM_SUSPEND,
++  XFPM_HYBRID_SLEEP,
+   XFPM_HIBERNATE,
+ } XfpmActionType;
+ 
+ gboolean xfpm_suspend_can_suspend   (void);
++gboolean xfpm_suspend_can_hybrid_sleep (void);
+ gboolean xfpm_suspend_can_hibernate (void);
+ gboolean xfpm_suspend_try_action    (XfpmActionType     type);
+ 
+diff --git a/src/xfpm-systemd.c b/src/xfpm-systemd.c
+index 4aa3047c..a2630f40 100644
+--- a/src/xfpm-systemd.c
++++ b/src/xfpm-systemd.c
+@@ -48,6 +48,7 @@ struct XfpmSystemdPrivate
+     gboolean         can_shutdown;
+     gboolean         can_restart;
+     gboolean         can_suspend;
++    gboolean         can_hybrid_sleep;
+     gboolean         can_hibernate;
+ #ifdef ENABLE_POLKIT
+     XfpmPolkit      *polkit;
+@@ -60,6 +61,7 @@ enum
+     PROP_CAN_RESTART,
+     PROP_CAN_SHUTDOWN,
+     PROP_CAN_SUSPEND,
++    PROP_CAN_HYBRID_SLEEP,
+     PROP_CAN_HIBERNATE,
+ };
+ 
+@@ -73,6 +75,12 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmSystemd, xfpm_systemd, G_TYPE_OBJECT)
+ #define SYSTEMD_REBOOT_TEST             "org.freedesktop.login1.reboot"
+ #define SYSTEMD_POWEROFF_TEST           "org.freedesktop.login1.power-off"
+ #define SYSTEMD_SUSPEND_TEST            "org.freedesktop.login1.suspend"
++/* Policykit does not support any method for hybrid sleep
++ * A require to use systemd-logind and CanHybridSleep would be required
++ * to properly test for permission. Assume a user who can hibernate
++ * is also allowed to HybridSleep for now
++ */
++#define SYSTEMD_HYBRID_SLEEP_TEST       "org.freedesktop.login1.hibernate"
+ #define SYSTEMD_HIBERNATE_TEST          "org.freedesktop.login1.hibernate"
+ 
+ static void
+@@ -105,6 +113,13 @@ xfpm_systemd_class_init (XfpmSystemdClass *klass)
+                                                            FALSE,
+                                                            G_PARAM_READABLE));
+ 
++    g_object_class_install_property (object_class,
++                                    PROP_CAN_HYBRID_SLEEP,
++                                    g_param_spec_boolean ("can-hybrid-sleep",
++                                                           NULL, NULL,
++                                                           FALSE,
++                                                           G_PARAM_READABLE));
++
+     g_object_class_install_property (object_class,
+                                      PROP_CAN_HIBERNATE,
+                                      g_param_spec_boolean ("can-hibernate",
+@@ -148,6 +163,9 @@ xfpm_systemd_init (XfpmSystemd *systemd)
+     xfpm_systemd_can_method (systemd,
+                              &systemd->priv->can_suspend,
+                              SYSTEMD_SUSPEND_TEST);
++    xfpm_systemd_can_method (systemd,
++                             &systemd->priv->can_hybrid_sleep,
++                             SYSTEMD_HYBRID_SLEEP_TEST);
+     xfpm_systemd_can_method (systemd,
+                              &systemd->priv->can_hibernate,
+                              SYSTEMD_HIBERNATE_TEST);
+@@ -172,6 +190,9 @@ static void xfpm_systemd_get_property (GObject *object,
+     case PROP_CAN_SUSPEND:
+         g_value_set_boolean (value, systemd->priv->can_suspend);
+         break;
++    case PROP_CAN_HYBRID_SLEEP:
++        g_value_set_boolean (value, systemd->priv->can_hybrid_sleep);
++        break;
+     case PROP_CAN_HIBERNATE:
+         g_value_set_boolean (value, systemd->priv->can_hibernate);
+         break;
+-- 
+2.26.1
+
