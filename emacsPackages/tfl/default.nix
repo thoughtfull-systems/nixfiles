@@ -20,6 +20,7 @@ epkgs: {
       wgrep
       which-key
       writegood-mode
+      yaml-mode
     ];
     pname = "tfl";
     src = ./src;
