@@ -8,7 +8,7 @@ in {
       libreoffice
       notify-desktop
       tor-browser-bundle-bin
-      zoom-us
+      pkgs.unstable.zoom-us
     ];
     fonts.fontconfig.enable = lib.mkForce true;
     services.blueman-applet.enable = lib.mkDefault osConfig.hardware.bluetooth.enable;
