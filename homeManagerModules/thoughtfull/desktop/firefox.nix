@@ -135,6 +135,8 @@ in {
             "media.autoplay.default" = 5;
             # Virtual Reality
             "permissions.default.xr" = 2;
+            # Disallow disabling pasting into fields
+            "dom.event.clipboardevents.enable" = false;
 
             ### Firefox Data Collection and Use
             # Allow Firefox to send technical and interaction data to Mozilla
