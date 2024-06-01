@@ -1,7 +1,7 @@
 { lib, ... }: {
   programs.zsh = lib.mkDefault {
     autocd = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";

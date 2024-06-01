@@ -1,7 +1,7 @@
 { lib, ... }: {
   services.avahi = lib.mkDefault {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish = {
       addresses = true;
       domain = true;

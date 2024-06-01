@@ -4,9 +4,9 @@
     fonts.packages = [
       pkgs.galatia-sil
     ];
-    services.xserver = {
+    services.xserver.xkb = {
       layout = lib.mkOverride 900 "us,gr";
-      xkbVariant = lib.mkOverride 900 "dvorak,polytonic";
+      variant = lib.mkOverride 900 "dvorak,polytonic";
     };
   };
 }

@@ -17,6 +17,8 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
     thunar-volman
   ];
   services = {
+    libinput.touchpad.tapping = false;
+    logind.lidSwitch = "ignore";
     xserver = {
       desktopManager.xfce = {
         enableScreensaver = lib.mkDefault true;
@@ -24,8 +26,6 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
         noDesktop = lib.mkDefault true;
       };
       displayManager.lightdm.enable = true;
-      libinput.touchpad.tapping = false;
     };
-    logind.lidSwitch = "ignore";
   };
 }
