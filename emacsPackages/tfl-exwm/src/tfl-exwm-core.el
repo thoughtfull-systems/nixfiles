@@ -17,6 +17,7 @@
 (require 'exwm-randr)
 (require 'tfl)
 (require 'tfl-gtd-agenda)
+(require 'seq)
 
 
 ;;; Variables
@@ -72,18 +73,26 @@ If TARGET is not in BUFFERS, then BUFFERS is returned in its original order."
           (append suffix (reverse prefix))
         buffers))))
 
+(defun tfl-exwm-class-buffers (target-class-name)
+  "List of buffers with class TARGET-CLASS-NAME."
+  (match-buffers #'tfl-exwm-buffer-class-p nil target-class-name))
+
 (defun tfl-exwm-cycle-class (target-class-name &optional start-at-current-buffer-flag)
   "Cycle to next buffer with class TARGET-CLASS-NAME.
 If START-AT-CURRENT-BUFFER-FLAG, then start at the current buffer if it has
 class TARGET-CLASS-NAME."
-  (when-let (matching-buffers (match-buffers #'tfl-exwm-buffer-class-p nil target-class-name))
-    (let* ((sorted-buffers (sort matching-buffers #'tfl-buffer-compare-name))
-           (buffers (let ((curr (current-buffer)))
-                      (if (and start-at-current-buffer-flag
+  (let ((curr (current-buffer))
+        (matching-buffers (tfl-exwm-class-buffers target-class-name)))
+    (when-let (invisible-buffers (seq-filter (lambda (buffer)
+                                               (or (eq buffer curr)
+                                                   (not (get-buffer-window buffer))))
+                                             matching-buffers))
+      (let* ((sorted-buffers (sort invisible-buffers #'tfl-buffer-compare-name))
+             (buffers (if (and start-at-current-buffer-flag
                                (tfl-exwm-buffer-class-p curr target-class-name))
                           (tfl-exwm-rotate-buffers-to-next sorted-buffers curr)
-                        sorted-buffers))))
-      (switch-to-buffer (car buffers)))))
+                        sorted-buffers)))
+        (switch-to-buffer (car buffers))))))
 
 (defun tfl-exwm-run-command (command)
   "Start COMMAND asynchronously as a disowned process whose I/O is redirected.
@@ -163,12 +172,14 @@ If no buffers of TARGET-CLASS-NAME exist, then start COMMAND."
       (tfl-exwm-cycle-class-or-run-command target-class-name command)
     ;; otherwise switch to workspace-number
     (exwm-workspace-switch-create workspace-number)
-    ;; if current-buffer is not target-class-name
-    (unless (tfl-exwm-buffer-class-p (current-buffer) target-class-name)
-      ;; cycle target-class-name or run command
-      (tfl-exwm-cycle-class-or-run-command target-class-name command)))
-  ;; focus on target-class-name
-  (delete-other-windows))
+    ;; if there are buffers of class
+    (if-let (matching-buffers (tfl-exwm-class-buffers target-class-name))
+        ;; only cycle if there are no visible buffers of class
+        (unless (seq-filter #'get-buffer-window matching-buffers)
+          (tfl-exwm-cycle-class target-class-name t))
+      ;; otherwise run the command
+      (delete-other-windows)
+      (tfl-exwm-run-command command))))
 
 (defun tfl-exwm-switch-to-agenda ()
   "Switch to agenda workspace and open agenda window.
