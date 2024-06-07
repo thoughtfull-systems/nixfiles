@@ -90,10 +90,10 @@
      ((string-equal exwm-class-name "obsidian")
       simulation-keys
       (([?\C-_]       . [?\C-z])
-       ([?\C-a]       . [escape home])
+       ([?\C-a]       . [home])
        ([?\C-b]       . [left])
        ([?\C-d]       . [delete])
-       ([?\C-e]       . [escape end])
+       ([?\C-e]       . [end])
        ([?\C-f]       . [right])
        ([?\C-g]       . [escape])
        ([?\C-k]       . [S-end delete])
