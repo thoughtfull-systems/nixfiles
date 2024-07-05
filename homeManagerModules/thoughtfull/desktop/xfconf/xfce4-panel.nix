@@ -12,7 +12,7 @@
   "panels/panel-1/length-adjust" = true;
   "panels/panel-1/mode" = uint 0; # horizontal
   "panels/panel-1/nrows" = uint 1;
-  "panels/panel-1/plugin-ids" = [ 1 16 3 20 6 17 8 10 9 19 12 18 15 14 ];
+  "panels/panel-1/plugin-ids" = [ 1 16 3 20 6 17 8 10 9 19 12 21 18 15 14 ];
   "panels/panel-1/position" = "p=6;x=0;y=0";
   "panels/panel-1/position-locked" = true;
   "panels/panel-1/size" = uint 26;
@@ -52,13 +52,12 @@
   "plugins/plugin-10" = "notification-plugin";
   "plugins/plugin-12" = "clock";
   "plugins/plugin-12/command" = "";
-  "plugins/plugin-12/digital-date-font" = "B612 8";
-  "plugins/plugin-12/digital-layout" = uint 1; # time then date
-  "plugins/plugin-12/digital-time-font" = "B612 Bold 10";
-  "plugins/plugin-12/digital-time-format" = "%R"; # hh:mm
+  "plugins/plugin-12/digital-time-font" = "B612 11";
+  "plugins/plugin-12/digital-time-format" = "%H:%M";
+  "plugins/plugin-12/digital-layout" = uint 3; # time only
   "plugins/plugin-12/mode" = uint 2; # digital
   "plugins/plugin-12/timezone" = "";
-  "plugins/plugin-12/tooltip-format" = "Week %V";
+  "plugins/plugin-12/tooltip-format" = "%A, %B %d, %Y (Week %V)";
   "plugins/plugin-14" = "actions";
   "plugins/plugin-14/appearance" = uint 0; # action buttons
   "plugins/plugin-14/ask-confirmation" = false;
@@ -118,4 +117,11 @@
   "plugins/plugin-20/text" = "";
   "plugins/plugin-20/update-period" = 250;
   "plugins/plugin-20/use-label" = false;
+  "plugins/plugin-21" = "genmon";
+  "plugins/plugin-21/command" = "date -u +'(%R UTC)'";
+  "plugins/plugin-21/enable-single-row" = true;
+  "plugins/plugin-21/font" = "B612 Italic 8";
+  "plugins/plugin-21/text" = "";
+  "plugins/plugin-21/update-period" = 500;
+  "plugins/plugin-21/use-label" = false;
 }
