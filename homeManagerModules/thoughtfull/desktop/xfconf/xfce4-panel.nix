@@ -118,9 +118,9 @@
   "plugins/plugin-20/update-period" = 250;
   "plugins/plugin-20/use-label" = false;
   "plugins/plugin-21" = "genmon";
-  "plugins/plugin-21/command" = "date -u +'(%R UTC)'";
+  "plugins/plugin-21/command" = "date -u +'(%R)'";
   "plugins/plugin-21/enable-single-row" = true;
-  "plugins/plugin-21/font" = "B612 Italic 8";
+  "plugins/plugin-21/font" = "B612 Italic 10";
   "plugins/plugin-21/text" = "";
   "plugins/plugin-21/update-period" = 500;
   "plugins/plugin-21/use-label" = false;
