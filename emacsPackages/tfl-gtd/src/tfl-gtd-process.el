@@ -73,12 +73,6 @@ If there are no more items, show MSG or a default."
    ("c" "Cancel item" tgp-refile-as-canceled)
    ("k" "Kill item" tgp-refile-as-killed)])
 
-(defun tgp--validate-estimate ()
-  (if (or (not (org-get-todo-state)) (org-entry-get nil "Effort"))
-      t
-    (message (substitute-command-keys "Missing estimate.  Set estimate with \\[org-set-effort]."))
-    nil))
-
 (defun tgp--validate-task ()
   (if (org-get-todo-state)
       t
@@ -88,8 +82,7 @@ If there are no more items, show MSG or a default."
 (defun tgp-refile-as-task ()
   "Refile current inbox item as a standalone task."
   (interactive)
-  (when (and (tgp--validate-estimate)
-             (tgp--validate-task))
+  (when (tgp--validate-task)
     (org-toggle-tag "SOMEDAY" 'off)
     (org-toggle-tag "MAYBE" 'off)
     (org-toggle-tag "REFERENCE" 'off)
@@ -105,23 +98,12 @@ If there are no more items, show MSG or a default."
 (defun tgp-add-to-project ()
   "Refile current inbox item as a child of an existing project or task."
   (interactive)
-  (when (tgp--validate-estimate)
-    (org-toggle-tag "SOMEDAY" 'off)
-    (org-toggle-tag "MAYBE" 'off)
-    (org-toggle-tag "REFERENCE" 'off)
-    (let ((org-refile-target-verify-function #'tgp--verify-active))
-      (org-refile))
-    (tgp--maybe-cleanup-and-next)))
-
-(defun tgp--verify-project-estimates ()
-  (save-excursion
-    (let ((has-estimate t))
-      (while (and has-estimate (outline-next-heading))
-        (when (and (not (tfl-gtd-project-p))
-                   (org-get-todo-state)
-                   (not (org-entry-get nil "Effort")))
-          (setq has-estimate nil)))
-      has-estimate)))
+  (org-toggle-tag "SOMEDAY" 'off)
+  (org-toggle-tag "MAYBE" 'off)
+  (org-toggle-tag "REFERENCE" 'off)
+  (let ((org-refile-target-verify-function #'tgp--verify-active))
+    (org-refile))
+  (tgp--maybe-cleanup-and-next))
 
 (defun tgp--maybe-beginning-of-item ()
   (when (equal (buffer-name) tgp-buffer-name)
@@ -137,15 +119,10 @@ If there are no more items, show MSG or a default."
              (tgp--maybe-beginning-of-item)
              (tfl-gtd-project-p)))
       (message "Not a valid project.")
-    (if (not (save-excursion
-               (tgp--maybe-beginning-of-item)
-               (tgp--verify-project-estimates)))
-        (message "Missing estimate(s).  Set estimate with %s."
-                 (substitute-command-keys "\\[org-set-effort]"))
-      (let ((org-refile-target-verify-function #'tgp--verify-active))
-        (tgp--maybe-beginning-of-item)
-        (org-refile))
-      (tgp--maybe-cleanup-and-next))))
+    (let ((org-refile-target-verify-function #'tgp--verify-active))
+      (tgp--maybe-beginning-of-item)
+      (org-refile))
+    (tgp--maybe-cleanup-and-next)))
 
 (defun tgp-refile-as-someday ()
   "Refile current inbox item as a someday task."
