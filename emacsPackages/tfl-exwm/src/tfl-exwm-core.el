@@ -166,20 +166,21 @@ If no buffers of TARGET-CLASS-NAME exist, then start COMMAND."
   (tfl-exwm-run-command "flameshot gui"))
 
 (defun tfl-exwm-switch-and-cycle-or-run (workspace-number target-class-name command)
-  ;; if workspace-number is current
-  (if (eq exwm-workspace-current-index workspace-number)
-      ;; cycle target-class-name or run command
-      (tfl-exwm-cycle-class-or-run-command target-class-name command)
-    ;; otherwise switch to workspace-number
-    (exwm-workspace-switch-create workspace-number)
-    ;; if there are buffers of class
-    (if-let (matching-buffers (tfl-exwm-class-buffers target-class-name))
-        ;; only cycle if there are no visible buffers of class
-        (unless (seq-filter #'get-buffer-window matching-buffers)
-          (tfl-exwm-cycle-class target-class-name t))
-      ;; otherwise run the command
-      (delete-other-windows)
-      (tfl-exwm-run-command command))))
+  (when (locate-file command exec-path exec-suffixes 1)
+    ;; if workspace-number is current
+    (if (eq exwm-workspace-current-index workspace-number)
+        ;; cycle target-class-name or run command
+        (tfl-exwm-cycle-class-or-run-command target-class-name command)
+      ;; otherwise switch to workspace-number
+      (exwm-workspace-switch-create workspace-number)
+      ;; if there are buffers of class
+      (if-let (matching-buffers (tfl-exwm-class-buffers target-class-name))
+          ;; only cycle if there are no visible buffers of class
+          (unless (seq-filter #'get-buffer-window matching-buffers)
+            (tfl-exwm-cycle-class target-class-name t))
+        ;; otherwise run the command
+        (delete-other-windows)
+        (tfl-exwm-run-command command)))))
 
 (defun tfl-exwm-switch-to-agenda ()
   "Switch to agenda workspace and open agenda window.
