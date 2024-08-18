@@ -125,10 +125,10 @@ in {
             ### Permissions
             # Location
             "permissions.default.geo" = 2;
-            # Camera
-            "permissions.default.camera" = 2;
-            # Microphone
-            "permissions.default.microphone" = 2;
+            # Camera (ask)
+            "permissions.default.camera" = 0;
+            # Microphone (ask)
+            "permissions.default.microphone" = 0;
             # Notifications
             "permissions.default.desktop-notification" = 2;
             # Autoplay
