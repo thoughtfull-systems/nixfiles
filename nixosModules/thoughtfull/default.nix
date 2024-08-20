@@ -35,6 +35,7 @@ inputs: { lib, ... }: {
     ./vaultwarden.nix
     ./vpn-home.nix
     ./vpn-proton.nix
+    ./webdav.nix
     ./xfce.nix
     ./yubikey.nix
     ./zsh.nix
