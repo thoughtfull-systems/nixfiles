@@ -2,7 +2,8 @@
   cfg = config.thoughtfull.restic;
   postgres-enabled = config.services.postgresql.enable;
   vaultwarden-enabled = config.services.vaultwarden.enable;
-  enabled = postgres-enabled || vaultwarden-enabled;
+  webdav = config.services.webdav;
+  enabled = postgres-enabled || vaultwarden-enabled || webdav.enable;
   pgbackup = config.services.postgresqlBackup;
 in {
   options.thoughtfull.restic = {
@@ -59,6 +60,9 @@ in {
           "--exclude=/var/lib/bitwarden_rs/sends"
         ];
         paths = [ "/var/lib/bitwarden_rs" ];
+      })
+      (lib.mkIf webdav.enable {
+        paths = [ webdav.settings.scope ];
       })
     ]);
   };
