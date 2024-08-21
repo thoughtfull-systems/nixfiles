@@ -106,6 +106,9 @@ in {
             ## Cookies and Site Data
             # Delete cookies and site data when Firefox is closed
             "network.cookie.lifetimePolicy" = 2;
+            ## Downloads
+            # Store downloads in tmp dir (wiped on boot)
+            "browser.download.dir" = "/tmp";
             ## Logins and Passwords
             # Ask to save logins and passwords for websites
             "signon.rememberSignons" = false;
