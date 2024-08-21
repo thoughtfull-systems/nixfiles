@@ -38,7 +38,7 @@ in {
       };
     };
     system.autoUpgrade = {
-      allowReboot = lib.mkDefault (!desktop);
+      allowReboot = lib.mkDefault false;
       dates = lib.mkDefault (if desktop then "12:00" else "03:00");
       enable = lib.mkDefault true;
       flags = [ "--no-write-lock-file" "--refresh" ] ++
