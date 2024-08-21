@@ -22,6 +22,7 @@ inputs: { lib, ... }: {
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix
+    ./nullmailer.nix
     ./openssh.nix
     ./overlay-thoughtfull.nix
     ./postgresql-backup.nix
@@ -30,6 +31,7 @@ inputs: { lib, ... }: {
     ./ssh.nix
     ./sudo.nix
     ./suspend-when-ac-disconnected.nix
+    ./systemd-notify-failure.nix
     ./tlp.nix
     ./tt-rss.nix
     ./vaultwarden.nix
