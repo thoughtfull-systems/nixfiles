@@ -24,7 +24,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    services.nullmailer.enable = lib.mkDefault true;
+    services.nullmailer.enable = true;
     systemd.services = {
       "notify-failure@" = {
         enable = true;
@@ -33,10 +33,11 @@ in {
           HOST = "%H";
         };
         description = "Failure notification for %i";
-        script = ''
-          sudo="${pkgs.sudo}/bin/sudo"
-          sendmail="${pkgs.nullmailer}/bin/sendmail"
-          $sudo -u ${config.services.nullmailer.user} $sendmail -tf ${cfg.from} <<EOF
+        script = let
+          sendmail = "${pkgs.nullmailer}/bin/sendmail";
+          sudo = "${pkgs.sudo}/bin/sudo";
+        in ''
+          ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
           From: ${cfg.from}
           To: ${cfg.to}
           Subject: [$HOST] $UNIT failed

@@ -22,6 +22,7 @@ inputs: { lib, ... }: {
     ./moonlander.nix
     ./nginx.nix
     ./nix.nix
+    ./notify-reboot.nix
     ./nullmailer.nix
     ./openssh.nix
     ./overlay-thoughtfull.nix
