@@ -25,24 +25,26 @@ in {
   };
   config = lib.mkIf cfg.enable {
     services.nullmailer.enable = lib.mkDefault true;
-    systemd.services."notify-failure@" = {
-      enable = true;
-      environment = {
-        UNIT = "%i";
-        HOST = "%H";
-      };
-      description = "Failure notification for %i";
-      script = ''
-        sudo="${pkgs.sudo}/bin/sudo"
-        sendmail="${pkgs.nullmailer}/bin/sendmail"
-        $sudo -u ${config.services.nullmailer.user} $sendmail -tf ${cfg.from} <<EOF
-        From: ${cfg.from}
-        To: ${cfg.to}
-        Subject: [$HOST] $UNIT failed
+    systemd.services = {
+      "notify-failure@" = {
+        enable = true;
+        environment = {
+          UNIT = "%i";
+          HOST = "%H";
+        };
+        description = "Failure notification for %i";
+        script = ''
+          sudo="${pkgs.sudo}/bin/sudo"
+          sendmail="${pkgs.nullmailer}/bin/sendmail"
+          $sudo -u ${config.services.nullmailer.user} $sendmail -tf ${cfg.from} <<EOF
+          From: ${cfg.from}
+          To: ${cfg.to}
+          Subject: [$HOST] $UNIT failed
 
-        $(systemctl status -n 1000000 "$UNIT")
-        EOF
-      '';
+          $(systemctl status -n 1000000 "$UNIT")
+          EOF
+        '';
+      };
     } // (lib.attrsets.genAttrs cfg.services (name: {
       onFailure = lib.mkBefore [ "notify-failure@%i.service" ];
     }));
