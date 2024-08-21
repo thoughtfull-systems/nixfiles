@@ -21,4 +21,5 @@ in {
     StateDirectory = lib.mkDefault "webdav";
     StateDirectoryMode = lib.mkDefault "0770";
   };
+  thoughtfull.systemd-notify-failure.services = [ "webdav" ];
 }

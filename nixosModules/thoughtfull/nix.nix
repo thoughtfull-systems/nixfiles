@@ -45,5 +45,6 @@ in {
               (map (i: "--update-input ${i}") cfg.inputs);
       flake = cfg.flake;
     };
+    thoughtfull.systemd-notify-failure.services = [ "nixos-upgrade" ];
   };
 }

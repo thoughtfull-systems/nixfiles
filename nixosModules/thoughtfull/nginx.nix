@@ -113,5 +113,6 @@ in {
           thoughtfull.proxies);
       };
     };
+    thoughtfull.systemd-notify-failure.services = [ "nginx" ];
   };
 }

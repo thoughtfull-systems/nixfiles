@@ -17,4 +17,5 @@
       registration.enable = true;
     };
   };
+  thoughtfull.systemd-notify-failure.services = [ "tt-rss" ];
 }

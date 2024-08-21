@@ -65,5 +65,6 @@ in {
         paths = [ webdav.settings.scope ];
       })
     ]);
+    thoughtfull.systemd-notify-failure.services = [ "restic-backups-default" ];
   };
 }

@@ -18,4 +18,5 @@
       dbBackend = "postgresql";
     };
   };
+  thoughtfull.systemd-notify-failure.services = [ "vaultwarden" ];
 }
