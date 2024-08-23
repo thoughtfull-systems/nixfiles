@@ -1,0 +1,18 @@
+* Deploy keys for automatic upgrades (2024-08-23)
+It is occasionally prudent to use a private git repo as a flake input. For example, I have a ~nixfiles-secrets~ repository with age encrypted passwords and other secrets. However, while using a private repo is fine for a manual ~nixos-rebuild~, automatic upgrades fail.
+
+The solution to running updates from private repos is a deploy key. A deploy key is an SSH key pair that has read-only access to a single repository. After generating an SSH key pair you add the public key as a deploy key to your private GitHub (or GitLab etc.) repository.
+
+The next problems that present themselves are: 1) how to get SSH to use the deploy key during an automatic upgrade, and 2) how to enter the password for the deploy key during an automatic upgrade.
+
+For me, the second problem is easy to solve: simply generate the key without a password. It is a key with read-only access to a single repository. I store it with root-only access on the machine, and if an attacker compromises it, then I would just rotate keys and passwords. This trade-off is evenly balanced for me. If I cared more, I may run an ~ssh-agent~ for root and manually load the deploy key with a passphrase after each boot, I guess?
+
+To have SSH use the key for an automatic deploy I create a unique ~Host~ configuration for SSH. For example, my ~nixfiles-secrets~ repository would have a ~nixfiles-secrets.github.com~ configuration with an ~IdentityFile~ configured to use the deploy key. Then I configure my ~system.autoUpgrade.flags~ to pass ~--override-input secrets git+ssh://git@nixfiles-secrets.github.com/thoughtfull-systems/nixfiles-secrets~. Automatic upgrade will then use the passwordless deploy key to fetch those nixfiles.
+** NixOS module
+I've created a nixos module to support this solution. Using ~thoughtfull.deploy-keys~ you can create a deploy key for a particular host for a particular repository. For example:
+
+: thoughtfull.deploy-keys = [{ name = "nixfiles-secrets"; hostname = "github.com"; }];
+
+will create an SSH key pair at ~/etc/nixos/nixfiles-secrets-deploy-key~ and configure an SSH host for ~nixfiles-secrets.github.com~. Once the deploy key has been generated, I configure the public key as a deploy key on the repository.
+
+I must still manually configure ~autoUpgrades~, but perhaps that could be a future enhancement.
