@@ -50,7 +50,7 @@ in {
         fi
       '';
       serviceConfig.Type = "oneshot";
-      startAt = lib.mkDefault (if desktop then "13:15" else "04:15");
+      startAt = lib.mkDefault (if desktop then "12:45" else "03:45");
       unitConfig.X-StopOnRemoval = false;
       wants = [ "network-online.target" ];
     };
