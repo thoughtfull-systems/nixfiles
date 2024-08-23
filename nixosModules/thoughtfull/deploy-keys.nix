@@ -1,9 +1,12 @@
+# See doc/deploy-keys.org
 { config, lib, pkgs, ... }: let
   cfg = config.thoughtfull.deploy-keys;
 in {
   options.thoughtfull.deploy-keys = lib.mkOption {
     default = [];
     description = lib.mdDoc ''
+      Create an SSH key pair and configure an SSH Host with IdentityFile using that key for deploy
+      key access to private git repositories.
     '';
     type = lib.types.listOf (
       lib.types.submodule (
@@ -36,14 +39,12 @@ in {
         IdentityFile /etc/nixos/${name}-deploy-key
       '')
       cfg);
-    system.activationScripts = {
-      ensure-deploy-keys = lib.concatMapStringsSep "\n"
-        ({ name, ... }: ''
-          [ -f /etc/nixos/${name}-deploy-key ] || \
-            ${pkgs.openssh}/bin/ssh-keygen -f /etc/nixos/${name}-deploy-key -t ed25519 -N "" \
-              -C "${name} deploy key"
-        '')
-        cfg;
-    };
+    system.activationScripts.ensure-deploy-keys = lib.concatMapStringsSep "\n"
+      ({ name, ... }: ''
+        [ -f /etc/nixos/${name}-deploy-key ] || \
+          ${pkgs.openssh}/bin/ssh-keygen -f /etc/nixos/${name}-deploy-key -t ed25519 -N "" \
+            -C "${name} deploy key"
+      '')
+      cfg;
   };
 }

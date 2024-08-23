@@ -8,6 +8,7 @@
 # your deploy key is named 'nixfiles', the flake should be something like
 # 'git+ssh://git@nixfiles.github.com/...'.
 { config, lib, ... }: let
+  autoUpgrade = config.system.autoUpgrade.enable;
   desktop = config.thoughtfull.desktop.enable;
   cfg = config.thoughtfull.autoUpgrade;
 in {
@@ -22,6 +23,9 @@ in {
     };
   };
   config = {
+    home-manager.sharedModules = [({ ... }: {
+      xdg.configFile."nixpkgs/config.nix".text = "{ allowUnfree = true; }";
+    })];
     nix = {
       gc = {
         automatic = lib.mkDefault true;
@@ -30,13 +34,15 @@ in {
       };
       optimise = {
         automatic = lib.mkDefault true;
-        dates = lib.mkDefault (if desktop then [ "12:30" ] else [ "03:30" ]);
+        dates = (if desktop then [ "12:30" ] else [ "03:30" ]);
       };
       settings = {
         auto-optimise-store = lib.mkDefault true;
         experimental-features = [ "flakes" "nix-command" ];
       };
     };
+    # this cannot be lib.mkDefault, because reasons
+    nixpkgs.config.allowUnfree = true;
     system.autoUpgrade = {
       allowReboot = lib.mkDefault false;
       dates = lib.mkDefault (if desktop then "12:00" else "03:00");
@@ -45,6 +51,6 @@ in {
               (map (i: "--update-input ${i}") cfg.inputs);
       flake = cfg.flake;
     };
-    thoughtfull.systemd-notify-failure.services = [ "nixos-upgrade" ];
+    thoughtfull.systemd-notify-failure.services = lib.mkIf autoUpgrade [ "nixos-upgrade" ];
   };
 }

@@ -1,7 +1,9 @@
-{ config, lib, pkgs, utils, ... }:
-lib.mkIf config.services.xserver.desktopManager.xfce.enable {
+{ config, lib, pkgs, ... }: let
+  xfce = config.services.xserver.desktopManager.xfce.enable;
+in lib.mkIf xfce {
   environment = {
     systemPackages = with pkgs.xfce; [
+      xfce4-genmon-plugin
       xfce4-panel
       xfce4-pulseaudio-plugin
       xfce4-xkb-plugin
@@ -17,15 +19,15 @@ lib.mkIf config.services.xserver.desktopManager.xfce.enable {
     thunar-volman
   ];
   services = {
-    libinput.touchpad.tapping = false;
-    logind.lidSwitch = "ignore";
+    libinput.touchpad.tapping = lib.mkDefault false;
+    logind.lidSwitch = lib.mkDefault "ignore";
     xserver = {
       desktopManager.xfce = {
         enableScreensaver = lib.mkDefault true;
         enableXfwm = lib.mkDefault true;
         noDesktop = lib.mkDefault true;
       };
-      displayManager.lightdm.enable = true;
+      displayManager.lightdm.enable = lib.mkDefault true;
     };
   };
 }

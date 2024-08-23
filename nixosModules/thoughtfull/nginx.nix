@@ -1,4 +1,5 @@
 { config, lib, ... }: let
+  nginx = config.services.nginx.enable;
   thoughtfull = config.thoughtfull.nginx;
 in {
   options.thoughtfull.nginx = {
@@ -51,18 +52,14 @@ in {
     };
   };
   config = {
-    networking = {
-      firewall.allowedTCPPorts = lib.mkIf config.services.nginx.enable [
-        80
-        443
-      ];
-    };
+    networking.firewall.allowedTCPPorts = lib.mkIf nginx [
+      80
+      443
+    ];
     security = lib.mkMerge (lib.mapAttrsToList
       (name : {name, backend, forceSSL}:
         {
-          acme.certs = {
-            ${name} = {};
-          };
+          acme.certs.${name} = {};
         })
       thoughtfull.proxies);
     services = {
@@ -101,7 +98,7 @@ in {
           limit_req_status 429;
         '';
         enable = lib.mkDefault ((builtins.length (builtins.attrNames thoughtfull.proxies)) > 0);
-        recommendedProxySettings = true;
+        recommendedProxySettings = lib.mkDefault true;
         virtualHosts = lib.mkMerge (lib.mapAttrsToList (name : {name, backend, forceSSL}:
           {
             ${name} = {
@@ -113,6 +110,6 @@ in {
           thoughtfull.proxies);
       };
     };
-    thoughtfull.systemd-notify-failure.services = [ "nginx" ];
+    thoughtfull.systemd-notify-failure.services = lib.mkIf nginx [ "nginx" ];
   };
 }

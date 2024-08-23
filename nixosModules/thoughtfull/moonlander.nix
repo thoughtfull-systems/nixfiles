@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }: let
-  cfg = config.thoughtfull.moonlander;
+  moonlander = config.thoughtfull.moonlander.enable;
 in {
   options.thoughtfull.moonlander.enable = lib.mkEnableOption "moonlander";
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf moonlander {
     environment.systemPackages = [ pkgs.wally-cli ];
   };
 }

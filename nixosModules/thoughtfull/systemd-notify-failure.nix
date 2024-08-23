@@ -24,7 +24,10 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    services.nullmailer.enable = true;
+    services.nullmailer = {
+      enable = true;
+      setSendmail = true;
+    };
     systemd.services = {
       "notify-failure@" = {
         enable = true;
@@ -47,7 +50,7 @@ in {
         '';
       };
     } // (lib.attrsets.genAttrs cfg.services (name: {
-      onFailure = lib.mkBefore [ "notify-failure@%i.service" ];
+      onFailure = [ "notify-failure@%i.service" ];
     }));
   };
 }

@@ -1,3 +1,3 @@
 { lib, ... } : {
-  security.acme.acceptTerms = true;
+  security.acme.acceptTerms = lib.mkDefault true;
 }

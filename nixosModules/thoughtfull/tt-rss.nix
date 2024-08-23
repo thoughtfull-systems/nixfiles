@@ -1,19 +1,15 @@
-{ config, lib, pkgs, ... }: lib.mkIf config.services.tt-rss.enable {
+{ config, lib, pkgs, ... }: let
+  cfg = config.services.tt-rss;
+in lib.mkIf cfg.enable {
   # needed for database migrations
   environment.systemPackages = [ pkgs.php ];
-  networking.firewall.allowedTCPPorts = [ 80 ];
   services = {
-    postgresql = {
-      enable = true;
-      ensureDatabases = [ "tt_rss" ];
-      ensureUsers = [{
-        ensureDBOwnership = true;
-        name = "tt_rss";
-      }];
-    };
-    postgresqlBackup.databases = [ "tt_rss" ];
+    postgresqlBackup.databases = [ cfg.database.name ];
     tt-rss = {
-      database.createLocally = false;
+      database = {
+        createLocally = true;
+        type = "pgsql";
+      };
       registration.enable = true;
     };
   };

@@ -20,7 +20,10 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    services.nullmailer.enable = true;
+    services.nullmailer = {
+      enable = true;
+      setSendmail = true;
+    };
     systemd.services.notify-reboot = {
       after = [ "network-online.target" ];
       description = "Notify when system upgrade requires a reboot";

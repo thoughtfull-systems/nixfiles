@@ -17,7 +17,7 @@ in {
     };
     services = lib.mkDefault {
       openvpn.servers.home = {
-        autoStart = lib.mkDefault cfg.autoStart;
+        autoStart = cfg.autoStart;
         config = ''
           config ${age.vpn-home-config.path}
           askpass ${age.vpn-home-askpass.path}

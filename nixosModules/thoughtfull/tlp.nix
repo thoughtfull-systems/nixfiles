@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ lib, ... }: {
   services.tlp.settings = {
     TLP_ENABLE = lib.mkDefault 1;
     TLP_WARN_LEVEL = lib.mkDefault 3;

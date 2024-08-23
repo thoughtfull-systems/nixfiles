@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... } : {
+{ config, lib, pkgs, ... } : let
+  greek = config.thoughtfull.greek.enable;
+in {
   options.thoughtfull.greek.enable = lib.mkEnableOption "greek";
-  config = lib.mkIf config.thoughtfull.greek.enable {
+  config = lib.mkIf greek {
     fonts.packages = [
       pkgs.galatia-sil
     ];

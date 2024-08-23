@@ -1,8 +1,8 @@
 { config, lib, ... }: let
-  cfg = config.services.webdav;
+  webdav = config.services.webdav.enable;
 in {
   services.webdav.settings = {
-    address = lib.mkDefault "0.0.0.0";
+    address = lib.mkDefault "127.0.0.1";
     auth = lib.mkDefault true;
     cors = {
       enabled = lib.mkDefault false;
@@ -17,9 +17,9 @@ in {
       password = "{env}WEBDAV_PASSWORD";
     }];
   };
-  systemd.services.webdav.serviceConfig = {
+  systemd.services.webdav.serviceConfig = lib.mkIf webdav {
     StateDirectory = lib.mkDefault "webdav";
-    StateDirectoryMode = lib.mkDefault "0770";
+    StateDirectoryMode = lib.mkDefault "0700";
   };
-  thoughtfull.systemd-notify-failure.services = [ "webdav" ];
+  thoughtfull.systemd-notify-failure.services = lib.mkIf webdav [ "webdav" ];
 }

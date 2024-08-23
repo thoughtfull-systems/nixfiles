@@ -1,5 +1,6 @@
-{ config, lib, ... }: lib.mkIf config.services.vaultwarden.enable {
-  networking.firewall.allowedTCPPorts = [ 8000 ];
+{ config, lib, ... }: let
+  vaultwarden = config.services.vaultwarden.enable;
+in lib.mkIf vaultwarden {
   services = {
     postgresql = {
       enable = true;

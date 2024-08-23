@@ -1,9 +1,9 @@
 { lib, ... }: {
-  programs.git = lib.mkDefault {
+  programs.git = {
     config = {
-      init.defaultBranch = "main";
-      pull.rebase = false;
+      init.defaultBranch = lib.mkDefault "main";
+      pull.rebase = lib.mkDefault false;
     };
-    enable = true;
+    enable = lib.mkDefault true;
   };
 }

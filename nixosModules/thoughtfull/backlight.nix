@@ -1,4 +1,5 @@
-{ lib, pkgs, writeScript, ... }: let
+# Dims screen and keyboard backlights when A/C is unplugged.
+{ pkgs, ... }: let
   dim-screen = pkgs.writeScript "dim-screen" ''
     #!/usr/bin/env bash
 

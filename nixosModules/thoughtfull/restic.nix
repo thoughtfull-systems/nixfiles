@@ -1,10 +1,10 @@
 { config, lib, pkgs, ... }: let
   cfg = config.thoughtfull.restic;
-  postgres-enabled = config.services.postgresql.enable;
-  vaultwarden-enabled = config.services.vaultwarden.enable;
+  postgresql = config.services.postgresql.enable;
+  postgresqlBackup = config.services.postgresqlBackup;
+  vaultwarden = config.services.vaultwarden.enable;
   webdav = config.services.webdav;
-  enabled = postgres-enabled || vaultwarden-enabled || webdav.enable;
-  pgbackup = config.services.postgresqlBackup;
+  enabled = postgresql || postgresqlBackup.enable || vaultwarden || webdav.enable;
 in {
   options.thoughtfull.restic = {
     s3Bucket = lib.mkOption {
@@ -51,10 +51,10 @@ in {
         repository = "s3:s3.amazonaws.com/${cfg.s3Bucket}";
         timerConfig.OnCalendar = lib.mkDefault "*-*-* *:00:00";
       }
-      (lib.mkIf postgres-enabled {
-        paths = [ pgbackup.location ];
+      (lib.mkIf postgresqlBackup.enable {
+        paths = [ postgresqlBackup.location ];
       })
-      (lib.mkIf vaultwarden-enabled {
+      (lib.mkIf vaultwarden {
         extraBackupArgs = [
           "--exclude=/var/lib/bitwarden_rs/icon_cache"
           "--exclude=/var/lib/bitwarden_rs/sends"
@@ -65,6 +65,6 @@ in {
         paths = [ webdav.settings.scope ];
       })
     ]);
-    thoughtfull.systemd-notify-failure.services = [ "restic-backups-default" ];
+    thoughtfull.systemd-notify-failure.services = lib.mkIf enabled [ "restic-backups-default" ];
   };
 }

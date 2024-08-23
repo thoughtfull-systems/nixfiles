@@ -1,11 +1,11 @@
 { lib, ... }: {
-  services.avahi = lib.mkDefault {
-    enable = true;
-    nssmdns4 = true;
+  services.avahi = {
+    enable = lib.mkDefault true;
+    nssmdns4 = lib.mkDefault true;
     publish = {
-      addresses = true;
-      domain = true;
-      enable = true;
+      addresses = lib.mkDefault true;
+      domain = lib.mkDefault true;
+      enable = lib.mkDefault true;
     };
   };
 }

@@ -17,7 +17,7 @@ in {
     };
     services = lib.mkDefault {
       openvpn.servers.proton = {
-        autoStart = lib.mkDefault cfg.autoStart;
+        autoStart = cfg.autoStart;
         config = ''
           config ${age.vpn-proton-config.path}
           auth-user-pass ${age.vpn-proton-auth-user-pass.path}

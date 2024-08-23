@@ -1,3 +1,4 @@
+# If printing is enables, then configure local Brother printer.
 { config, lib, pkgs, ... }: lib.mkIf config.services.printing.enable {
   hardware.printers.ensurePrinters = [
     {
@@ -7,7 +8,5 @@
       ppdOptions.PageSize = "Letter";
     }
   ];
-  services.printing = {
-    drivers = [ pkgs.cups-brother-mfcl2750dw ];
-  };
+  services.printing.drivers = [ pkgs.cups-brother-mfcl2750dw ];
 }
