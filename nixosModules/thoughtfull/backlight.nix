@@ -1,21 +1,23 @@
 # Dims screen and keyboard backlights when A/C is unplugged.
 { pkgs, ... }: let
+  bash = "${pkgs.bash}/bin/bash";
+  xbacklight = "${pkgs.acpilight}/bin/xbacklight";
   dim-screen = pkgs.writeScript "dim-screen" ''
-    #!/usr/bin/env bash
+    #!${bash}
 
     case ''${1} in
       ac)
-        xbacklight -ctrl intel_backlight -set 100
+        ${xbacklight} -ctrl intel_backlight -set 100
         ;;
       bat)
-        xbacklight -ctrl intel_backlight -set 50
+        ${xbacklight} -ctrl intel_backlight -set 50
         ;;
     esac
   '';
   set-keyboard = pkgs.writeScript "set-keyboard" ''
-    #!/usr/bin/env bash
-    bl=$(xbacklight -ctrl intel_backlight -get)
-    xbacklight -ctrl tpacpi::kbd_backlight -set $((100-$bl))
+    #!${bash}
+    bl=$(${xbacklight} -ctrl intel_backlight -get)
+    ${xbacklight} -ctrl tpacpi::kbd_backlight -set $((100-$bl))
   '';
 in {
   services.udev = {
@@ -24,9 +26,5 @@ in {
       SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="${dim-screen} ac"
       SUBSYSTEM=="backlight", ACTION=="change", RUN+="${set-keyboard} ac"
     '';
-    path = with pkgs; [
-      acpilight
-      bash
-    ];
   };
 }
