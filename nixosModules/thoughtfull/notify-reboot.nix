@@ -53,7 +53,6 @@ in {
         sudo = "${pkgs.sudo}/bin/sudo";
       in ''
         if ${reboot-required}/bin/reboot-required; then
-          echo "$HOST requires a reboot"
           ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
       From: ${cfg.from}
       To: ${cfg.to}
