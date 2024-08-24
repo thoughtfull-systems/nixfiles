@@ -1,19 +1,11 @@
-home-manager: thoughtfull: { lib, pkgs, secrets, ... }: let
-  home = thoughtfull.nixosModules.home;
-in {
-  environment.systemPackages = [
-    pkgs.home-manager
-  ];
+{ lib, pkgs, secrets, thoughtfull, ... }: {
   home-manager = {
     extraSpecialArgs = {
       inherit secrets;
-      thoughtfull = home;
+      thoughtfull = thoughtfull.homeManagerModules;
     };
-    sharedModules = [ home.thoughtfull ];
+    sharedModules = [ thoughtfull.homeManagerModules.default ];
     useGlobalPkgs = lib.mkDefault true;
     useUserPackages = lib.mkDefault true;
   };
-  imports = [
-    home-manager.nixosModules.home-manager
-  ];
 }

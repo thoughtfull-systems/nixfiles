@@ -1,3 +1,3 @@
 {
-  thoughtfull = import ./thoughtfull;
+  default = import ./thoughtfull;
 }

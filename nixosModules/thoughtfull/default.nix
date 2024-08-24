@@ -1,11 +1,17 @@
-inputs: { lib, ... }: {
+inputs:
+{ lib, pkgs, ... }: {
+  _module.args = {
+    inherit (inputs) agenix home-manager unstable;
+    thoughtfull = inputs.self;
+  };
   boot.tmp.cleanOnBoot = lib.mkDefault true;
   console.useXkbConfig = lib.mkDefault true;
+  environment.systemPackages = [
+    inputs.agenix.packages.${pkgs.system}.default
+    inputs.home-manager.packages.${pkgs.system}.default
+  ];
   hardware.enableAllFirmware = lib.mkDefault true;
   imports = [
-    (import ./agenix.nix inputs.agenix)
-    (import ./home-manager.nix inputs.home-manager inputs.self)
-    (import ./overlay-unstable.nix inputs.unstable)
     ./acme.nix
     ./avahi.nix
     ./backlight.nix
@@ -17,6 +23,7 @@ inputs: { lib, ... }: {
     ./fonts.nix
     ./git.nix
     ./greek.nix
+    ./home-manager.nix
     ./initrd-ssh.nix
     ./lock-screen.nix
     ./moonlander.nix
@@ -26,6 +33,7 @@ inputs: { lib, ... }: {
     ./nullmailer.nix
     ./openssh.nix
     ./overlay-thoughtfull.nix
+    ./overlay-unstable.nix
     ./postgresql-backup.nix
     ./restic.nix
     ./root.nix
@@ -42,6 +50,8 @@ inputs: { lib, ... }: {
     ./xfce.nix
     ./yubikey.nix
     ./zsh.nix
+    inputs.agenix.nixosModules.default
+    inputs.home-manager.nixosModules.home-manager
   ];
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   networking.domain = lib.mkDefault "thoughtfull.systems";
