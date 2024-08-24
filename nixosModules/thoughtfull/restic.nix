@@ -1,10 +1,5 @@
 { config, lib, pkgs, ... }: let
   cfg = config.thoughtfull.restic;
-  postgresql = config.services.postgresql.enable;
-  postgresqlBackup = config.services.postgresqlBackup;
-  vaultwarden = config.services.vaultwarden.enable;
-  webdav = config.services.webdav;
-  enabled = postgresql || postgresqlBackup.enable || vaultwarden || webdav.enable;
 in {
   options.thoughtfull.restic = {
     s3Bucket = lib.mkOption {
@@ -20,6 +15,20 @@ in {
         EnvironmentFile as described by systemd.exec(5)
       '';
     };
+    exclude = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = ''
+        Patterns to exclude when backing up. See
+        https://restic.readthedocs.io/en/latest/040_backup.html#excluding-files for
+        details on syntax.
+      '';
+      example = [
+        "/var/cache"
+        "/home/*/.cache"
+        ".git"
+      ];
+    };
     passwordFile = lib.mkOption {
       type = lib.types.str;
       default = null;
@@ -27,44 +36,46 @@ in {
         Read the repository password from a file.
       '';
     };
+    paths = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = ''
+        Which paths to backup, in addition to ones specified via
+        `dynamicFilesFrom`.  If null or an empty array and
+        `dynamicFilesFrom` is also null, no backup command will be run.
+         This can be used to create a prune-only job.
+      '';
+      example = [
+        "/var/lib/postgresql"
+        "/home/user/backup"
+      ];
+    };
   };
-  config = lib.mkIf enabled {
-    environment.systemPackages = [
+  config = {
+    environment.systemPackages = lib.mkIf (cfg.paths != []) [
       (pkgs.writeScriptBin "restic" ''
-        #!/usr/bin/env bash
+        #!${pkgs.bash}/bin/bash
         ${pkgs.execline}/bin/envfile ${cfg.environmentFile} ${pkgs.restic}/bin/restic \
           -r "s3:s3.amazonaws.com/${cfg.s3Bucket}" \
           -p ${cfg.passwordFile} \
           "''${@}"
       '')
     ];
-    services.restic.backups.default = (lib.mkMerge [
-      {
-        environmentFile = cfg.environmentFile;
-        passwordFile = cfg.passwordFile;
-        pruneOpts = [
-          "--keep-daily 7"
-          "--keep-weekly 5"
-          "--keep-monthly 12"
-          "--keep-yearly 75"
-        ];
-        repository = "s3:s3.amazonaws.com/${cfg.s3Bucket}";
-        timerConfig.OnCalendar = lib.mkDefault "*-*-* *:00:00";
-      }
-      (lib.mkIf postgresqlBackup.enable {
-        paths = [ postgresqlBackup.location ];
-      })
-      (lib.mkIf vaultwarden {
-        extraBackupArgs = [
-          "--exclude=/var/lib/bitwarden_rs/icon_cache"
-          "--exclude=/var/lib/bitwarden_rs/sends"
-        ];
-        paths = [ "/var/lib/bitwarden_rs" ];
-      })
-      (lib.mkIf webdav.enable {
-        paths = [ webdav.settings.scope ];
-      })
-    ]);
-    thoughtfull.systemd-notify-failure.services = lib.mkIf enabled [ "restic-backups-default" ];
+    services.restic.backups.default = {
+      environmentFile = cfg.environmentFile;
+      exclude = cfg.exclude;
+      passwordFile = cfg.passwordFile;
+      paths = cfg.paths;
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 5"
+        "--keep-monthly 12"
+        "--keep-yearly 75"
+      ];
+      repository = "s3:s3.amazonaws.com/${cfg.s3Bucket}";
+      timerConfig.OnCalendar = lib.mkDefault "*-*-* *:00:00";
+    };
+    thoughtfull.systemd-notify-failure.services = lib.mkIf (cfg.paths != [])
+      [ "restic-backups-default" ];
   };
 }

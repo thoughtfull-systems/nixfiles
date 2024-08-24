@@ -1,12 +1,11 @@
 { config, lib, ... }: let
-  postgresql = config.services.postgresql.enable;
-  postgresqlBackup = config.services.postgresqlBackup.enable;
+  cfg = config.services.postgresqlBackup;
 in {
   config = {
     services.postgresqlBackup = {
-      enable = lib.mkDefault postgresql;
+      enable = lib.mkDefault config.services.postgresql.enable;
       startAt = lib.mkDefault "*-*-* *:55:00";
     };
-    thoughtfull.systemd-notify-failure.services = lib.mkIf postgresqlBackup [ "postgresqlBackup" ];
+    thoughtfull.restic.paths = lib.mkIf cfg.enable [ cfg.location ];
   };
 }

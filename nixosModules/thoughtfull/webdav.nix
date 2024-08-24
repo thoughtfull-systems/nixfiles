@@ -1,5 +1,5 @@
 { config, lib, ... }: let
-  webdav = config.services.webdav.enable;
+  cfg = config.services.webdav;
 in {
   services.webdav.settings = {
     address = lib.mkDefault "127.0.0.1";
@@ -17,9 +17,12 @@ in {
       password = "{env}WEBDAV_PASSWORD";
     }];
   };
-  systemd.services.webdav.serviceConfig = lib.mkIf webdav {
+  systemd.services.webdav.serviceConfig = lib.mkIf cfg.enable {
     StateDirectory = lib.mkDefault "webdav";
     StateDirectoryMode = lib.mkDefault "0700";
   };
-  thoughtfull.systemd-notify-failure.services = lib.mkIf webdav [ "webdav" ];
+  thoughtfull = {
+    restic.paths = lib.mkIf cfg.enable [ cfg.settings.scope ];
+    systemd-notify-failure.services = lib.mkIf cfg.enable [ "webdav" ];
+  };
 }

@@ -19,5 +19,17 @@ in lib.mkIf vaultwarden {
       dbBackend = "postgresql";
     };
   };
-  thoughtfull.systemd-notify-failure.services = [ "vaultwarden" ];
+  thoughtfull = {
+    restic = {
+      exclude = [
+        "/var/lib/bitwarden_rs/icon_cache"
+        "/var/lib/bitwarden_rs/sends"
+      ];
+      paths = [ "/var/lib/bitwarden_rs" ];
+    };
+    systemd-notify-failure.services = [
+      "postgresqlBackup-vaultwarden"
+      "vaultwarden"
+    ];
+  };
 }
