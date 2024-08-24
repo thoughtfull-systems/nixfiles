@@ -1,11 +1,11 @@
 { config, lib, osConfig, pkgs, ... }: let
-  enable = osConfig.services.xserver.desktopManager.xfce.enable;
+  cfg = osConfig.services.xserver.desktopManager.xfce;
   xfconf-args = {
-    inherit config pkgs;
+    inherit config lib pkgs;
     uint = value: { type = "uint"; value = value; };
   };
-in lib.mkIf enable {
-  services.picom.enable = true;
+in lib.mkIf cfg.enable {
+  services.picom.enable = lib.mkDefault true;
   xfconf.settings = {
     accessibility = import ./xfconf/accessibility.nix xfconf-args;
     keyboard-layout = import ./xfconf/keyboard-layout.nix xfconf-args;

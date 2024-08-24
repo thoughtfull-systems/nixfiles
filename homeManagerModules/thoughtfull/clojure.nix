@@ -1,19 +1,21 @@
-{ config, lib, pkgs, ... } : {
+{ config, lib, pkgs, ... } : let
+  cfg = config.thoughtfull.clojure;
+in {
   options.thoughtfull.clojure = {
     enable = lib.mkEnableOption "clojure";
     jdk-package = lib.mkPackageOption pkgs "jdk" {
       default = "temurin-bin-17";
     };
   };
-  config = lib.mkIf config.thoughtfull.clojure.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       babashka
       clj-kondo
       (clojure.override {
-        jdk = config.thoughtfull.clojure.jdk-package;
+        jdk = cfg.jdk-package;
       })
       joker
-    ] ++ [ config.thoughtfull.clojure.jdk-package ];
+    ] ++ [ cfg.jdk-package ];
     programs.emacs = {
       extraConfig = "(require 'tfl-clojure)";
       extraPackages = epkgs: [ epkgs.tfl-clojure ];

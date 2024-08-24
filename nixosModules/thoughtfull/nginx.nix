@@ -1,6 +1,6 @@
 { config, lib, ... }: let
   nginx = config.services.nginx.enable;
-  thoughtfull = config.thoughtfull.nginx;
+  cfg = config.thoughtfull.nginx;
 in {
   options.thoughtfull.nginx = {
     allowedIPs = lib.mkOption {
@@ -61,11 +61,11 @@ in {
         {
           acme.certs.${name} = {};
         })
-      thoughtfull.proxies);
+      cfg.proxies);
     services = {
       nginx = let
-        blockStr = lib.concatMapStringsSep "\n" (ip: "deny ${ip};") thoughtfull.blockedIPs;
-        allowStr = lib.concatMapStringsSep "\n" (ip: "${ip} 0;") thoughtfull.allowedIPs;
+        blockStr = lib.concatMapStringsSep "\n" (ip: "deny ${ip};") cfg.blockedIPs;
+        allowStr = lib.concatMapStringsSep "\n" (ip: "${ip} 0;") cfg.allowedIPs;
       in {
         appendHttpConfig = ''
           # blocked IPs:
@@ -97,7 +97,7 @@ in {
           limit_req zone=limit_relaxed burst=2000 nodelay;
           limit_req_status 429;
         '';
-        enable = lib.mkDefault ((builtins.length (builtins.attrNames thoughtfull.proxies)) > 0);
+        enable = lib.mkDefault ((builtins.length (builtins.attrNames cfg.proxies)) > 0);
         recommendedProxySettings = lib.mkDefault true;
         virtualHosts = lib.mkMerge (lib.mapAttrsToList (name : {name, backend, forceSSL}:
           {
@@ -107,7 +107,7 @@ in {
               locations."/".proxyPass = lib.mkDefault backend;
             };
           })
-          thoughtfull.proxies);
+          cfg.proxies);
       };
     };
     thoughtfull.systemd-notify-failure.services = lib.mkIf nginx [ "nginx" ];

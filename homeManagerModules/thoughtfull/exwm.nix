@@ -1,10 +1,8 @@
 { config, lib, osConfig, pkgs, ... }: let
   cfg = config.thoughtfull.exwm;
-  desktop = config.thoughtfull.desktop.enable;
 in {
   options.thoughtfull.exwm.enable = lib.mkOption {
-    default = desktop;
-    defaultText = "config.thoughtfull.desktop.enable";
+    default = config.thoughtfull.desktop.enable;
     description = "Whether to enable exwm.";
     type = lib.types.bool;
   };

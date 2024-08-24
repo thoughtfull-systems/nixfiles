@@ -1,4 +1,7 @@
-{ config, lib, pkgs, ... }: lib.mkIf config.programs.emacs.enable {
+{ config, lib, pkgs, ... }: let
+  desktop = config.thoughtfull.desktop.enable;
+  emacs = config.programs.emacs.enable;
+in lib.mkIf emacs {
   home = {
     file.".config/emacs/early-init.el".source = ./emacs/early-init.el;
     packages = (lib.mkMerge [
@@ -11,7 +14,7 @@
         # for loading files from JARs
         unzip
       ])
-      (lib.mkIf config.thoughtfull.desktop.enable (with pkgs; [
+      (lib.mkIf desktop (with pkgs; [
         emacs-all-the-icons-fonts
         source-code-pro
       ]))

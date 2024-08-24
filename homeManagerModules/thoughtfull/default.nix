@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   imports = [
     ./clojure.nix
     ./desktop
@@ -20,5 +20,5 @@
     ./yubikey.nix
     ./zsh.nix
   ];
-  systemd.user.startServices = "sd-switch";
+  systemd.user.startServices = lib.mkDefault "sd-switch";
 }

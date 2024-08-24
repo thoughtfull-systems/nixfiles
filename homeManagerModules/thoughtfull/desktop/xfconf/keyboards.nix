@@ -1,5 +1,5 @@
-{ ... } : {
-  "Default/KeyRepeat" = true;
-  "Default/KeyRepeat/Delay" = 500;
-  "Default/RestoreNumlock" = false;
+{ lib, ... } : {
+  "Default/KeyRepeat" = lib.mkDefault true;
+  "Default/KeyRepeat/Delay" = lib.mkDefault 500;
+  "Default/RestoreNumlock" = lib.mkDefault false;
 }

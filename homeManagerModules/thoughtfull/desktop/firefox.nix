@@ -1,17 +1,15 @@
 { config, lib, pkgs, ... }: let
-  cfg = config.thoughtfull.desktop;
+  desktop = config.thoughtfull.desktop.enable;
 in {
-  config = lib.mkIf cfg.enable {
-    home = {
-      packages = with pkgs; [
-        b612
-        source-code-pro
-      ];
-    };
+  config = lib.mkIf desktop {
+    home.packages = with pkgs; [
+      b612
+      source-code-pro
+    ];
     fonts.fontconfig.enable = lib.mkForce true;
-    programs = lib.mkDefault {
+    programs = {
       firefox = {
-        enable = true;
+        enable = lib.mkDefault true;
         profiles.default = {
           id = 0;
           settings = {
@@ -19,156 +17,166 @@ in {
             #
             # I like this, but it interacts badly with Google Calendar keyboard
             # shortcuts.  I can still search quickly with '/'.
-            "accessibility.typeaheadfind" = false;
+            "accessibility.typeaheadfind" = lib.mkDefault false;
             # Supress warning when opening about:config
-            "browser.aboutConfig.showWarning" = false;
+            "browser.aboutConfig.showWarning" = lib.mkDefault false;
             # Supress Firefox Privacy Notice on first run
-            "toolkit.telemetry.reportingpolicy.firstRun" = false;
+            "toolkit.telemetry.reportingpolicy.firstRun" = lib.mkDefault false;
 
             ### General
             ## Startup
             # Open previous windows and tabs
-            "browser.startup.page" = 3;
+            "browser.startup.page" = lib.mkDefault 3;
             ## Tabs
             # Confirm before closing multiple tabs
-            "browser.tabs.warnOnClose" = false;
+            "browser.tabs.warnOnClose" = lib.mkDefault false;
             # Confirm before quitting with Ctrl+Q
-            "browser.warnOnQuitShortcut" = false;
+            "browser.warnOnQuitShortcut" = lib.mkDefault false;
 
             ### Language and Appearance
             ## Website appearance
             # System theme for dark/light mode
-            "layout.css.prefers-color-scheme.content-override" = 2;
+            "layout.css.prefers-color-scheme.content-override" = lib.mkDefault 2;
             ## Fonts
             # Proportional Serif
-            "font.name.serif.x-western" = "B612";
-            "font.minimum-size.x-western" = 16;
-            "font.size.variable.x-western" = 16;
+            "font.name.serif.x-western" = lib.mkDefault "B612";
+            "font.minimum-size.x-western" = lib.mkDefault 16;
+            "font.size.variable.x-western" = lib.mkDefault 16;
             # Proportianal Sans-serif
-            "font.name.sans-serif.x-western" = "B612";
+            "font.name.sans-serif.x-western" = lib.mkDefault "B612";
             # Monospace
-            "font.name.monospace.x-western" = "Source Code Pro";
-            "font.size.monospace.x-western" = 16;
+            "font.name.monospace.x-western" = lib.mkDefault "Source Code Pro";
+            "font.size.monospace.x-western" = lib.mkDefault 16;
 
             ### Browsing
             # Recommend extensions as you browse
-            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" =
+              lib.mkDefault false;
             # Recommend features as you browse
-            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+            "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" =
+              lib.mkDefault false;
 
             ### Home
             ## New Windows and Tabs
             # Homepage and new windows
-            "browser.startup.homepage" = "about:blank";
+            "browser.startup.homepage" = lib.mkDefault "about:blank";
             # New tabs
-            "browser.newtabpage.enabled" = false;
+            "browser.newtabpage.enabled" = lib.mkDefault false;
             ## Firefox Home Content
             # Web Search
-            "browser.newtabpage.activity-stream.showSearch" = false;
+            "browser.newtabpage.activity-stream.showSearch" = lib.mkDefault false;
             # Shortucts
-            "browser.newtabpage.activity-stream.feeds.topsites" = false;
+            "browser.newtabpage.activity-stream.feeds.topsites" = lib.mkDefault false;
             # Sponsored Shortcuts
-            "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+            "browser.newtabpage.activity-stream.showSponsoredTopSites" = lib.mkDefault false;
             # Recent activity
-            "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
+            "browser.newtabpage.activity-stream.feeds.section.highlights" = lib.mkDefault false;
             # Visited Pages
-            "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
+            "browser.newtabpage.activity-stream.section.highlights.includeVisited" =
+              lib.mkDefault false;
             # Bookmarks
-            "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
+            "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" =
+              lib.mkDefault false;
             # Most Recent Download
-            "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+            "browser.newtabpage.activity-stream.section.highlights.includeDownloads" =
+              lib.mkDefault false;
             # Pages Saved to Pocket
-            "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+            "browser.newtabpage.activity-stream.section.highlights.includePocket" =
+              lib.mkDefault false;
 
             ### Search
             ## Search Suggestions
             # Provide search suggestions
-            "browser.search.suggest.enabled" = false;
+            "browser.search.suggest.enabled" = lib.mkDefault false;
             # Show search suggestions in address bar results
-            "browser.urlbar.suggest.searches" = false;
+            "browser.urlbar.suggest.searches" = lib.mkDefault false;
             # Show search suggestions ahead of browsing history in address bar results
-            "browser.urlbar.showSearchSuggestionsFirst" = false;
+            "browser.urlbar.showSearchSuggestionsFirst" = lib.mkDefault false;
             # Show search suggestions in Private Windows
-            "browser.search.suggest.enabled.private" = false;
+            "browser.search.suggest.enabled.private" = lib.mkDefault false;
 
             ### Browser Privacy
             ## Enhanced Tracking Protection
-            "browser.contentblocking.category" = "strict";
-            "network.cookie.cookieBehavior" = 5;
-            "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation" = true;
-            "privacy.annotate_channels.strict_list.enabled" = true;
-            "privacy.partition.network_state.ocsp_cache" = true;
-            "privacy.query_stripping.enabled" = true;
-            "privacy.trackingprotection.enabled" = true;
-            "privacy.trackingprotection.socialtracking.enabled" = true;
+            "browser.contentblocking.category" = lib.mkDefault "strict";
+            "network.cookie.cookieBehavior" = lib.mkDefault 5;
+            "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation" =
+              lib.mkDefault true;
+            "privacy.annotate_channels.strict_list.enabled" = lib.mkDefault true;
+            "privacy.partition.network_state.ocsp_cache" = lib.mkDefault true;
+            "privacy.query_stripping.enabled" = lib.mkDefault true;
+            "privacy.trackingprotection.enabled" = lib.mkDefault true;
+            "privacy.trackingprotection.socialtracking.enabled" = lib.mkDefault true;
             # Send websites a "Do Not Track" signal that you don't want to be tracked
-            "privacy.donottrackheader.enabled" = true;
+            "privacy.donottrackheader.enabled" = lib.mkDefault true;
             ## Cookies and Site Data
             # Delete cookies and site data when Firefox is closed
-            "network.cookie.lifetimePolicy" = 2;
+            "network.cookie.lifetimePolicy" = lib.mkDefault 2;
             ## Downloads
             # Store downloads in tmp dir (wiped on boot)
-            "browser.download.dir" = "/tmp";
+            "browser.download.dir" = lib.mkDefault "/tmp";
             ## Logins and Passwords
             # Ask to save logins and passwords for websites
-            "signon.rememberSignons" = false;
+            "signon.rememberSignons" = lib.mkDefault false;
             # Autofill logins and passwords
-            "signon.autofillForms" = false;
+            "signon.autofillForms" = lib.mkDefault false;
             # Suggest and generate strong passwords
-            "signon.generation.enabled" = false;
+            "signon.generation.enabled" = lib.mkDefault false;
             # Show alerts about passwords for breached websites
-            "signon.management.page.breach-alerts.enabled" = false;
+            "signon.management.page.breach-alerts.enabled" = lib.mkDefault false;
             ## History
             # Firefox will use custom settings for history
-            "privacy.history.custom" = true;
+            "privacy.history.custom" = lib.mkDefault true;
             # Must preserve history to restore tabs on startup
-            "privacy.sanitize.pending" = "[{\"id\":\"newtab-container\",\"itemsToClear\":[],\"options\":{}}]";
-            "privacy.sanitize.sanitizeOnShutdown" = false;
+            "privacy.sanitize.pending" =
+              lib.mkDefault "[{\"id\":\"newtab-container\",\"itemsToClear\":[],\"options\":{}}]";
+            "privacy.sanitize.sanitizeOnShutdown" = lib.mkDefault false;
 
             ### Permissions
             # Location
-            "permissions.default.geo" = 2;
+            "permissions.default.geo" = lib.mkDefault 2;
             # Camera (ask)
-            "permissions.default.camera" = 0;
+            "permissions.default.camera" = lib.mkDefault 0;
             # Microphone (ask)
-            "permissions.default.microphone" = 0;
+            "permissions.default.microphone" = lib.mkDefault 0;
             # Notifications
-            "permissions.default.desktop-notification" = 2;
+            "permissions.default.desktop-notification" = lib.mkDefault 2;
             # Autoplay
-            "media.autoplay.default" = 5;
+            "media.autoplay.default" = lib.mkDefault 5;
             # Virtual Reality
-            "permissions.default.xr" = 2;
+            "permissions.default.xr" = lib.mkDefault 2;
             # Disallow disabling pasting into fields
-            "dom.event.clipboardevents.enable" = false;
+            "dom.event.clipboardevents.enable" = lib.mkDefault false;
 
             ### Firefox Data Collection and Use
             # Allow Firefox to send technical and interaction data to Mozilla
-            "datareporting.healthreport.uploadEnabled" = false;
+            "datareporting.healthreport.uploadEnabled" = lib.mkDefault false;
             # Allow Firefox to make personalized extension recommendations
-            "browser.discovery.enabled" = false;
+            "browser.discovery.enabled" = lib.mkDefault false;
             # Allow Firefox to install and run studies
-            "app.shield.optoutstudies.enabled" = false;
+            "app.shield.optoutstudies.enabled" = lib.mkDefault false;
             # Allow Firefox to send backlogged crash reports on your behalf
-            "browser.crashReports.unsubmittedCheck.autoSubmit2" = false;
+            "browser.crashReports.unsubmittedCheck.autoSubmit2" = lib.mkDefault false;
 
             ### Security
             ## Deceptive Content and Dangerous Software Protection
             # Block dangerous and deceptive content
-            "browser.safebrowsing.malware.enabled" = false;
-            "browser.safebrowsing.phishing.enabled" = false;
+            "browser.safebrowsing.malware.enabled" = lib.mkDefault false;
+            "browser.safebrowsing.phishing.enabled" = lib.mkDefault false;
             # Block dangerous downloads
-            "browser.safebrowsing.downloads.enabled" = false;
+            "browser.safebrowsing.downloads.enabled" = lib.mkDefault false;
             # Warn you about unwanted and uncommon software
-            "browser.safebrowsing.downloads.remote.block_potentially_unwanted" = false;
-            "browser.safebrowsing.downloads.remote.block_uncommon" = false;
-            "urlclassifier.malwareTable" = "goog-malware-proto,moztest-harmful-simple,moztest-malware-simple";
+            "browser.safebrowsing.downloads.remote.block_potentially_unwanted" =
+              lib.mkDefault false;
+            "browser.safebrowsing.downloads.remote.block_uncommon" = lib.mkDefault false;
+            "urlclassifier.malwareTable" =
+              lib.mkDefault "goog-malware-proto,moztest-harmful-simple,moztest-malware-simple";
             ## HTTPS-Only mode
             # Enable HTTPS-Only Mode in all windows
-            "dom.security.https_only_mode" = true;
-            "dom.security.https_only_mode_ever_enabled" = true;
+            "dom.security.https_only_mode" = lib.mkDefault true;
+            "dom.security.https_only_mode_ever_enabled" = lib.mkDefault true;
             ## don't show data privacy warning
-            "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = 2;
-            "datareporting.policy.dataSubmissionPolicyNotifiedTime" = "1656951310242";
+            "datareporting.policy.dataSubmissionPolicyAcceptedVersion" = lib.mkDefault 2;
+            "datareporting.policy.dataSubmissionPolicyNotifiedTime" = lib.mkDefault "1656951310242";
           };
         };
       };

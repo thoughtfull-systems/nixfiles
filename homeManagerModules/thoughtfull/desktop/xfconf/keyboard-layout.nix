@@ -1,3 +1,3 @@
-{ ... } : {
-  "Default/XkbDisable" = true;
+{ lib, ... } : {
+  "Default/XkbDisable" = lib.mkDefault true;
 }

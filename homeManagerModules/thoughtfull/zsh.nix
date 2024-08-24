@@ -1,10 +1,10 @@
 { lib, ... }: {
-  programs.zsh = lib.mkDefault {
-    autocd = true;
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    defaultKeymap = "emacs";
+  programs.zsh = {
+    autocd = lib.mkDefault true;
+    autosuggestion.enable = lib.mkDefault true;
+    enableCompletion = lib.mkDefault true;
+    syntaxHighlighting.enable = lib.mkDefault true;
+    defaultKeymap = lib.mkDefault "emacs";
     dirHashes = {
       h = "$HOME";
       e = "$HOME/.config/emacs";
@@ -12,9 +12,9 @@
     };
     history = {
       # Include timing information in history
-      extended = true;
-      ignoreDups = true;
-      share = false;
+      extended = lib.mkDefault true;
+      ignoreDups = lib.mkDefault true;
+      share = lib.mkDefault false;
     };
     initExtra = ''
       unalias run-help

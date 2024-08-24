@@ -1,6 +1,6 @@
-{ lib, ... }: lib.mkDefault {
+{ lib, ... }: {
   programs.git = {
-    enable = true;
+    enable = lib.mkDefault true;
     ignores = [ "*~" ];
   };
 }

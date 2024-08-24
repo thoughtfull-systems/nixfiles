@@ -1,12 +1,17 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: let
+  desktop = config.thoughtfull.desktop.enable;
+  cfg = config.programs.tmux;
+  tmux = "${pkgs.tmux}/bin/tmux";
+  xsel = "${pkgs.xsel}/bin/xsel";
+in {
   home = {
     # TODO: run this on config change instead of activation
-    activation = lib.mkIf config.programs.tmux.enable {
+    activation = lib.mkIf cfg.enable {
       reloadTmuxConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
         export TMUX_TMPDIR=/run/user/$UID
-        if ${pkgs.tmux}/bin/tmux ls &> /dev/null; then
+        if ${tmux} ls &> /dev/null; then
           echo "Reloading tmux config"
-          $DRY_RUN_CMD ${pkgs.tmux}/bin/tmux source-file $HOME/.config/tmux/tmux.conf
+          $DRY_RUN_CMD ${tmux} source-file $HOME/.config/tmux/tmux.conf
         else
           echo "NOT Reloading tmux config (tmux not running)"
         fi
@@ -16,10 +21,10 @@
   programs.tmux = {
     baseIndex = lib.mkDefault 1;
     clock24 = lib.mkDefault true;
-    enable = lib.mkDefault config.thoughtfull.desktop.enable;
+    enable = lib.mkDefault desktop;
     extraConfig = ''
       set-option -g alternate-screen on
-      set-option -g copy-command "${pkgs.xsel}/bin/xsel -i --clipboard"
+      set-option -g copy-command "${xsel} -i --clipboard"
       set-option -g detach-on-destroy off
       set-option -g history-file "~/.config/tmux/history"
       set-option -g monitor-activity on
