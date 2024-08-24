@@ -27,9 +27,6 @@ in lib.mkIf vaultwarden {
       ];
       paths = [ "/var/lib/bitwarden_rs" ];
     };
-    systemd-notify-failure.services = [
-      "postgresqlBackup-vaultwarden"
-      "vaultwarden"
-    ];
+    systemd-notify-failure.services = [ "vaultwarden" ];
   };
 }
