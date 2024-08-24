@@ -1,6 +1,21 @@
 { config, lib, pkgs, ... } : let
   cfg = config.thoughtfull.notify-reboot;
   desktop = config.thoughtfull.desktop.enable;
+  readlink = "${pkgs.coreutils}/bin/readlink";
+  reboot-required = pkgs.writeScriptBin "reboot-required" ''
+    #!${pkgs.bash}/bin/bash
+    booted="$(${readlink} /run/booted-system/{initrd,kernel,kernel-modules})"
+    built="$(${readlink} /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
+    if [ "''${booted}" = "''${built}" ]; then
+      echo "Reboot not required"
+      exit 1
+    else
+      echo $booted
+      echo $built
+      echo "Reboot required"
+      exit 0
+    fi
+  '';
 in {
   options.thoughtfull.notify-reboot = {
     enable = lib.mkOption {
@@ -20,6 +35,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = [ reboot-required ];
     services.nullmailer = {
       enable = true;
       setSendmail = true;
@@ -33,15 +49,10 @@ in {
       };
       restartIfChanged = false;
       script = let
-        readlink = "${pkgs.coreutils}/bin/readlink";
         sendmail = "${pkgs.nullmailer}/bin/sendmail";
         sudo = "${pkgs.sudo}/bin/sudo";
       in ''
-        booted="$(${readlink} /run/booted-system/{initrd,kernel,kernel-modules})"
-        built="$(${readlink} /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
-        if [ "''${booted}" = "''${built}" ]; then
-          echo "$HOST does not require a reboot"
-        else
+        if ${reboot-required}/bin/reboot-required; then
           echo "$HOST requires a reboot"
           ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
       From: ${cfg.from}
