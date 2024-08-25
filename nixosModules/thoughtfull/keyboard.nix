@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, ... }: {
   console.useXkbConfig = lib.mkDefault true;
   services.xserver.xkb = {
     layout = lib.mkDefault "us";
