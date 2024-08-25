@@ -4,18 +4,17 @@
     inherit (inputs) agenix home-manager unstable;
     thoughtfull = inputs.self;
   };
-  boot.tmp.cleanOnBoot = lib.mkDefault true;
   environment.systemPackages = [
     agenix.packages.${pkgs.system}.default
     home-manager.packages.${pkgs.system}.default
   ];
-  hardware.enableAllFirmware = lib.mkDefault true;
   imports = [
     ./acme.nix
     ./avahi.nix
     ./backlight.nix
     ./bluetooth.nix
     ./brother.nix
+    ./common.nix
     ./deploy-keys.nix
     ./desktop.nix
     ./emoji.nix
@@ -53,6 +52,4 @@
     agenix.nixosModules.default
     home-manager.nixosModules.home-manager
   ];
-  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
-  networking.domain = lib.mkDefault "thoughtfull.systems";
 }
