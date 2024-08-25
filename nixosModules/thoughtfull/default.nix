@@ -36,13 +36,13 @@
     ./overlay-unstable.nix
     ./postgresql-backup.nix
     ./restic.nix
-    ./root.nix
     ./ssh.nix
     ./sudo.nix
     ./suspend-when-ac-disconnected.nix
     ./systemd-notify-failure.nix
     ./tlp.nix
     ./tt-rss.nix
+    ./users.nix
     ./vaultwarden.nix
     ./vpn-home.nix
     ./vpn-proton.nix
@@ -55,5 +55,4 @@
   ];
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   networking.domain = lib.mkDefault "thoughtfull.systems";
-  users.mutableUsers = lib.mkDefault false;
 }

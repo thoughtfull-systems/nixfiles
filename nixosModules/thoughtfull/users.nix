@@ -9,9 +9,12 @@
     thoughtfull.desktop.enable = lib.mkOverride 900 false;
   };
   services.openssh.settings.PermitRootLogin = lib.mkDefault "prohibit-password";
-  users.users.root = {
-    password = lib.mkDefault null;
-    # NixOS sets a default, so I'm (slightly) overriding it.
-    shell = lib.mkOverride 900 pkgs.zsh;
+  users = {
+    mutableUsers = lib.mkDefault false;
+    users.root = {
+      password = lib.mkDefault null;
+      # NixOS sets a default, so I'm (slightly) overriding it.
+      shell = lib.mkOverride 900 pkgs.zsh;
+    };
   };
 }
