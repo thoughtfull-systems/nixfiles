@@ -4,7 +4,7 @@
 in {
   config = {
     services.openssh = {
-      enable = lib.mkOverride 900 (!desktop);
+      enable = lib.mkDefault true;
       settings.PasswordAuthentication = lib.mkIf cfg.enable (lib.mkDefault false);
     };
     thoughtfull.systemd-notify-failure.services = lib.mkIf cfg.enable [ "sshd" ];

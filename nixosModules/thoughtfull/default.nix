@@ -55,17 +55,10 @@
   ];
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   networking.domain = lib.mkDefault "thoughtfull.systems";
-  programs = {
-    git.enable = lib.mkDefault true;
-    zsh.enable = lib.mkDefault true;
-  };
-  services = {
-    openssh.enable = lib.mkDefault true;
-    xserver.xkb = {
-      layout = lib.mkDefault "us";
-      options = lib.mkDefault "grp:shifts_toggle,ctrl:nocaps,compose:rctrl";
-      variant = lib.mkDefault "dvorak";
-    };
+  services.xserver.xkb = {
+    layout = lib.mkDefault "us";
+    options = lib.mkDefault "grp:shifts_toggle,ctrl:nocaps,compose:rctrl";
+    variant = lib.mkDefault "dvorak";
   };
   users.mutableUsers = lib.mkDefault false;
 }
