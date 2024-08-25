@@ -5,7 +5,6 @@
     thoughtfull = inputs.self;
   };
   boot.tmp.cleanOnBoot = lib.mkDefault true;
-  console.useXkbConfig = lib.mkDefault true;
   environment.systemPackages = [
     agenix.packages.${pkgs.system}.default
     home-manager.packages.${pkgs.system}.default
@@ -25,6 +24,7 @@
     ./greek.nix
     ./home-manager.nix
     ./initrd-ssh.nix
+    ./keyboard.nix
     ./lock-screen.nix
     ./moonlander.nix
     ./nginx.nix
@@ -55,10 +55,5 @@
   ];
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   networking.domain = lib.mkDefault "thoughtfull.systems";
-  services.xserver.xkb = {
-    layout = lib.mkDefault "us";
-    options = lib.mkDefault "grp:shifts_toggle,ctrl:nocaps,compose:rctrl";
-    variant = lib.mkDefault "dvorak";
-  };
   users.mutableUsers = lib.mkDefault false;
 }
