@@ -51,8 +51,8 @@ in {
       ];
     };
   };
-  config = {
-    environment.systemPackages = lib.mkIf (cfg.paths != []) [
+  config = lib.mkIf (cfg.paths != []) {
+    environment.systemPackages = [
       (pkgs.writeScriptBin "restic" ''
         #!${pkgs.bash}/bin/bash
         ${pkgs.execline}/bin/envfile ${cfg.environmentFile} ${pkgs.restic}/bin/restic \
@@ -75,7 +75,6 @@ in {
       repository = "s3:s3.amazonaws.com/${cfg.s3Bucket}";
       timerConfig.OnCalendar = lib.mkDefault "*-*-* *:00:00";
     };
-    thoughtfull.systemd-notify-failure.services = lib.mkIf (cfg.paths != [])
-      [ "restic-backups-default" ];
+    thoughtfull.systemd-notify-failure.services = [ "restic-backups-default" ];
   };
 }
