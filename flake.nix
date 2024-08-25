@@ -17,6 +17,7 @@
     emacsPackages = import ./emacsPackages;
     homeManagerModules = import ./homeManagerModules;
     lib = import ./lib inputs;
+    overlays = import ./overlays inputs;
     nixosModules = import ./nixosModules inputs;
     packages = self.lib.forAllSystems (system:
       import ./packages (import nixpkgs {

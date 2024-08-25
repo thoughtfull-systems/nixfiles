@@ -31,8 +31,7 @@
     ./notify-reboot.nix
     ./nullmailer.nix
     ./openssh.nix
-    ./overlay-thoughtfull.nix
-    ./overlay-unstable.nix
+    ./overlays.nix
     ./postgresql-backup.nix
     ./restic.nix
     ./ssh.nix
