@@ -1,4 +1,4 @@
-inputs:
+{ agenix, home-manager, ... }@inputs:
 { lib, pkgs, ... }: {
   _module.args = {
     inherit (inputs) agenix home-manager unstable;
@@ -7,8 +7,8 @@ inputs:
   boot.tmp.cleanOnBoot = lib.mkDefault true;
   console.useXkbConfig = lib.mkDefault true;
   environment.systemPackages = [
-    inputs.agenix.packages.${pkgs.system}.default
-    inputs.home-manager.packages.${pkgs.system}.default
+    agenix.packages.${pkgs.system}.default
+    home-manager.packages.${pkgs.system}.default
   ];
   hardware.enableAllFirmware = lib.mkDefault true;
   imports = [
@@ -50,8 +50,8 @@ inputs:
     ./xfce.nix
     ./yubikey.nix
     ./zsh.nix
-    inputs.agenix.nixosModules.default
-    inputs.home-manager.nixosModules.home-manager
+    agenix.nixosModules.default
+    home-manager.nixosModules.home-manager
   ];
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   networking.domain = lib.mkDefault "thoughtfull.systems";
