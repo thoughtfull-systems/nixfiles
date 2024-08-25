@@ -4,9 +4,7 @@ inputs: {
       inputs.agenix.packages.${pkgs.system}.default
       inputs.home-manager.packages.${pkgs.system}.default
     ];
-    home-manager = {
-      sharedModules = [ inputs.self.homeManagerModules.default ];
-    };
+    home-manager.sharedModules = [ inputs.self.homeManagerModules.default ];
     imports = [
       ./acme.nix
       ./avahi.nix
