@@ -13,7 +13,7 @@
     # for some software I want the most recent version
     unstable.url = "github:thoughtfull-systems/nixpkgs/nixpkgs-unstable";
   };
-  outputs = { nixpkgs, self, ... }@inputs: {
+  outputs = inputs: {
     emacsPackages = import ./emacsPackages;
     homeManagerModules = import ./homeManagerModules;
     lib = import ./lib inputs;

@@ -28,7 +28,7 @@ in lib.mkIf emacs {
     extraPackages = epkgs: [ epkgs.tfl ];
     # moving emacs29->emacs29-gtk3 fixes a focusing issue with EXWM--switching from X buffer to
     # another X buffer, but it does not fix switching from an emacs buffer to an X buffer.  it's a
-    # long running and complicated issue.  a good reference is
+    # long running and complicated issue.  A good reference is
     # https://github.com/ch11ng/exwm/issues/759. the best theory seems to be libX11 version. I guess
     # this change uses a different version (either older or newer)?
     package = pkgs.emacs29-gtk3;
