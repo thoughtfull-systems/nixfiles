@@ -8,12 +8,12 @@ in {
       type = lib.types.bool;
     };
     from = lib.mkOption {
-      default = "technosophist@thoughtfull.systems";
+      default = null;
       description = lib.mdDoc "Email address from which to notify on systemd service failures.";
       type = lib.types.str;
     };
     to = lib.mkOption {
-      default = "technosophist@thoughtfull.systems";
+      default = null;
       description = lib.mdDoc "Email address to notify on systemd service failures.";
       type = lib.types.str;
     };

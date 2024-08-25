@@ -24,12 +24,12 @@ in {
       type = lib.types.bool;
     };
     from = lib.mkOption {
-      default = "technosophist@thoughtfull.systems";
+      default = null;
       description = lib.mdDoc "Email address from which to notify when reboot is required.";
       type = lib.types.str;
     };
     to = lib.mkOption {
-      default = "technosophist@thoughtfull.systems";
+      default = null;
       description = lib.mdDoc "Email address to notify when reboot is required.";
       type = lib.types.str;
     };
