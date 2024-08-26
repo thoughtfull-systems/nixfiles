@@ -10,7 +10,6 @@ inputs: {
       ./avahi.nix
       ./backlight.nix
       ./bluetooth.nix
-      ./brother.nix
       ./common.nix
       ./deploy-keys.nix
       ./desktop.nix
