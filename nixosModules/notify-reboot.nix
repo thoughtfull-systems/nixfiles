@@ -2,17 +2,17 @@
   cfg = config.thoughtfull.notify-reboot;
   desktop = config.thoughtfull.desktop.enable;
   readlink = "${pkgs.coreutils}/bin/readlink";
-  reboot-required = pkgs.writeScriptBin "reboot-required" ''
+  check-for-reboot = pkgs.writeScriptBin "check-for-reboot" ''
     #!${pkgs.bash}/bin/bash
     booted="$(${readlink} /run/booted-system/{initrd,kernel,kernel-modules})"
     built="$(${readlink} /nix/var/nix/profiles/system/{initrd,kernel,kernel-modules})"
     if [ "''${booted}" = "''${built}" ]; then
-      echo "Reboot not required"
+      echo "System does not require a reboot"
       exit 1
     else
       echo $booted
       echo $built
-      echo "Reboot required"
+      echo "System requires a reboot"
       exit 0
     fi
   '';
@@ -35,7 +35,7 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ reboot-required ];
+    environment.systemPackages = [ check-for-reboot ];
     services.nullmailer = {
       enable = true;
       setSendmail = true;
@@ -49,21 +49,29 @@ in {
       };
       restartIfChanged = false;
       script = let
+        find = "${pkgs.findutils}/bin/find";
         sendmail = "${pkgs.nullmailer}/bin/sendmail";
         sudo = "${pkgs.sudo}/bin/sudo";
+        file = "/tmp/thoughtfull-reboot-last-notified";
       in ''
-        if ${reboot-required}/bin/reboot-required; then
-          ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
+        if ${check-for-reboot}/bin/check-for-reboot; then
+          if [[ $(${find} ${file} -mmin -1440) != "${file}" ]]; then
+            echo "Sending notification email"
+            touch ${file}
+            ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
       From: ${cfg.from}
       To: ${cfg.to}
       Subject: [$HOST] requires a reboot
 
       $HOST requires a reboot.
       EOF
+          else
+            echo "Skipping notification email"
+          fi
         fi
       '';
       serviceConfig.Type = "oneshot";
-      startAt = lib.mkDefault (if desktop then "12:45" else "03:45");
+      startAt = lib.mkDefault "hourly";
       unitConfig.X-StopOnRemoval = false;
       wants = [ "network-online.target" ];
     };
