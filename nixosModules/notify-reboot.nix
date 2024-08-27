@@ -52,10 +52,10 @@ in {
         find = "${pkgs.findutils}/bin/find";
         sendmail = "${pkgs.nullmailer}/bin/sendmail";
         sudo = "${pkgs.sudo}/bin/sudo";
-        file = "/tmp/thoughtfull-reboot-last-notified";
+        file = "$CACHE_DIRECTORY/last-notified";
       in ''
         if ${check-for-reboot}/bin/check-for-reboot; then
-          if [[ $(${find} ${file} -mmin -1440) != "${file}" ]]; then
+          if [[ $(${find} ${file} -mmin -1440 2>/dev/null) != "${file}" ]]; then
             echo "Sending notification email"
             touch ${file}
             ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
@@ -70,7 +70,10 @@ in {
           fi
         fi
       '';
-      serviceConfig.Type = "oneshot";
+      serviceConfig = {
+        Type = "oneshot";
+        CacheDirectory = lib.mkDefault "notify-reboot";
+      };
       startAt = lib.mkDefault "hourly";
       unitConfig.X-StopOnRemoval = false;
       wants = [ "network-online.target" ];
