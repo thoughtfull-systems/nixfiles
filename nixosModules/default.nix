@@ -27,6 +27,7 @@ inputs: {
       ./notify-reboot.nix
       ./nullmailer.nix
       ./openssh.nix
+      ./openvpn-proton.nix
       ./postgresql-backup.nix
       ./restic.nix
       ./ssh.nix
@@ -37,8 +38,6 @@ inputs: {
       ./tt-rss.nix
       ./users.nix
       ./vaultwarden.nix
-      ./vpn-home.nix
-      ./vpn-proton.nix
       ./webdav.nix
       ./xfce.nix
       ./yubikey.nix
