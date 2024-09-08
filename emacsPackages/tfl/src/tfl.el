@@ -167,7 +167,12 @@
 (use-package display-line-numbers
   :hook (prog-mode . display-line-numbers-mode)
   :custom ((display-line-numbers-minor-tick 10)
-           (display-line-numbers-width-start t)))
+           (display-line-numbers-width-start t))
+  ;; fix line number scaling; minor tick would scale with text-scale-adjust, but major tick would
+  ;; not.
+  :custom-face
+  (line-number-major-tick ((t (:inherit default))))
+  (line-number-minor-tick ((t (:inherit default)))))
 (use-package eldoc
   :diminish
   :hook (emacs-lisp-mode . eldoc-mode))
