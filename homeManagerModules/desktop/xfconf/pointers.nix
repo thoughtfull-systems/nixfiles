@@ -10,7 +10,7 @@
   "ELAN067600_04F33195_Touchpad/ReverseScrolling" = lib.mkDefault false;
   "ELAN067600_04F33195_Touchpad/RightHanded" = lib.mkDefault true;
   "ELAN901C00_04F32FE6/Properties/Device_Enabled" = lib.mkDefault 0;
-  "TPPS2_Elan_TrackPoint/Acceleration" = lib.mkDefault 5.0;
+  "TPPS2_Elan_TrackPoint/Acceleration" = lib.mkDefault 3.0;
   "TPPS2_Elan_TrackPoint/ReverseScrolling" = lib.mkDefault false;
   "TPPS2_Elan_TrackPoint/RightHanded" = lib.mkDefault true;
 }
