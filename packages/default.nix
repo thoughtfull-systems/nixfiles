@@ -11,4 +11,5 @@ in {
   mic = import ./mic nixpkgs;
   speaker = import ./speaker nixpkgs;
   yubikey-touch-plugin = import ./yubikey-touch-plugin nixpkgs;
+  zoom-us = import ./zoom-us.nix nixpkgs;
 })
