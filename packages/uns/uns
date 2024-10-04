@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+# source: https://gist.github.com/zanona/6f33ad30c18c8a2a2cc673f6bc7590b9
+# source: https://grammar.yourdictionary.com/parts-of-speech/adjectives/list-of-positive-adjectives.html
+# source: https://eslgrammar.org/list-of-nouns/
+
+ADJECTIVES="Affectionate Agreeable Amiable Bright Charming Creative Determined Diligent Diplomatic Dynamic Energetic Friendly Funny Generous Giving Gregarious Hardworking Helpful Imaginative Kind Likable Loyal Patient Polite Sincere Adept Brave Capable Considerate Courageous Faithful Fearless Frank Humorous Knowledgeable Loving Marvelous Nice Optimistic Passionate Persistent Plucky Proficient Romantic Sensible Thoughtful Warmhearted Willing Zestful Amazing Awesome Blithesome Excellent Fabulous Favorable Fortuitous Gorgeous Incredible Unique Mirthful Outstanding Perfect Philosophical Propitious Remarkable Rousing Spectacular Splendid Stellar Stupendous Super Upbeat Stunning Wondrous Alluring Ample Bountiful Brilliant Breathtaking Dazzling Elegant Enchanting Gleaming Glimmering Glistening Glittering Glowing Lovely Lustrous Magnificent Ravishing Shimmering Shining Sleek Sparkling Twinkling Vivid Vibrant Vivacious Adaptable Ambitious Approachable Competitive Confident Devoted Educated Efficient Flexible Focused Honest Independent Inquisitive Insightful Organized Personable Productive Qualified Relaxed Resourceful Responsible Technological Engaging Engrossing Captivating Fantastic Gripping Hilarious Imaginative Moving Powerful Spellbinding"
+NOUNS="Actor Gold Painting Advertisement Grass Parrot Afternoon Greece Pencil Airport Guitar Piano Ambulance Hair Pillow Animal Hamburger Pizza Answer Helicopter Planet Apple Helmet Plastic Army Holiday Portugal Australia Honey Potato Balloon Horse Queen Banana Hospital Quill Battery House Rain Beach Hydrogen Rainbow Beard Ice Raincoat Bed Insect Refrigerator Belgium Insurance Restaurant Boy Iron River Branch Island Rocket Breakfast Jackal Room Brother Jelly Rose Camera Jewellery Russia Candle Jordan Sandwich Car Juice School Caravan Kangaroo Scooter Carpet King Shampoo Cartoon Kitchen Shoe China Kite Soccer Church Knife Spoon Crayon Lamp Stone Crowd Lawyer Sugar Daughter Leather Sweden Death Library Teacher Denmark Lighter Telephone Diamond Lion Television Dinner Lizard Tent Disease Lock Thailand Doctor London Tomato Dog Lunch Toothbrush Dream Machine Traffic Dress Magazine Train Easter Magician Truck Egg Manchester Uganda Eggplant Market Umbrella Egypt Match Van Elephant Microphone Vase Energy Monkey Vegetable Engine Morning Vulture England Motorcycle Wall Evening Nail Whale Eye Napkin Window Family Needle Wire Finland Nest Xylophone Fish Nigeria Yacht Flag Night Yak Flower Notebook Zebra Football Ocean Zoo Forest Oil Garden Fountain Orange Gas France Oxygen Girl Furniture Oyster Glass Garage Ghost"
+
+sample() {
+  ARR=($(echo "$1" | tr ' ' '\n'))
+  echo "${ARR[$RANDOM % ${#ARR[@]}]}"
+}
+
+for i in {1..6}; do
+  echo "$(sample "$ADJECTIVES")$(sample "$NOUNS")$(@apg@ -a1 -n1 -MN -m2 -x2)"
+done
