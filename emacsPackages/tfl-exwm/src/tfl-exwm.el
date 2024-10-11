@@ -87,7 +87,10 @@
        ([?\C-y]         . [?\C-\S-v])
        ([M-iso-lefttab] . [?\C-z ?\C-\M-B])
        ([M-tab]         . [?\C-z ?\C-\M-F])
-       ([?\s-w]         . [?\C-z ?K])))))
+       ([?\s-w]         . [?\C-z ?K])))
+     ((string-equal exwm-class-name "Slack")
+      simulation-keys
+      (([?\C-/] . [?\C-z])))))
   :defer)
 (use-package exwm-modeline
   :custom (exwm-modeline-mode t)
