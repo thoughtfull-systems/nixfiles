@@ -2,6 +2,12 @@
   cfg = config.thoughtfull.restic;
 in {
   options.thoughtfull.restic = {
+    enable = lib.mkOption {
+      default = !config.thoughtfull.desktop.enable;
+      example = false;
+      description = "Whether to enable restic.";
+      type = lib.types.bool;
+    };
     age = {
       environmentFile = lib.mkOption {
         type = lib.types.path;
@@ -53,7 +59,7 @@ in {
       ];
     };
   };
-  config = lib.mkIf (cfg.paths != []) (let
+  config = lib.mkIf (cfg.enable && cfg.paths != []) (let
     env-path = config.age.secrets.thoughtfull-restic-env-file.path;
     pwd-path = config.age.secrets.thoughtfull-restic-pwd-file.path;
   in {
