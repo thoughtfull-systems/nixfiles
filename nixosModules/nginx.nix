@@ -104,7 +104,10 @@ in {
             ${name} = {
               enableACME = lib.mkDefault true;
               forceSSL = lib.mkDefault forceSSL;
-              locations."/".proxyPass = lib.mkDefault backend;
+              locations."/" = {
+                proxyPass = lib.mkDefault backend;
+                proxyWebsockets = lib.mkDefault true;
+              };
             };
           })
           cfg.proxies);

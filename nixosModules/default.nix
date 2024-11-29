@@ -16,6 +16,7 @@ inputs: {
       ./emoji.nix
       ./fonts.nix
       ./git.nix
+      ./gotosocial.nix
       ./greek.nix
       ./home-manager.nix
       ./initrd-ssh.nix
