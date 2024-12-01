@@ -4,7 +4,7 @@ in {
   options.thoughtfull.desktop.enable = lib.mkEnableOption "desktop";
   config = lib.mkIf desktop {
     boot.loader.timeout = lib.mkDefault 5;
-    hardware.pulseaudio.enable = lib.mkDefault true;
+    services.pipewire.pulse.enable = lib.mkDefault true;
     home-manager.sharedModules = [({ ... }: {
       thoughtfull.desktop.enable = lib.mkDefault true;
     })];
