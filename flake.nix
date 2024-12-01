@@ -7,9 +7,9 @@
     };
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:thoughtfull-systems/home-manager/release-24.05";
+      url = "github:thoughtfull-systems/home-manager/release-24.11";
     };
-    nixpkgs.url = "github:thoughtfull-systems/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:thoughtfull-systems/nixpkgs/nixos-24.11";
     # for some software I want the most recent version
     unstable.url = "github:thoughtfull-systems/nixpkgs/nixpkgs-unstable";
   };
