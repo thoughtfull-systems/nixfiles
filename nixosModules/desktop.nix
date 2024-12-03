@@ -4,7 +4,16 @@ in {
   options.thoughtfull.desktop.enable = lib.mkEnableOption "desktop";
   config = lib.mkIf desktop {
     boot.loader.timeout = lib.mkDefault 5;
-    services.pipewire.pulse.enable = lib.mkDefault true;
+    services.pipewire = {
+      extraConfig.pipewire = {
+        "99-disable-bell" = {
+          "context.properties"= {
+            "module.x11.bell" = false;
+          };
+        };
+      };
+      pulse.enable = lib.mkDefault true;
+    };
     home-manager.sharedModules = [({ ... }: {
       thoughtfull.desktop.enable = lib.mkDefault true;
     })];
