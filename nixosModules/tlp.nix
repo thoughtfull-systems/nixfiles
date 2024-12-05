@@ -61,8 +61,6 @@
     CPU_BOOST_ON_BAT = lib.mkDefault 0; # disabled
     CPU_HWP_DYN_BOOST_ON_AC = lib.mkDefault 1; # enabled
     CPU_HWP_DYN_BOOST_ON_BAT = lib.mkDefault 0; # disabled
-    SCHED_POWERSAVE_ON_AC = lib.mkDefault 0; # disabled
-    SCHED_POWERSAVE_ON_BAT = lib.mkDefault 1; # enabled
     # ENERGY_PERF_POLICY_ON_AC = "performance"; # use CPU_ENERGY_PERF_POLICY_ON_AC
     # ENERGY_PERF_POLICY_ON_BAT = "power"; # use CPU_ENERGY_PERF_POLICY_ON_BAT
     RESTORE_DEVICE_STATE_ON_STARTUP = lib.mkDefault 0; # disabled
@@ -99,6 +97,5 @@
     USB_EXCLUDE_PRINTER = lib.mkDefault 1; # enabled
     USB_EXCLUDE_WWAN = lib.mkDefault 0; # disabled
     USB_ALLOWLIST = lib.mkDefault "";
-    USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN = lib.mkDefault 0; # disabled
   };
 }
