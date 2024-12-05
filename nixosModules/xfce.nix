@@ -9,7 +9,7 @@ in lib.mkIf xfce {
       xfce4-xkb-plugin
       xfce4-weather-plugin
     ] ++ [
-      pkgs.gnome.file-roller
+      pkgs.file-roller
     ];
     xfce.excludePackages = [ pkgs.xfce.xfce4-volumed-pulse ];
   };
