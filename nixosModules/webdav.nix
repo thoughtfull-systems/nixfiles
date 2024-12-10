@@ -41,7 +41,7 @@ in {
       StateDirectoryMode = lib.mkDefault "0700";
     };
     thoughtfull = {
-      restic.paths = lib.mkIf webdav.enable [ webdav.settings.scope ];
+      restic.paths = lib.mkIf webdav.enable [ webdav.settings.directory ];
       systemd-notify-failure.services = lib.mkIf webdav.enable [ "webdav" ];
     };
   };
