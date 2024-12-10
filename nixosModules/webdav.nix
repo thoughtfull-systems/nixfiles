@@ -20,13 +20,15 @@ in {
       settings = {
         address = lib.mkDefault "127.0.0.1";
         auth = lib.mkDefault true;
+        behindProxy = lib.mkDefault true;
         cors = {
           enabled = lib.mkDefault false;
           credentials = lib.mkDefault false;
         };
+        directory = lib.mkDefault "/var/lib/webdav";
         modify = lib.mkDefault true;
+        permissions = "CRUD";
         port = lib.mkDefault 8001;
-        scope = lib.mkDefault "/var/lib/webdav";
         tls = lib.mkDefault false;
         users = [{
           username = "webdav";
