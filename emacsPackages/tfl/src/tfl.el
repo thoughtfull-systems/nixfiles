@@ -33,9 +33,10 @@
   :diminish buffer-face-mode)
 (use-package faces
   :custom-face
-  (default ((t (:height 110 :family "Source Code Pro"))) face-defface-spec)
+  (default ((t (:height 110 :family "IBM Plex Mono"))) face-defface-spec)
   (fixed-pitch ((t (:height 110))))
   (mode-line-inactive ((t (:foreground "gray60"))))
+  (font-lock-comment-face ((t (:slant italic))))
   :defer)
 (use-package files
   :custom ((auto-save-visited-mode t)
