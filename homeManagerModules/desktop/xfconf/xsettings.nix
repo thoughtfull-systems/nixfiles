@@ -5,9 +5,9 @@
   "Gtk/CursorThemeName" = lib.mkDefault "Adwaita";
   "Gtk/CursorThemeSize" = lib.mkDefault 16;
   "Gtk/DialogsUseHeader" = lib.mkDefault false;
-  "Gtk/FontName" = lib.mkDefault "B612 11";
+  "Gtk/FontName" = lib.mkDefault "IBM Plex Serif 11";
   "Gtk/MenuImages" = lib.mkDefault true;
-  "Gtk/MonospaceFontName" = lib.mkDefault "Source Code Pro 11";
+  "Gtk/MonospaceFontName" = lib.mkDefault "IBM Plex Mono 11";
   "Net/DndDragThreshold" = lib.mkDefault 8;
   "Net/DoubleClickDistance" = lib.mkDefault 5;
   "Net/DoubleClickTime" = lib.mkDefault 400;

@@ -39,13 +39,13 @@ in {
             "layout.css.prefers-color-scheme.content-override" = lib.mkDefault 2;
             ## Fonts
             # Proportional Serif
-            "font.name.serif.x-western" = lib.mkDefault "B612";
+            "font.name.serif.x-western" = lib.mkDefault "IBM Plex Serif";
             "font.minimum-size.x-western" = lib.mkDefault 16;
             "font.size.variable.x-western" = lib.mkDefault 16;
             # Proportianal Sans-serif
-            "font.name.sans-serif.x-western" = lib.mkDefault "B612";
+            "font.name.sans-serif.x-western" = lib.mkDefault "IBM Plex Sans";
             # Monospace
-            "font.name.monospace.x-western" = lib.mkDefault "Source Code Pro";
+            "font.name.monospace.x-western" = lib.mkDefault "IBM Plex Mono";
             "font.size.monospace.x-western" = lib.mkDefault 16;
 
             ### Browsing

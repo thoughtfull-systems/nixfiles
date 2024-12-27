@@ -54,7 +54,7 @@ in {
   "plugins/plugin-10" = lib.mkDefault "notification-plugin";
   "plugins/plugin-12" = lib.mkDefault "clock";
   "plugins/plugin-12/command" = lib.mkDefault "";
-  "plugins/plugin-12/digital-time-font" = lib.mkDefault "B612 11";
+  "plugins/plugin-12/digital-time-font" = lib.mkDefault "IBM Plex Serif 11";
   "plugins/plugin-12/digital-time-format" = lib.mkDefault "%H:%M";
   "plugins/plugin-12/digital-layout" = lib.mkDefault (uint 3); # time only
   "plugins/plugin-12/mode" = lib.mkDefault (uint 2); # digital
@@ -115,14 +115,14 @@ in {
   "plugins/plugin-20" = lib.mkDefault "genmon";
   "plugins/plugin-20/command" = lib.mkDefault yubikey-touch-plugin;
   "plugins/plugin-20/enable-single-row" = lib.mkDefault true;
-  "plugins/plugin-20/font" = lib.mkDefault "B612 11";
+  "plugins/plugin-20/font" = lib.mkDefault "IBM Plex Serif 11";
   "plugins/plugin-20/text" = lib.mkDefault "";
   "plugins/plugin-20/update-period" = lib.mkDefault 250;
   "plugins/plugin-20/use-label" = lib.mkDefault false;
   "plugins/plugin-21" = lib.mkDefault "genmon";
   "plugins/plugin-21/command" = lib.mkDefault "date -u +'(%R)'";
   "plugins/plugin-21/enable-single-row" = lib.mkDefault true;
-  "plugins/plugin-21/font" = lib.mkDefault "B612 Italic 10";
+  "plugins/plugin-21/font" = lib.mkDefault "IBM Plex Serif Italic 10";
   "plugins/plugin-21/text" = lib.mkDefault "";
   "plugins/plugin-21/update-period" = lib.mkDefault 500;
   "plugins/plugin-21/use-label" = lib.mkDefault false;
