@@ -43,7 +43,6 @@ inputs: {
       ./xfce.nix
       ./yubikey.nix
       ./zsh.nix
-      inputs.agenix.nixosModules.default
       inputs.home-manager.nixosModules.home-manager
     ];
     nixpkgs.overlays = [

@@ -1,0 +1,162 @@
+{
+  "nodes": {
+    "agenix": {
+      "inputs": {
+        "darwin": [
+          "darwin"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1723293904,
+        "narHash": "sha256-b+uqzj+Wa6xgMS9aNbX4I+sXeb5biPDi39VgvSFqFvU=",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "f6291c5935fdc4e0bef208cfc0dcab7e3f7a1c41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryantm",
+        "ref": "main",
+        "repo": "agenix",
+        "type": "github"
+      }
+    },
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735685839,
+        "narHash": "sha256-62xAPSs5VRZoPH7eRanUn5S5vZEd+8vM4bD5I+zxokc=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "6a1fdb2a1204c0de038847b601cff5012e162b5e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735350001,
+        "narHash": "sha256-V/d0BtVgiQwakqygdYF0CZjmWLWuu5Lt+NRohDId5/w=",
+        "owner": "thoughtfull-systems",
+        "repo": "home-manager",
+        "rev": "6732bef96909c57cf473887dc4f02c949bdb66cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thoughtfull-systems",
+        "ref": "release-24.11",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1735780403,
+        "narHash": "sha256-tWD6tUmLhj6Y1UskxH7Ej40QX6gipbPyl1Si2BiG76Y=",
+        "owner": "thoughtfull-systems",
+        "repo": "nixpkgs",
+        "rev": "d59282e53f4517b67b9218709ab72184cab49587",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thoughtfull-systems",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "agenix": "agenix",
+        "darwin": "darwin",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "secrets": "secrets",
+        "unstable": "unstable"
+      }
+    },
+    "secrets": {
+      "inputs": {
+        "agenix": [
+          "agenix"
+        ],
+        "darwin": [
+          "darwin"
+        ],
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1735832127,
+        "narHash": "sha256-ybghx4FrHO+Mh1LLeCfA1e76dhOPCpPVVdYj3Kw3+rM=",
+        "ref": "refs/heads/main",
+        "rev": "d8a7aa74a5db759e6dabfd17de9871fd80764d12",
+        "revCount": 4,
+        "type": "git",
+        "url": "ssh://git@github.com/thoughtfull-systems/nixfiles-secrets"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/thoughtfull-systems/nixfiles-secrets"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "unstable": {
+      "locked": {
+        "lastModified": 1735779735,
+        "narHash": "sha256-lLnOQIGcGwR4NJaxSpdc+ItB6z4vvPvSHPoBvW1Whas=",
+        "owner": "thoughtfull-systems",
+        "repo": "nixpkgs",
+        "rev": "7ed3c048acec7799377b55993d067950b97e6cc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thoughtfull-systems",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
