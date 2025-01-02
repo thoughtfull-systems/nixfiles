@@ -1,9 +1,6 @@
 inputs: {
   default = { lib, pkgs, ... }: {
-    environment.systemPackages = [
-      inputs.agenix.packages.${pkgs.system}.default
-      inputs.home-manager.packages.${pkgs.system}.default
-    ];
+    environment.systemPackages = [ inputs.home-manager.packages.${pkgs.system}.default ];
     home-manager.sharedModules = [ inputs.self.homeManagerModules.default ];
     imports = [
       ./acme.nix
