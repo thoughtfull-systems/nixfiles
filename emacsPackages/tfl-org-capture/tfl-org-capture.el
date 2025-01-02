@@ -1,15 +1,16 @@
 ;;; tfl-org-capture.el --- Code and configuration for org-capture        -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
+;;
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;  Version: 0.0.0
 ;;
 ;;; Commentary:
 ;;
-;; Code and configuration for org-capture.
+;;  Code and configuration for org-capture.
 ;;
 ;;; Code:
-
 (use-package org-capture
   :bind (("C-c o c" . org-capture)))
 

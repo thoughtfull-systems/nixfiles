@@ -1,13 +1,15 @@
 ;;; tfl-gtd-process.el --- Process entries from GTD inbox                -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Technosophist
-
+;;
+;;  Copyright (c) 2024 technosophist
+;;
+;; Author: technosophist <technosophist@thoughtfull.systems>
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
+;;
 ;; Take each entry from GTD inbox in a narrowed view for processing.
-
+;;
 ;;; Code:
 (require 'tfl-gtd)
 (require 'tfl-gtd-core)

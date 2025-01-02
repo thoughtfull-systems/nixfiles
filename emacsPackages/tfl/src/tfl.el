@@ -1,18 +1,17 @@
 ;;; tfl.el --- Essentials for a pleasant Emacs experience                -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2024 Technosophist
+;; Copyright (c) 2024 technosophist
 ;;
-;; Author: Technosophist <technosophist@thoughtfull.systems>
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;
-;; Configures essential and/or global aspects of the Emacs experience.  Customizations broadly
-;; affecting the Emacs experience should be here.  As well, this is kind of a "miscellaneous"
-;; library for customizations not having a home elsewhere, though the ideally customizations should
-;; move out to other libraries as seams become apparent.
+;;  Configures essential and/or global aspects of the Emacs experience.  Customizations broadly
+;;  affecting the Emacs experience should be here.  As well, this is kind of a "miscellaneous"
+;;  library for customizations not having a home elsewhere, though the ideally customizations should
+;;  move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
-
 
 ;;; General
 (use-package all-the-icons

@@ -1,14 +1,16 @@
 ;;; tfl-org-bullets.el --- Use fancy bullets for headings and lists      -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
+;;
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;
-;; Use fancy bullets for headings and lists.
+;;  Use fancy bullets for headings and lists.
 ;;
 ;;; Code:
-
-;; Heading bullets
+;;
+;;  Heading bullets
 (defun tob--compose-bullet (bullet)
   (prog1 () (compose-region (match-beginning 1) (match-end 1) bullet)))
 

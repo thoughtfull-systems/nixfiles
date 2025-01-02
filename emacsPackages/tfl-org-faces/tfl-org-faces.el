@@ -1,16 +1,18 @@
 ;;; tfl-org-faces.el --- Faces for org-mode                              -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
+;;
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;  Version: 0.0.0
 ;;
 ;;; Commentary:
 ;;
-;; Because I like to use variable pitch for org-mode, make the left margins fixed pitch, so things
-;; line up when indented.
+;;  Because I like to use variable pitch for org-mode, make the left margins fixed pitch, so things
+;;  line up when indented.
 ;;
 ;;; Code:
-;; Make heading bullets fixed pitch
+;;  Make heading bullets fixed pitch
 (defface org-level-1-bullet '((t :inherit (org-level-1 fixed-pitch)))
   "Face used for level 1 headline bullets."
   :group 'org-faces)

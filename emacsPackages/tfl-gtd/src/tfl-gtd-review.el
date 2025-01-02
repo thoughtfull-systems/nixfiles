@@ -1,13 +1,15 @@
 ;;; tfl-gtd-review.el --- Weekly review                                  -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2024 Technosophist
-
+;;
+;; Copyright (c) 2024 technosophist
+;;
+;; Author: technosophist <technosophist@thoughtfull.systems>
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
+;;
 ;; Weekly review agenda with waiting, someday, maybe, and stuck project sections
-
+;;
 ;;; Code:
 (require 'tfl-gtd)
 (require 'org-agenda)

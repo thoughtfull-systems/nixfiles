@@ -1,12 +1,14 @@
 ;;; tfl-gtd.el --- Project and task management with GTDish process  -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
+;;
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;  Version: 0.0.0
 ;;
 ;;; Commentary:
 ;;
-;; Project and task management with GTDish process.
+;;  Project and task management with GTDish process.
 ;;
 ;;; Code:
 

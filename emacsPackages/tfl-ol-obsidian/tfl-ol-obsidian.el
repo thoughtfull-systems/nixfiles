@@ -1,8 +1,8 @@
 ;;; tfl-ol-obsidian.el --- Org-link configuration for obsidian links     -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2024 Technosophist
+;; Copyright (c) 2024 technosophist
 ;;
-;; Author: Technosophist <technosophist@thoughtfull.systems>
+;; Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;

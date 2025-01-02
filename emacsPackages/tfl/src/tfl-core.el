@@ -1,16 +1,15 @@
 ;;; tfl-core.el --- Generally useful functions and such                  -*- lexical-binding: t; -*-
 ;;
-;; Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
 ;;
-;; Author: Technosophist <technosophist@thoughtfull.systems>
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;
-;; A kind of a "miscellaneous" library for functions an such not having a home elsewhere, though the
-;; ideally things functions and such move out to other libraries as seams become apparent.
+;;  A kind of a "miscellaneous" library for functions an such not having a home elsewhere, though
+;;  the ideally things functions and such move out to other libraries as seams become apparent.
 ;;
 ;;; Code:
-
 
 ;; General
 (defun tfl-buffer-compare-name (b1 b2)

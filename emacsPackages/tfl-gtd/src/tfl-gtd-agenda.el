@@ -1,13 +1,15 @@
 ;;; tfl-gtd-agenda.el --- Organize GTD projects                          -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Technoophist
-
+;;
+;;  Copyright (c) 2024 Technoophist
+;;
+;; Author: technosophist <technosophist@thoughtfull.systems>
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
+;;
 ;; Take each unorganized project in a narrowed view for planning.
-
+;;
 ;;; Code:
 (require 'tfl-gtd)
 (require 'tfl-gtd-core)

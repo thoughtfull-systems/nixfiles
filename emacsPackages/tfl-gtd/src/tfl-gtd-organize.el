@@ -1,13 +1,15 @@
 ;;; tfl-gtd-organize.el --- Organize GTD projects                        -*- lexical-binding: t; -*-
-
-;;  Copyright (c) 2023 Technosophist
-
+;;
+;;  Copyright (c) 2024 technosophist
+;;
+;; Author: technosophist <technosophist@thoughtfull.systems>
+;;
 ;;  Version: 0.0.0
-
+;;
 ;;; Commentary:
-
+;;
 ;; Take each unorganized project in a narrowed view for planning.
-
+;;
 ;;; Code:
 (require 'tfl-gtd)
 (require 'org-refile)

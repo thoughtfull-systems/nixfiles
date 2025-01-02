@@ -1,13 +1,14 @@
 ;;; tfl-org.el --- Code and configuration for org-mode                   -*- lexical-binding: t; -*-
 ;;
-;;  Copyright (c) 2024 Technosophist
+;;  Copyright (c) 2024 technosophist
+;;
+;;  Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;
-;; Code and configuration for org-mode.
+;;  Code and configuration for org-mode.
 ;;
 ;;; Code:
-
 (use-package hl-line
   :hook (org-agenda-mode . hl-line-mode))
 (use-package org

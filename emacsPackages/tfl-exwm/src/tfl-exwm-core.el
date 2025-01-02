@@ -1,8 +1,8 @@
 ;;; tfl-exwm-core.el --- Functions and such for customizing EXWM         -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2024 Technosophist
+;; Copyright (C) 2024 technosophist
 ;;
-;; Author: Technosophist <technosophist@thoughtfull.systems>
+;; Author: technosophist <technosophist@thoughtfull.systems>
 ;;
 ;;; Commentary:
 ;;
