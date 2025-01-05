@@ -62,7 +62,7 @@ in {
   ###### interface
   options.thoughtfull.services.syncthing-init = {
     configDir = mkOption {
-      default = "~/.config/syncthing";
+      default = "~/.local/state/syncthing";
       description = mdDoc ''
         Configuration dir for syncthing.
       '';
