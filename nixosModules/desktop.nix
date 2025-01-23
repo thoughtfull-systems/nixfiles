@@ -1,25 +1,26 @@
-{ config, lib, ... }: let
+{ config, lib, pkgs, ... }: let
   desktop = config.thoughtfull.desktop.enable;
 in {
   options.thoughtfull.desktop.enable = lib.mkEnableOption "desktop";
   config = lib.mkIf desktop {
     boot.loader.timeout = lib.mkDefault 5;
-    services.pipewire = {
-      extraConfig.pipewire = {
-        "99-disable-bell" = {
-          "context.properties"= {
-            "module.x11.bell" = false;
-          };
-        };
-      };
-      pulse.enable = lib.mkDefault true;
-    };
+    environment.defaultPackages = with pkgs.thoughtfull; [ pins uns ];
     home-manager.sharedModules = [({ ... }: {
       thoughtfull.desktop.enable = lib.mkDefault true;
     })];
     networking.networkmanager.enable = lib.mkDefault true;
     security.rtkit.enable = lib.mkDefault config.hardware.pulseaudio.enable;
     services = {
+      pipewire = {
+        extraConfig.pipewire = {
+          "99-disable-bell" = {
+            "context.properties"= {
+              "module.x11.bell" = false;
+            };
+          };
+        };
+        pulse.enable = lib.mkDefault true;
+      };
       printing.enable = lib.mkDefault true;
       xserver = {
         desktopManager.xfce.enable = lib.mkDefault true;
