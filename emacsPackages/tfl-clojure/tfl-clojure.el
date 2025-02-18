@@ -21,7 +21,10 @@
   ;; clojure-mode fills to fill-column plus 2.  I think it is because it narrows the buffer to the
   ;; docstring, which removes the first two spaces on the line, so I'm adjusting for that here.
   :custom ((clojure-docstring-fill-column (- fill-column 2))
-           (clojure-indent-style 'always-indent))
+           ;; https://metaredux.com/posts/2024/02/19/configuring-fixed-tonsky-indentation-in-clojure-mode.html
+           (clojure-indent-style 'always-indent)
+           (clojure-indent-keyword-style 'always-indent)
+           (clojure-enable-indent-specs nil))
   :defer)
 (use-package clojure-mode-extra-font-locking
   :after clojure-mode)
