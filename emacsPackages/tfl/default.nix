@@ -11,6 +11,7 @@ epkgs: {
       flycheck
       magit
       marginalia
+      markdown-mode
       nix-mode
       orderless
       paredit
