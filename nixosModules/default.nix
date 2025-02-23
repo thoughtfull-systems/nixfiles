@@ -34,6 +34,7 @@ inputs: {
       ./systemd-notify-failure.nix
       ./tlp.nix
       ./tt-rss.nix
+      ./tunnel.nix
       ./users.nix
       ./vaultwarden.nix
       ./webdav.nix
