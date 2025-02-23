@@ -12,6 +12,7 @@ inputs: {
       ./desktop.nix
       ./emoji.nix
       ./fonts.nix
+      ./forgejo.nix
       ./git.nix
       ./gotosocial.nix
       ./greek.nix
