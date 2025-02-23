@@ -32,10 +32,13 @@ in {
         ${pkgs.openssh}/bin/ssh -N -o ExitOnForwardFailure=yes -i ${cfg.identity} ${cfg.user}@${cfg.host} ${portsString}
       '';
       serviceConfig = {
-        Restart = "always";
+        Restart = "on-success";
         Type = "exec";
       };
       wantedBy = [ "multi-user.target" ];
+    };
+    thoughtfull = {
+      systemd-notify-failure.services = [ "thoughtfull-tunnel" ];
     };
   };
 }
