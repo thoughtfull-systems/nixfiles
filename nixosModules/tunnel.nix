@@ -32,7 +32,7 @@ in {
         ${pkgs.openssh}/bin/ssh -N -o ExitOnForwardFailure=yes -i ${cfg.identity} ${cfg.user}@${cfg.host} ${portsString}
       '';
       serviceConfig = {
-        Restart = "on-success";
+        Restart = "always";
         Type = "exec";
       };
       wantedBy = [ "multi-user.target" ];
