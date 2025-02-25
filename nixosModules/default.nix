@@ -39,6 +39,7 @@ inputs: {
       ./users.nix
       ./vaultwarden.nix
       ./webdav.nix
+      ./woodpecker.nix
       ./xfce.nix
       ./yubikey.nix
       ./zsh.nix
