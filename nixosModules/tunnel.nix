@@ -21,8 +21,13 @@ in {
           type = lib.types.str;
         };
         host = lib.mkOption {
-          description = "host to tunnel to";
+          description = "host to tunnel from";
           type = lib.types.str;
+        };
+        port = lib.mkOption {
+          default = 22;
+          description = "port to connect with";
+          type = lib.types.int;
         };
         identity = lib.mkOption {
           description = "path to identity file to use for connection";
@@ -75,6 +80,7 @@ in {
           script = ''
             ${pkgs.openssh}/bin/ssh -N -o ExitOnForwardFailure=yes \
                 -i ${c.identity} \
+                -p ${builtins.toString c.port} \
                 ${bindings} \
                 ${c.user}@${c.host}
           '';
