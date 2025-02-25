@@ -2,6 +2,7 @@
   cfg = config.thoughtfull.tunnels;
 in {
   options.thoughtfull.tunnels = lib.mkOption {
+    default = {};
     type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
       options = {
         name = lib.mkOption {
