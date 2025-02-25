@@ -78,8 +78,11 @@ in {
                 ${c.user}@${c.host}
           '';
           serviceConfig = {
-            Restart = "always";
-            Type = "exec";
+            Restart = lib.mkDefault "always";
+            RestartMaxDelaySec = lib.mkDefault 300;
+            RestartSec = lib.mkDefault 5;
+            RestartSteps = lib.mkDefault 100;
+            Type = lib.mkDefault "exec";
           };
           wantedBy = [ "multi-user.target" ];
         };
