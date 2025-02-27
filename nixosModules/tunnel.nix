@@ -37,6 +37,11 @@ in {
           description = "addresses and ports to bind";
           type = lib.types.listOf (lib.types.submodule {
             options = {
+              reverse = lib.mkOption {
+                default = false;
+                description = "if true tunnel from remote to local, otherwise local to remote";
+                type = lib.types.bool;
+              };
               local = {
                 address = lib.mkOption {
                   default = "localhost";
@@ -71,7 +76,7 @@ in {
         c = cfg.${name};
         endpoint = { address, port }: "${address}:${builtins.toString port}";
         bindings = (lib.strings.concatMapStringsSep " "
-          (binding: "-R${endpoint binding.remote}:${endpoint binding.local}")
+          (binding: "-${if binding.reverse then "R" else "L"}${endpoint binding.remote}:${endpoint binding.local}")
           c.bindings);
       in services // {
         "thoughtfull-tunnel-${name}" = {
