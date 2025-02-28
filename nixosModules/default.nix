@@ -21,6 +21,7 @@ inputs: {
       ./keyboard.nix
       ./lock-screen.nix
       ./moonlander.nix
+      ./netdata.nix
       ./nginx.nix
       ./nix.nix
       ./notify-reboot.nix
