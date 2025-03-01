@@ -45,7 +45,7 @@ in {
     nixpkgs.config.allowUnfree = true;
     system.autoUpgrade = {
       allowReboot = lib.mkDefault false;
-      dates = lib.mkDefault (if desktop then "12:00" else "03:00");
+      dates = lib.mkDefault (if desktop then "12:00" else "08:00");
       enable = lib.mkDefault true;
       flags = [ "--no-write-lock-file" "--refresh" ] ++
               (map (i: "--update-input ${i}") cfg.inputs);
