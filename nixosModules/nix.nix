@@ -29,12 +29,16 @@ in {
     nix = {
       gc = {
         automatic = lib.mkDefault true;
-        dates = lib.mkDefault (if desktop then "12:15" else "03:15");
+        dates = lib.mkDefault (if desktop
+                               then "12:15 America/New_York"
+                               else "03:15 America/New_York");
         options = lib.mkDefault "--delete-older-than 7d";
       };
       optimise = {
         automatic = lib.mkDefault true;
-        dates = (if desktop then [ "12:30" ] else [ "03:30" ]);
+        dates = (if desktop
+                 then [ "12:30 America/New_York" ]
+                 else [ "03:30 America/New_York" ]);
       };
       settings = {
         auto-optimise-store = lib.mkDefault true;
@@ -45,7 +49,9 @@ in {
     nixpkgs.config.allowUnfree = true;
     system.autoUpgrade = {
       allowReboot = lib.mkDefault false;
-      dates = lib.mkDefault (if desktop then "12:00" else "08:00");
+      dates = lib.mkDefault (if desktop
+                             then "12:00 America/New_York"
+                             else "03:00 America/New_York");
       enable = lib.mkDefault true;
       flags = [ "--no-write-lock-file" "--refresh" ] ++
               (map (i: "--update-input ${i}") cfg.inputs);
