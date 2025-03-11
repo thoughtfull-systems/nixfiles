@@ -61,7 +61,7 @@ in {
             ${sudo} -u ${config.services.nullmailer.user} ${sendmail} -tf ${cfg.from} <<EOF
       From: ${cfg.from}
       To: ${cfg.to}
-      Subject: [$HOST] requires a reboot
+      Subject: $HOST requires a reboot
 
       $HOST requires a reboot.
       EOF
