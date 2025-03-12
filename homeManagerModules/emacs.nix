@@ -31,6 +31,6 @@ in lib.mkIf emacs {
     # long running and complicated issue.  A good reference is
     # https://github.com/ch11ng/exwm/issues/759. the best theory seems to be libX11 version. I guess
     # this change uses a different version (either older or newer)?
-    package = pkgs.emacs29-gtk3;
+    package = pkgs.emacs30-gtk3;
   };
 }
