@@ -3,14 +3,20 @@
 in {
   options.thoughtfull.clojure = {
     enable = lib.mkEnableOption "clojure";
+    babashka-package = lib.mkPackageOption pkgs "babashka" {
+      default = "babashka";
+    };
+    clj-kondo-package = lib.mkPackageOption pkgs "clj-kondo" {
+      default = "clj-kondo";
+    };
     jdk-package = lib.mkPackageOption pkgs "jdk" {
       default = "temurin-bin-17";
     };
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      babashka
-      clj-kondo
+      cfg.babashka-package
+      cfg.clj-kondo-package
       (clojure.override {
         jdk = cfg.jdk-package;
       })
