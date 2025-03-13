@@ -20,9 +20,12 @@ in {
           account-domain = lib.mkOverride 900 "thoughtfull.systems";
           application-name = lib.mkOverride 900 "Thoughtfull Systems";
           bind-address = lib.mkOverride 900 "localhost";
+          cache.memory-target = lib.mkOverride 900 "50MiB";
+          db-max-open-conns-multiplier = lib.mkOverride 900 1;
           host = lib.mkOverride 900 "social.thoughtfull.systems";
           instance-languages = ["en"];
           landing-page-user = lib.mkOverride 900 "technosophist";
+          letsencrypt-enabled = lib.mkOverride 900 false;
           port = lib.mkOverride 900 8002;
           protocol = lib.mkOverride 900 "https";
         };
