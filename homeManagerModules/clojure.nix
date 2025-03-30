@@ -10,7 +10,7 @@ in {
       default = "clj-kondo";
     };
     jdk-package = lib.mkPackageOption pkgs "jdk" {
-      default = "temurin-bin-17";
+      default = "jdk";
     };
   };
   config = lib.mkIf cfg.enable {
