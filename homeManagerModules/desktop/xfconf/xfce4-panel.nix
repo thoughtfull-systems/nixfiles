@@ -66,6 +66,7 @@ in {
   "plugins/plugin-14/items" = [
     "+suspend"
     "+hybrid-sleep"
+    "+lock-screen"
     "+logout"
     "-separator"
     "-switch-user"
@@ -73,7 +74,6 @@ in {
     "-shutdown"
     "-restart"
     "-logout-dialog"
-    "-lock-screen"
   ];
   "plugins/plugin-15" = lib.mkDefault "separator";
   "plugins/plugin-15/expand" = lib.mkDefault false;
