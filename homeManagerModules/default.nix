@@ -1,6 +1,7 @@
 {
   default = { lib, ... }: {
     imports = [
+      ./autostart.nix
       ./clojure.nix
       ./desktop
       ./emacs.nix
@@ -14,7 +15,7 @@
       ./keychain.nix
       ./notifications.nix
       ./overlay-emacs.nix
-      ./autostart.nix
+      ./rust.nix
       ./starship.nix
       ./syncthing.nix
       ./tmux.nix
