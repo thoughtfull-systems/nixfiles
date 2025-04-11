@@ -91,8 +91,7 @@
   :defer)
 (use-package visual-fill-column
   :hook ((markdown-mode org-mode) . visual-fill-column-mode)
-  :config
-  (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust))
+  :config (advice-add 'text-scale-adjust :after 'visual-fill-column-adjust))
 (use-package window
   :custom (split-window-preferred-function 'visual-fill-column-split-window-sensibly)
   :defer)
@@ -162,8 +161,7 @@
 (use-package company
   :diminish
   :hook (prog-mode . company-mode))
-(use-package simple
-  :hook (prog-mode . column-number-mode))
+(use-package dap-mode)
 (use-package display-line-numbers
   :hook (prog-mode . display-line-numbers-mode)
   :custom ((display-line-numbers-minor-tick 10)
@@ -195,6 +193,13 @@
 (use-package lisp-mode
   :custom (emacs-lisp-docstring-fill-column 80)
   :defer)
+(use-package lsp-mode
+  :init (setq lsp-keymap-prefix "C-c l")
+  :commands (lsp lsp-deferred)
+  :config (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  :hook (lsp-mode . lsp-enable-which-key-integration))
+(use-package lsp-ui
+  :commands lsp-ui-mode)
 (use-package magit-extras
   :after magit
   ;; add project-switch-command without demand loading magit
@@ -207,6 +212,8 @@
 (use-package sh-script
   :custom (sh-basic-offset 2)
   :defer)
+(use-package simple
+  :hook (prog-mode . column-number-mode))
 
 (provide 'tfl)
 ;;; tfl.el ends here

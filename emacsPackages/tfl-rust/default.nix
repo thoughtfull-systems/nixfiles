@@ -3,6 +3,7 @@ epkgs: {
     packageRequires = with epkgs; [
       flycheck-rust
       rust-mode
+      rustic
       tfl
     ];
     pname = "tfl-rust";

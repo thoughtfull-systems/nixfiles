@@ -7,8 +7,11 @@ epkgs: {
       all-the-icons-ibuffer
       company
       consult
+      dap-mode
       diminish
       flycheck
+      lsp-mode
+      lsp-ui
       magit
       marginalia
       markdown-mode
