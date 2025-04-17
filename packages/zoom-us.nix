@@ -65,7 +65,7 @@ let
     };
     x86_64-linux = fetchurl {
       url = "https://zoom.us/client/${versions.x86_64-linux}/zoom_x86_64.pkg.tar.xz";
-      hash = "sha256-k8T/lmfgAFxW1nwEyh61lagrlHP5geT2tA7e5j61+qw";
+      hash = "sha256-oAsK92yTaLdi9YfIcMkTevrSsKr2nClcMjOBo5VYIEg=";
     };
   };
 
