@@ -51,7 +51,7 @@ let
   # find where to edit them.
   versions.aarch64-darwin = "6.0.2.33403";
   versions.x86_64-darwin = "6.0.2.33403";
-  versions.x86_64-linux = "6.2.11.5069";
+  versions.x86_64-linux = "6.4.5.1259";
 
   srcs = {
     aarch64-darwin = fetchurl {
