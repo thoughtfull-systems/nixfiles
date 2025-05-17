@@ -1,6 +1,7 @@
 {
   default = { lib, ... }: {
     imports = [
+      ./aider.nix
       ./autostart.nix
       ./clojure.nix
       ./desktop
