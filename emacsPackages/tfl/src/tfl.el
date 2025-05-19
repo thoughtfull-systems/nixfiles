@@ -23,6 +23,14 @@
 (use-package all-the-icons-ibuffer
   :after (all-the-icons ibuffer)
   :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+(use-package chatgpt-shell
+  :ensure t
+  :custom
+  (chatgpt-shell-anthropic-key
+   (auth-source-pick-first-password :host "console.anthropic.com"))
+  (chatgpt-shell-google-key
+   (auth-source-pick-first-password :host "generativelanguage.googleapis.com"))
+  (chatgpt-shell-model-versions '("gpt-4" "gpt3.5" "claude-3.7")))
 (use-package desktop
   :custom (desktop-restore-frames nil)
   :defer)

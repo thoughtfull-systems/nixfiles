@@ -5,6 +5,9 @@ epkgs: {
       all-the-icons-completion
       all-the-icons-dired
       all-the-icons-ibuffer
+      # Install manually until 25.05 is released
+      #
+      # chatgpt-shell
       company
       consult
       dap-mode
