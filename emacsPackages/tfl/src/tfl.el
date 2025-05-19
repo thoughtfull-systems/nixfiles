@@ -30,7 +30,8 @@
    (auth-source-pick-first-password :host "console.anthropic.com"))
   (chatgpt-shell-google-key
    (auth-source-pick-first-password :host "generativelanguage.googleapis.com"))
-  (chatgpt-shell-model-versions '("gpt-4" "gpt3.5" "claude-3.7")))
+  (chatgpt-shell-openai-key
+   (auth-source-pick-first-password :host "api.openai.com")))
 (use-package desktop
   :custom (desktop-restore-frames nil)
   :defer)
