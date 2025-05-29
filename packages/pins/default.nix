@@ -1,11 +1,13 @@
 nixpkgs: nixpkgs.symlinkJoin {
   name = "pins";
   paths = [
-    (nixpkgs.substituteAll {
+    (nixpkgs.replaceVarsWith {
       dir = "bin";
       isExecutable = true;
       src = ./pins;
-      apg = "${nixpkgs.apg}/bin/apg";
+      replacements = {
+        apg = "${nixpkgs.apg}/bin/apg";
+      };
     })
   ];
 }

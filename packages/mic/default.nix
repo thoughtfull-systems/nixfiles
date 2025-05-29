@@ -1,41 +1,51 @@
 nixpkgs: let
-  notify = nixpkgs.substituteAll {
+  notify = nixpkgs.replaceVarsWith {
     dir = "bin";
     isExecutable = true;
+    replacements = {
+      notify = "${nixpkgs.notify-desktop}/bin/notify-desktop";
+      status = "${status}/bin/mic-status";
+    };
     src = ./mic-status-notify;
-    notify = "${nixpkgs.notify-desktop}/bin/notify-desktop";
-    status = "${status}/bin/mic-status";
   };
   pactl = "${nixpkgs.pulseaudio}/bin/pactl";
-  status = nixpkgs.substituteAll {
+  status = nixpkgs.replaceVarsWith {
     dir = "bin";
-    inherit pactl;
     isExecutable = true;
+    replacements = {
+      inherit pactl;
+    };
     src = ./mic-status;
   };
 in nixpkgs.symlinkJoin {
   name = "mic";
   paths = [
-    (nixpkgs.substituteAll {
+    (nixpkgs.replaceVarsWith {
       dir = "bin";
       isExecutable = true;
+      replacements = {
+        inherit pactl;
+        notify = "${notify}/bin/mic-status-notify";
+      };
       src = ./mic-volume-lower;
-      inherit pactl;
-      notify = "${notify}/bin/mic-status-notify";
     })
-    (nixpkgs.substituteAll {
+    (nixpkgs.replaceVarsWith {
       dir = "bin";
       isExecutable = true;
+      replacements = {
+        inherit pactl;
+        notify = "${notify}/bin/mic-status-notify";
+      };
       src = ./mic-mute;
-      inherit pactl;
-      notify = "${notify}/bin/mic-status-notify";
     })
-    (nixpkgs.substituteAll {
+    (nixpkgs.replaceVarsWith {
       dir = "bin";
       isExecutable = true;
+      replacements = {
+        inherit pactl;
+        notify = "${notify}/bin/mic-status-notify";
+      };
       src = ./mic-volume-raise;
-      inherit pactl;
-      notify = "${notify}/bin/mic-status-notify";
     })
     notify
     status

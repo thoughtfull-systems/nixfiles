@@ -1,13 +1,16 @@
 nixpkgs: let
-  yubikey-touch-plugin = nixpkgs.substituteAll {
+  yubikey-touch-plugin = nixpkgs.replaceVarsWith {
     isExecutable = true;
+    replacements = {};
     src = ./yubikey-touch-plugin;
   };
-  yubikey-touch-plugin-updater = nixpkgs.substituteAll {
+  yubikey-touch-plugin-updater = nixpkgs.replaceVarsWith {
     isExecutable = true;
-    not_waiting = not-waiting;
+    replacements = {
+      not_waiting = not-waiting;
+      waiting = waiting;
+    };
     src = ./yubikey-touch-plugin-updater;
-    waiting = waiting;
   };
   waiting = ./yubikey-waiting.png;
   not-waiting = ./yubikey-not-waiting.png;
