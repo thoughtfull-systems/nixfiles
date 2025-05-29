@@ -9,7 +9,7 @@ in {
       thoughtfull.desktop.enable = lib.mkDefault true;
     })];
     networking.networkmanager.enable = lib.mkDefault true;
-    security.rtkit.enable = lib.mkDefault config.hardware.pulseaudio.enable;
+    security.rtkit.enable = lib.mkDefault config.services.pulseaudio.enable;
     services = {
       pipewire = {
         extraConfig.pipewire = {
