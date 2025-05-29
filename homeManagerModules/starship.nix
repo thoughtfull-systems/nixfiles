@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   home.packages = [ pkgs.starship ];
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     eval "$(starship init zsh)"
   '';
 }

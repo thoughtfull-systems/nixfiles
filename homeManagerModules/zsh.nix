@@ -16,7 +16,7 @@
       ignoreDups = lib.mkDefault true;
       share = lib.mkDefault false;
     };
-    initExtra = ''
+    initContent = ''
       unalias run-help
       autoload run-help
 
