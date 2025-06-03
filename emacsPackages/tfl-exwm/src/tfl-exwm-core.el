@@ -235,7 +235,7 @@ If terminal is not running, the run the terminal command."
   (interactive)
   (unless (server-running-p)
     (server-start))
-  (exwm-randr-enable)
+  (exwm-randr-mode)
   (exwm-enable)
   (desktop-read user-emacs-directory)
   (desktop-release-lock)
