@@ -5,6 +5,10 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = [ pkgs.gnome-terminal ];
     dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        font-name = lib.mkDefault "IBM Plex Serif 11";
+        monospace-font-name = lib.mkDefault "IBM Plex Mono 11";
+      };
       "org/gnome/terminal/legacy" = {
         default-show-menubar = lib.mkDefault false;
       };
