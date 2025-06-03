@@ -18,7 +18,7 @@
   "xfce4-power-manager/general-notification" = lib.mkDefault false;
   "xfce4-power-manager/handle-brightness-keys" = lib.mkDefault true;
   "xfce4-power-manager/hibernate-button-action" = lib.mkDefault (uint 2); # hybrid-sleep
-  "xfce4-power-manager/inactivity-on-ac" = lib.mkDefault (uint 14); # never
+  "xfce4-power-manager/inactivity-on-ac" = lib.mkDefault (uint 0); # never
   "xfce4-power-manager/inactivity-on-battery" = lib.mkDefault (uint 20);
   "xfce4-power-manager/inactivity-sleep-mode-on-ac" = lib.mkDefault (uint 1); # suspend
   "xfce4-power-manager/inactivity-sleep-mode-on-battery" = lib.mkDefault (uint 1); # suspend
