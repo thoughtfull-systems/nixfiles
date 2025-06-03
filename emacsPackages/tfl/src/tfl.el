@@ -94,7 +94,8 @@
   :autoload tfl-buffer-compare-name
   :bind (("C-c D" . tfl-kill-buffer-and-delete-file)
          ("C-x b" . tfl-switch-buffer)
-         ("C-x C-b" . tfl-switch-buffer)))
+         ("C-x C-b" . tfl-switch-buffer))
+  :commands (tfl-completion-delete-back-to-slash))
 (use-package tool-bar
   :custom (tool-bar-mode nil)
   :defer)
@@ -150,6 +151,8 @@
            (read-buffer-completion-ignore-case t)
            (read-file-name-completion-ignore-case t))
   :custom-face (completions-common-part ((t (:inherit orderless-match-face-0))) face-defface-spec)
+  :bind (:map minibuffer-mode-map
+              ("M-<backspace>" . tfl-completion-delete-back-to-slash))
   :defer)
 (use-package orderless
   :custom (orderless-matching-styles
