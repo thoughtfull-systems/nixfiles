@@ -14,8 +14,8 @@
       ./home-manager.nix
       ./javascript.nix
       ./keychain.nix
+      ./mcp.nix
       ./notifications.nix
-      ./overlay-emacs.nix
       ./rust.nix
       ./starship.nix
       ./syncthing.nix
