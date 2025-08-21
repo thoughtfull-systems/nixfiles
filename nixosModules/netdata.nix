@@ -36,6 +36,8 @@ in {
           [${cfg.api-key}]
           enabled = yes
         '';
+        # https://github.com/NixOS/nixpkgs/issues/402135
+        package = pkgs.netdataCloud;
       } else {
         config = {
           db = {
