@@ -70,6 +70,9 @@
            (pulse-flag nil))
   :custom-face (pulse-highlight-start-face ((t (:inherit highlight :extend t))) face-defface-spec)
   :defer)
+(use-package repeat
+  :custom ((repeat-exit-key "C-g")
+           (repeat-mode t)))
 (use-package safehist
   :custom (savehist-mode t)
   :defer)
