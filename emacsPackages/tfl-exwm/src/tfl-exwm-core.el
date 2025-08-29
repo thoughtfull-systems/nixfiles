@@ -231,6 +231,18 @@ If terminal is not running, the run the terminal command."
                                     tfl-exwm-terminal-class
                                     tfl-exwm-terminal-command))
 
+(defun tfl-exwm-fix-obsidian-focus (id)
+  ;; there's possibly a race condition between unhiding a window and setting focus, so just don't
+  ;; set hidden state.  this is a workaround from
+  ;; https://github.com/emacs-exwm/exwm/issues/18#issuecomment-2000284049
+  ;;
+  ;; I only see this with obsidian
+  (with-current-buffer (exwm--id->buffer id)
+    (setq exwm--ewmh-state
+          (delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
+    (exwm-layout--set-ewmh-state id)
+    (xcb:flush exwm--connection)))
+
 (defun tfl-exwm-enable ()
   "Enable my EXWM configuration."
   (interactive)
@@ -241,7 +253,8 @@ If terminal is not running, the run the terminal command."
   (desktop-read user-emacs-directory)
   (desktop-release-lock)
   (desktop-remove)
-  (edwina-mode))
+  (edwina-mode)
+  (advice-add #'exwm-layout--hide :after #'tfl-exwm-fix-obsidian-focus))
 
 (defun tfl-exwm-workspace-name (n)
   "Rename workspace N to align more intuitively with key bindings."
