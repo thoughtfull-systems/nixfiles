@@ -13,7 +13,8 @@
 (use-package exwm
   :custom ((exwm-replace t)
            (exwm-update-class-hook '(tfl-exwm-rename-current-buffer))
-           (exwm-update-title-hook '(tfl-exwm-rename-current-buffer)))
+           (exwm-update-title-hook '(tfl-exwm-rename-current-buffer))
+           (exwm-manage-finish-hook '(tfl-exwm-float-zoom-windows)))
   :defer)
 (use-package exwm-input
   :after tfl-exwm-core

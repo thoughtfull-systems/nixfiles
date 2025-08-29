@@ -261,5 +261,11 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
   (desktop-save user-emacs-directory t)
   (kill-emacs 82))
 
+(defun tfl-exwm-float-zoom-windows ()
+  (pcase exwm-class-name
+    ("zoom" (pcase exwm-title
+              ("zoom_linux_float_video_window" (exwm-floating-toggle-floating))
+              ("zoom" (exwm-floating-toggle-floating))))))
+
 (provide 'tfl-exwm-core)
 ;;; tfl-exwm-core.el ends here
