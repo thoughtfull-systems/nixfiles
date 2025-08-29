@@ -172,7 +172,17 @@
   :custom (checkdoc-force-docstrings-flag nil))
 (use-package company
   :diminish
-  :hook (prog-mode . company-mode))
+  :hook (prog-mode . company-mode)
+  :bind (:map company-active-map
+              ("C-p" . nil)
+              ("C-n" . nil)
+              ("M-p" . company-select-previous)
+              ("M-n" . company-select-next)
+              :map company-search-map
+              ("C-p" . nil)
+              ("C-n" . nil)
+              ("M-p" . company-select-previous)
+              ("M-n" . company-select-next)))
 (use-package dap-mode)
 (use-package display-line-numbers
   :hook (prog-mode . display-line-numbers-mode)
