@@ -247,7 +247,7 @@ If terminal is not running, the run the terminal command."
 
 (defun tfl-exwm-rename-current-buffer ()
   "Rename `current-buffer' with its `exwm-class-name'."
-  (exwm-workspace-rename-buffer exwm-class-name))
+  (exwm-workspace-rename-buffer (concat exwm-class-name ": " exwm-title)))
 
 (defun tfl-exwm-restart ()
   "Restart Emacs and EXWM.
