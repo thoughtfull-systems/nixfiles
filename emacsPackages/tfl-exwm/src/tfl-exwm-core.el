@@ -18,6 +18,7 @@
 (require 'tfl)
 (require 'tfl-gtd-agenda)
 (require 'seq)
+(require 'edwina)
 
 
 ;;; Variables
@@ -236,10 +237,11 @@ If terminal is not running, the run the terminal command."
   (unless (server-running-p)
     (server-start))
   (exwm-randr-mode)
-  (exwm-enable)
+  (exwm-wm-mode)
   (desktop-read user-emacs-directory)
   (desktop-release-lock)
-  (desktop-remove))
+  (desktop-remove)
+  (edwina-mode))
 
 (defun tfl-exwm-workspace-name (n)
   "Rename workspace N to align more intuitively with key bindings."
@@ -264,8 +266,17 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
 (defun tfl-exwm-float-zoom-windows ()
   (pcase exwm-class-name
     ("zoom" (pcase exwm-title
-              ("zoom_linux_float_video_window" (exwm-floating-toggle-floating))
+              ("zoom_linux_float_video_window"
+               (exwm-floating-toggle-floating)
+               (set-frame-width (selected-frame) 300 nil t))
               ("zoom" (exwm-floating-toggle-floating))))))
+
+(defun tfl-exwm-edwina ()
+  "Activate edwina commands."
+  (interactive)
+  (let ((edwina-prefix-map (keymap-lookup edwina-mode-map "s-e")))
+    (set-transient-map edwina-prefix-map)
+    (which-key--show-keymap "edwina" edwina-prefix-map)))
 
 (provide 'tfl-exwm-core)
 ;;; tfl-exwm-core.el ends here

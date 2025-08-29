@@ -1,6 +1,7 @@
 epkgs: {
   tfl-exwm = epkgs.trivialBuild {
     packageRequires = with epkgs; [
+      edwina
       exwm
       exwm-modeline
       tfl
