@@ -137,8 +137,7 @@
   :defer)
 
 (use-package edwina
-  :custom ((display-buffer-base-action '(display-buffer-below-selected))
-           (edwina-keymap-prefix (kbd "s-e")))
+  :custom ((edwina-keymap-prefix (kbd "s-e")))
   :bind
   (:repeat-map tfl-edwina-resize-repeat-map
                ("{" . edwina-dec-mfact)
