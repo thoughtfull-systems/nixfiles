@@ -43,6 +43,7 @@ in {
       settings = {
         auto-optimise-store = lib.mkDefault true;
         experimental-features = [ "flakes" "nix-command" ];
+        trusted-users = [ "root" "technosophist" ];
       };
     };
     # this cannot be lib.mkDefault, because reasons
