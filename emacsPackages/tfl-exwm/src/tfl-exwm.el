@@ -24,7 +24,7 @@
             `(([?\s-a]    . tfl-exwm-switch-to-agenda)
               ([?\s-b]    . tfl-switch-to-most-recent-buffer)
               ([?\s-d]    . tfl-exwm-switch-and-cycle-or-run-discord)
-              ([?\s-e]    . tfl-exwm-edwina)
+              ;; ([?\s-e]    . tfl-exwm-edwina)
               ([?\s-f]    . tfl-exwm-switch-and-cycle-or-run-firefox)
               ([?\s-o]    . tfl-exwm-switch-and-cycle-or-run-obsidian)
               ([?\s-s]    . tfl-exwm-switch-and-cycle-or-run-slack)

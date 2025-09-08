@@ -18,7 +18,7 @@
 (require 'tfl)
 (require 'tfl-gtd-agenda)
 (require 'seq)
-(require 'edwina)
+;; (require 'edwina)
 
 
 ;;; Variables
@@ -253,7 +253,7 @@ If terminal is not running, the run the terminal command."
   (desktop-read user-emacs-directory)
   (desktop-release-lock)
   (desktop-remove)
-  (edwina-mode)
+  ;; (edwina-mode)
   (advice-add #'exwm-layout--hide :after #'tfl-exwm-fix-obsidian-focus))
 
 (defun tfl-exwm-workspace-name (n)
@@ -284,12 +284,12 @@ Exiting with 82 ('R') signals the trampoline script to restart Emacs."
                (set-frame-width (selected-frame) 300 nil t))
               ("zoom" (exwm-floating-toggle-floating))))))
 
-(defun tfl-exwm-edwina ()
-  "Activate edwina commands."
-  (interactive)
-  (let ((edwina-prefix-map (keymap-lookup edwina-mode-map "s-e")))
-    (set-transient-map edwina-prefix-map)
-    (which-key--show-keymap "edwina" edwina-prefix-map)))
+;; (defun tfl-exwm-edwina ()
+;;   "Activate edwina commands."
+;;   (interactive)
+;;   (let ((edwina-prefix-map (keymap-lookup edwina-mode-map "s-e")))
+;;     (set-transient-map edwina-prefix-map)
+;;     (which-key--show-keymap "edwina" edwina-prefix-map)))
 
 (provide 'tfl-exwm-core)
 ;;; tfl-exwm-core.el ends here
