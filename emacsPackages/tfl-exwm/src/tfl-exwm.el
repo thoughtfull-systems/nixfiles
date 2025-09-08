@@ -136,21 +136,21 @@
            (exwm-workspace-show-all-buffers t))
   :defer)
 
-(use-package edwina
-  :custom ((edwina-keymap-prefix (kbd "s-e")))
-  :bind
-  (:repeat-map tfl-edwina-resize-repeat-map
-               ("{" . edwina-dec-mfact)
-               ("}" . edwina-inc-mfact))
-  (:repeat-map tfl-edwina-move-repeat-map
-               ("c" . edwina-clone-window)
-               ("n" . edwina-select-next-window)
-               ("p" . edwina-select-previous-window)
-               ("N" . edwina-swap-next-window)
-               ("P" . edwina-swap-previous-window)
-               ("i" . edwina-inc-nmaster)
-               ("d" . edwina-dec-nmaster)
-               ("k" . edwina-delete-window)))
+;; (use-package edwina
+;;   :custom ((edwina-keymap-prefix (kbd "s-e")))
+;;   :bind
+;;   (:repeat-map tfl-edwina-resize-repeat-map
+;;                ("{" . edwina-dec-mfact)
+;;                ("}" . edwina-inc-mfact))
+;;   (:repeat-map tfl-edwina-move-repeat-map
+;;                ("c" . edwina-clone-window)
+;;                ("n" . edwina-select-next-window)
+;;                ("p" . edwina-select-previous-window)
+;;                ("N" . edwina-swap-next-window)
+;;                ("P" . edwina-swap-previous-window)
+;;                ("i" . edwina-inc-nmaster)
+;;                ("d" . edwina-dec-nmaster)
+;;                ("k" . edwina-delete-window)))
 
 (require 'tfl-exwm-core)
 
