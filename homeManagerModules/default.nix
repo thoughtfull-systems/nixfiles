@@ -11,6 +11,7 @@
       ./exwm.nix
       ./git.nix
       ./gnome-terminal.nix
+      ./gpg.nix
       ./home-manager.nix
       ./javascript.nix
       ./keychain.nix
