@@ -21,6 +21,7 @@
       ./starship.nix
       ./syncthing.nix
       ./tmux.nix
+      ./tpm.nix
       ./yubikey.nix
       ./zsh.nix
     ];
