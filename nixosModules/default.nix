@@ -35,6 +35,7 @@ inputs: {
       ./suspend-when-ac-disconnected.nix
       ./systemd-notify-failure.nix
       ./tlp.nix
+      ./tpm.nix
       ./tt-rss.nix
       ./tunnel.nix
       ./users.nix
