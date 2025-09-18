@@ -3,7 +3,7 @@
 in lib.mkIf enabled
   {
     security.tpm2 = {
-      abrmd.enable = enabled;
       pkcs11.enable = enabled;
+      tctiEnvironment.enable = enabled;
     };
   }
