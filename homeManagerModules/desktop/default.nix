@@ -7,7 +7,7 @@ in {
       flameshot
       libreoffice
       notify-desktop
-      tor-browser-bundle-bin
+      tor-browser
       pkgs.thoughtfull.zoom-us
     ];
     fonts.fontconfig.enable = lib.mkForce true;
