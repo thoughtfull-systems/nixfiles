@@ -1,11 +1,8 @@
 {
   default = { lib, ... }: {
     imports = [
-      ./aider.nix
-      ./autostart.nix
       ./clojure.nix
       ./desktop
-      ./emacs.nix
       ./emacs/gtd.nix
       ./emoji.nix
       ./exwm.nix
@@ -15,9 +12,7 @@
       ./home-manager.nix
       ./javascript.nix
       ./keychain.nix
-      ./mcp.nix
       ./notifications.nix
-      ./rust.nix
       ./starship.nix
       ./syncthing.nix
       ./tmux.nix
