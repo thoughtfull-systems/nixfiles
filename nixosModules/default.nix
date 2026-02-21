@@ -4,7 +4,6 @@ inputs: {
     home-manager.sharedModules = [ inputs.self.homeManagerModules.default ];
     imports = [
       ./acme.nix
-      ./backlight.nix
       ./bluetooth.nix
       ./common.nix
       ./deploy-keys.nix
