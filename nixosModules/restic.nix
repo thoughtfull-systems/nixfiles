@@ -73,9 +73,14 @@ in {
     services.restic.backups.default = {
       environmentFile = env-path;
       exclude = cfg.exclude;
+      extraBackupArgs = [
+        "--no-scan"
+        "--retry-lock 1h"
+      ];
       passwordFile = pwd-path;
       paths = cfg.paths;
       pruneOpts = [
+        "--retry-lock 1h"
         "--keep-daily 7"
         "--keep-weekly 5"
         "--keep-monthly 12"
