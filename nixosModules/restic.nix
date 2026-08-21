@@ -75,12 +75,6 @@ in {
       exclude = cfg.exclude;
       passwordFile = pwd-path;
       paths = cfg.paths;
-      pruneOpts = [
-        "--keep-daily 7"
-        "--keep-weekly 5"
-        "--keep-monthly 12"
-        "--keep-yearly 75"
-      ];
       repository = "s3:s3.amazonaws.com/${cfg.s3Bucket}";
       timerConfig.OnCalendar = lib.mkDefault "*-*-* *:00:00";
     };
